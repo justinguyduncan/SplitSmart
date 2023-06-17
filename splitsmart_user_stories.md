@@ -97,6 +97,7 @@
     * I can click the red X button to permanently delete an expense.
 
 ## Bills
+
 ### Viewing Bills
 
 * As a logged in user, I want to be able to see all of my bills.
