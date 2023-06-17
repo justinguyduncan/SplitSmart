@@ -42,7 +42,7 @@
 ## `split_expenses`
 
 | column name | data type | details               |
-|-------------|-----------|---------------- ------|
+|-------------|-----------|-----------------------|
 | id          | integer   | not null, primary key |
 | expense_id  | integer   | not null, foreign key |
 | user_id     | integer   | not null, foreign key |
