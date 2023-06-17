@@ -1,4 +1,3 @@
-
                   
 
 ## 1. New account creation, log in, log out, and guest/demo login
