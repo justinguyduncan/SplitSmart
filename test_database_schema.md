@@ -10,7 +10,7 @@
 | email        | string    | not null, indexed, unique |
 | phone_number | string    | unique                    |
 | created_at   | datetime  | not null                  |
-| updated-at   | datetime  | not null                  |
+| updated_at   | datetime  | not null                  |
 
 ## `friendships`
 
@@ -20,7 +20,7 @@
 | user_id     | integer   | not null, foreign key |
 | friend_id   | integer   | not null, foreign key |
 | created_at  | datetime  | not null              |
-| updated-at  | datetime  | not null              |
+| updated_at  | datetime  | not null              |
 
 * `user_id` references `users` table
 * `friend_id` references `users` table
@@ -35,7 +35,7 @@
 | creator_id   | integer   | not null, foreign key |
 | is_settled   | boolean   | not null              |
 | created_at   | datetime  | not null              |
-| updated-at   | datetime  | not null              |
+| updated_at   | datetime  | not null              |
 
 * `creator_id` references `users` table
 
@@ -49,7 +49,7 @@
 | amount_due  | decimal   | not null              |
 | is_settled  | boolean   | not null              |
 | created_at  | datetime  | not null              |
-| updated-at  | datetime  | not null              |
+| updated_at  | datetime  | not null              |
 
 * `expense_id` references `expenses` table
 * `user_id` references `users` table
@@ -61,9 +61,9 @@
 | id          | integer   | not null, primary key |
 | comment     | string    | not null              |
 | expense_id  | integer   | not null              |
-| creator_id  | integer   | not null, foreign key |
+| user_id     | integer   | not null, foreign key |
 | created_at  | datetime  | not null              |
-| updated-at  | datetime  | not null              |
+| updated_at  | datetime  | not null              |
 
 * `expense_id` references `expenses` table
 * `user_id` references `users` table
