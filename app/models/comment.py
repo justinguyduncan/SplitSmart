@@ -2,19 +2,18 @@ from datetime import datetime
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 
-class ExpenseParticipant(db.Model):
-    __tablename__ = 'expense_participants'
+class Comment(db.Model):
+    __tablename__ = 'comments'
 
     if environment == 'production':
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
+    comment = db.Column(db.String(50), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     expense_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('expenses.id')), nullable=False)
-    friendship_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('friendships.id')), nullable=False)
-    amount_due = db.Column(db.Numeric, nullable=False)
-    is_settled = db.Column(db.Boolean, default=False, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    expense = db.relationship('Expense', back_populates='participants')
-    friendship = db.relationship('Friendship', back_populates='expenses')
+    expense = db.relationship('Expense', back_populates='comments')
+    user = db.relationship('User', back_populates='comments')

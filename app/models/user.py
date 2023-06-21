@@ -1,3 +1,4 @@
+from datetime import datetime
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
@@ -10,17 +11,16 @@ class User(db.Model, UserMixin):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(40), nullable=False, unique=True)
-    first_name = db.Column(db.String(40), nullable=False)
-    last_name = db.Column(db.String(40), nullable=False)
-    phone_number=db.Column(db.Integer(40), nullable=False,unique=True)
-    email = db.Column(db.String(255), nullable=False, unique=True)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(50), nullable=False, unique=True)
+    phone_number = db.Column(db.String(10), unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
-    
-    
-    
-    friendship = db.relationship('Expense', back_populates='users')
-    expenses = db.relationship('Friendship', back_populates='users')
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    expenses = db.relationship('Expense', back_populates='user')
+    comments = db.relationship('Comment', back_populates='user')
 
     @property
     def password(self):
@@ -36,7 +36,6 @@ class User(db.Model, UserMixin):
     def to_dict(self):
         return {
             'id': self.id,
-            'username': self.username,
+            'name': f"{self.first_name} {self.last_name[0]}.",
             'email': self.email
         }
-  
