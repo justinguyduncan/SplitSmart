@@ -5,7 +5,7 @@ from wtforms import TextAreaField, SubmitField, IntegerField
 
 
 class CommentForm(FlaskForm):
-    comment = TextAreaField("Comment")
-    user_id= IntegerField("User_id")
-    expense_id= IntegerField("Expense_id")
-    submit=SubmitField("Submit")
+    comment = TextAreaField("comment")
+    user_id= IntegerField("user_id")
+    expense_id= IntegerField("expense_id")
+    submit=SubmitField("submit")

@@ -27,7 +27,7 @@ def get_comment(expense_id):
 
 
 
-# Create new comment
+# # Create new comment
 
 @comment_routes.route('/',methods=["POST"])
 # @login_required
@@ -76,16 +76,17 @@ def delete_comment(comment_id):
     
 
 
-# @comment_routes.route('/', methods=["GET","POST"])
+# @comment_routes.route('/', methods=["POST"])
 # # @login_required
 # def create_comment():
 #     # form['csrf_token'].data= request.cookies['csrf_token']
 #     form= CommentForm()
 #     if form.validate_on_submit():
-#         comment= form.comment.data
-#         user_id=form.user_id.data
-#         expense_id=form.expense_id.data
-#         new_comment=Comment(comment=comment, user_id=user_id, expense_id=expense_id)
+      
+#         new_comment=Comment(
+#             comment=form.data['comment'],
+#             user_id=form.data['user_id'],
+#             expense_id=form.data['expense_id'])
         
 #         db.session.add(new_comment)
 #         db.session.commit()
