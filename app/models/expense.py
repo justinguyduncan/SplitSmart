@@ -18,3 +18,14 @@ class Expense(db.Model):
     participants = db.relationship('ExpenseParticipant', back_populates='expense')
     user = db.relationship('User', back_populates='expenses')
     comments = db.relationship('Comment', back_populates='expense')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'description': self.description,
+            'amount': self.amount,
+            'creator_id': self.creator_id,
+            'particpants': [participant.to_dict() for participant in self.participants],
+            'user': self.user.to_dict(),
+            'comments': [comment.to_dict() for comment in self.comments]
+        }
