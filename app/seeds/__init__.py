@@ -18,8 +18,10 @@ def seed():
         # Make sure to add all your other model's undo functions below
         undo_users()
         undo_friendships()
+        undo_payments
     seed_users()
     seed_friendships()
+    seed_payments
     # Add other seed functions here
 
 
@@ -28,4 +30,5 @@ def seed():
 def undo():
     undo_users()
     undo_friendships()
+    undo_payments
     # Add other undo functions here
