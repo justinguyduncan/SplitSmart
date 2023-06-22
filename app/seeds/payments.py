@@ -1,5 +1,5 @@
-from datetime import datetime
-from app.models import db, Payment
+from app.models import db, Payment, environment, SCHEMA
+from sqlalchemy.sql import text
 
 def seed_payments():
 
@@ -11,7 +11,7 @@ def seed_payments():
     payment4 = Payment(friendship_id=4,amount=50.00)
     payment5 = Payment(friendship_id=5, amount=75.00)
 
-    #Auror payments
+    #Aurora payments
     payment6 = Payment(friendship_id=6, amount=100.00)
     payment7 = Payment(friendship_id=7, amount=50.00,)
     payment8 = Payment(friendship_id=8, amount=75.00,)

@@ -21,17 +21,17 @@ def seed():
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
         undo_users()
-        undo_comments()
+        undo_friendships()
         undo_expenses()
         undo_expense_participants()
-        undo_friendships()
         undo_payments()
+        undo_comments()
     seed_users()
-    seed_comments()
-    seed_expenses()
-    seed_expense_participants()        
     seed_friendships()
+    seed_expenses()
+    seed_expense_participants()
     seed_payments()
+    seed_comments()
     # Add other seed functions here
 
 
@@ -39,9 +39,9 @@ def seed():
 @seed_commands.command('undo')
 def undo():
     undo_users()
-    undo_comments()
+    undo_friendships()
     undo_expenses()
     undo_expense_participants()
-    undo_friendships()
     undo_payments()
+    undo_comments()
     # Add other undo functions here

@@ -64,7 +64,7 @@ def seed_friendships():
     db.session.commit()
 
 def undo_friendships():
-        if environment == "production":
+    if environment == "production":
         db.session.execute(f"TRUNCATE table {SCHEMA}.friendships RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM friendships"))
