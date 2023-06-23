@@ -16,6 +16,7 @@ def my_expenses():
     expenses = Expense.query.filter(Expense.creator_id == current_user.to_dict()['id']).all()
     return {'expenses': [expense.to_dict() for expense in expenses]}
 
+
 # A user can get a list of all their unsettled expenses
 # GET /api/expenses/unsettled
 @expense_routes.route('/unsettled')
@@ -27,6 +28,7 @@ def unsettled_expenses():
     # return friendship_ids
     unsettled = ExpenseParticipant.query.filter(ExpenseParticipant.friendship_id.in_(friendship_ids), ExpenseParticipant.is_settled == False).all()
     return {'unsettled': [expense.to_dict() for expense in unsettled]}
+
 
 # A user can get a list of all their settled expenses
 # GET /api/expenses/settled
@@ -40,6 +42,7 @@ def settled_expenses():
     settled = ExpenseParticipant.query.filter(ExpenseParticipant.friendship_id.in_(friendship_ids), ExpenseParticipant.is_settled == True).all()
     return {'settled': [expense.to_dict() for expense in settled]}
 
+
 # A user can get an expense's details
 # GET /api/expenses/:id
 @expense_routes.route('/<int:id>')
@@ -47,6 +50,7 @@ def settled_expenses():
 def expense(id):
     expense = Expense.query.get(id)
     return expense.to_dict()
+
 
 # A user can create a new expense.
 # POST /api/expenses
@@ -77,8 +81,10 @@ def create_expense():
         return expense.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
+
 # A user can update an expense.
 # PUT /api/expenses/:id
+
 
 # A user can delete an expense.
 # DELETE /api/expenses/:id

@@ -29,5 +29,7 @@ class Friendship(db.Model):
             'bill': self.bill,
             'is_active': self.is_active,
             'user': self.user.to_dict(),
-            'friend': self.friend.to_dict()
+            'friend': self.friend.to_dict(),
+            # 'expenses': [expense.to_dict() for expense in self.expenses],
+            # 'payments': [payment.to_dict() for payment in self.payments]
         }

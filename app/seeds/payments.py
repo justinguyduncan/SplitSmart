@@ -1,8 +1,8 @@
 from app.models import db, Payment, environment, SCHEMA
 from sqlalchemy.sql import text
 
-def seed_payments():
 
+def seed_payments():
 
     # Demo payments
     payment1 = Payment(friendship_id=1, amount=50.00,)

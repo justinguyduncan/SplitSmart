@@ -63,6 +63,13 @@ def inject_csrf_token(response):
     return response
 
 
+# @app.route('/test')
+# def test():
+#     from .models import db, User, Payment, Friendship, Expense, ExpenseParticipant, Comment
+#     item = Comment.query.first()
+#     return item.to_dict()
+
+
 @app.route("/api/docs")
 def api_help():
     """

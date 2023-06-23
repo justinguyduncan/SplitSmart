@@ -24,4 +24,5 @@ class Comment(db.Model):
             'comment': self.comment,
             'user_id': self.user_id,
             'expense_id': self.expense_id,
+            'user': self.user.to_dict()
         }
