@@ -25,4 +25,5 @@ class ExpenseParticipant(db.Model):
             'expense_id': self.expense_id,
             'friendship_id': self.friendship_id,
             'is_settled': self.is_settled,
+            'amount_due': self.amount_due
         }

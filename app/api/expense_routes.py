@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, session, request
 from flask_login import current_user, login_required
-from app.models import Expense, ExpenseParticipant, Friendship
+from app.models import db, Expense, ExpenseParticipant, Friendship
 from app.forms import ExpenseForm
+from app.api.auth_routes import validation_errors_to_error_messages
 
 expense_routes = Blueprint('expenses', __name__)
 
@@ -33,13 +34,13 @@ def unsettled_expenses():
 # GET /api/expenses/settled
 @expense_routes.route('/settled')
 @login_required
-def settled():
+def settled_expenses():
     # grab all friendships where user id is friend_id
     friendships = Friendship.query.filter(Friendship.friend_id == current_user.to_dict()['id']).all()
     friendship_ids = (friendship.to_dict()['id'] for friendship in friendships)
     # return friendship_ids
-    unsettled = ExpenseParticipant.query.filter(ExpenseParticipant.friendship_id.in_(friendship_ids), ExpenseParticipant.is_settled == True).all()
-    return {'settled': [expense.to_dict() for expense in unsettled]}
+    settled = ExpenseParticipant.query.filter(ExpenseParticipant.friendship_id.in_(friendship_ids), ExpenseParticipant.is_settled == True).all()
+    return {'settled': [expense.to_dict() for expense in settled]}
 
 # A user can get an expense's details
 # GET /api/expenses/:id
@@ -51,6 +52,31 @@ def expense(id):
 
 # A user can create a new expense.
 # POST /api/expenses
+@expense_routes.route('/', methods=['POST'])
+def create_expense():
+    form = ExpenseForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    form.friends.choices = [(friendship.to_dict()['id'], friendship.to_dict()['friend']['name']) for friendship in Friendship.query.filter(Friendship.user_id == current_user.to_dict()['id']).all()]
+    # [(6, 'Demo L.'), (7, 'Justin D.'), (8, 'Dmytro Y.'), (9, 'Will D.'), (10, 'Anthony R.')]
+    if form.validate_on_submit():
+        expense = Expense(
+            description=form.data['description'],
+            amount=form.data['amount'],
+            creator_id=current_user.to_dict()['id']
+        )
+        # print(form.data['friends'])
+        db.session.add(expense)
+        db.session.commit()
+        for id in form.data['friends']:
+            expense_participant = ExpenseParticipant(
+                expense_id=expense.to_dict()['id'],
+                friendship_id=id,
+                amount_due=expense.to_dict()['amount']/(len(form.data['friends'])+1)
+            )
+            db.session.add(expense_participant)
+        db.session.commit()
+        return expense.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 # A user can update an expense.
 # PUT /api/expenses/:id

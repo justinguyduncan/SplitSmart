@@ -27,5 +27,7 @@ class Friendship(db.Model):
             'user_id': self.user_id,
             'friend_id': self.friend_id,
             'bill': self.bill,
-            'is_active': self.is_active
+            'is_active': self.is_active,
+            'user': self.user.to_dict(),
+            'friend': self.friend.to_dict()
         }
