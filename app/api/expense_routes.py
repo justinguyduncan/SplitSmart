@@ -1,30 +1,56 @@
 from flask import Blueprint, jsonify, session, request
 from flask_login import current_user, login_required
-from app.models import Expense, ExpenseParticipant
+from app.models import Expense, ExpenseParticipant, Friendship
 from app.forms import ExpenseForm
 
 expense_routes = Blueprint('expenses', __name__)
 
 
-# A user can create a new expense.
-# POST /api/expenses
 
-# A user can get a list of all their expenses.
+
+# A user can get a list of all their created expenses.
 # GET /api/expenses
 @expense_routes.route('/')
 @login_required
-def all_expenses():
+def my_expenses():
     # print(current_user.to_dict()) # {'id': 1, 'name': 'Demo L.', 'email': 'demo@aa.io'}
     expenses = Expense.query.filter(Expense.creator_id == current_user.to_dict()['id']).all()
     return {'expenses': [expense.to_dict() for expense in expenses]}
 
-# A user can get a expense details
+# A user can get a list of all their unsettled expenses
+# GET /api/expenses/unsettled
+@expense_routes.route('/unsettled')
+@login_required
+def unsettled_expenses():
+    # grab all friendships where user id is friend_id
+    friendships = Friendship.query.filter(Friendship.friend_id == current_user.to_dict()['id']).all()
+    friendship_ids = (friendship.to_dict()['id'] for friendship in friendships)
+    # return friendship_ids
+    unsettled = ExpenseParticipant.query.filter(ExpenseParticipant.friendship_id.in_(friendship_ids), ExpenseParticipant.is_settled == False).all()
+    return {'unsettled': [expense.to_dict() for expense in unsettled]}
+
+# A user can get a list of all their settled expenses
+# GET /api/expenses/settled
+@expense_routes.route('/settled')
+@login_required
+def settled():
+    # grab all friendships where user id is friend_id
+    friendships = Friendship.query.filter(Friendship.friend_id == current_user.to_dict()['id']).all()
+    friendship_ids = (friendship.to_dict()['id'] for friendship in friendships)
+    # return friendship_ids
+    unsettled = ExpenseParticipant.query.filter(ExpenseParticipant.friendship_id.in_(friendship_ids), ExpenseParticipant.is_settled == True).all()
+    return {'settled': [expense.to_dict() for expense in unsettled]}
+
+# A user can get an expense's details
 # GET /api/expenses/:id
 @expense_routes.route('/<int:id>')
 @login_required
 def expense(id):
     expense = Expense.query.filter(Expense.id == id).first()
     return expense.to_dict()
+
+# A user can create a new expense.
+# POST /api/expenses
 
 # A user can update an expense.
 # PUT /api/expenses/:id
