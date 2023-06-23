@@ -7,8 +7,6 @@ from app.api.auth_routes import validation_errors_to_error_messages
 expense_routes = Blueprint('expenses', __name__)
 
 
-
-
 # A user can get a list of all their created expenses.
 # GET /api/expenses
 @expense_routes.route('/')
@@ -47,12 +45,13 @@ def settled_expenses():
 @expense_routes.route('/<int:id>')
 @login_required
 def expense(id):
-    expense = Expense.query.filter(Expense.id == id).first()
+    expense = Expense.query.get(id)
     return expense.to_dict()
 
 # A user can create a new expense.
 # POST /api/expenses
 @expense_routes.route('/', methods=['POST'])
+@login_required
 def create_expense():
     form = ExpenseForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -83,3 +82,10 @@ def create_expense():
 
 # A user can delete an expense.
 # DELETE /api/expenses/:id
+@expense_routes.route('/<int:id>', methods=['DELETE'])
+@login_required
+def delete_expense(id):
+    expense = Expense.query.get(id)
+    db.session.delete(expense)
+    db.session.commit()
+    return {'message': 'Delete successful'}
