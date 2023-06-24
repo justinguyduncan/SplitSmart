@@ -52,8 +52,8 @@ def expense(id):
     if not expense:
         return {'errors': f"Expense {id} does not exist"}
     # checks if current user is a creator of the expense
-    if expense.creator_id != current_user.id:
-        return {'errors': f"User is not the creator of expense {id}"}
+    # if expense.creator_id != current_user.id:
+    #     return {'errors': f"User is not the creator of expense {id}"}
     return expense.to_dict()
 
 
