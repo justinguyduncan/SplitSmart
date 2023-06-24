@@ -7,38 +7,36 @@ from app.api.auth_routes import validation_errors_to_error_messages
 expense_routes = Blueprint('expenses', __name__)
 
 
-# A user can get a list of all their created expenses.
-# GET /api/expenses
 @expense_routes.route('/')
 @login_required
 def my_expenses():
-    # print(current_user.to_dict()) # {'id': 1, 'name': 'Demo L.', 'email': 'demo@aa.io'}
-    expenses = Expense.query.filter(Expense.creator_id == current_user.to_dict()['id']).all()
+    """
+    Query for all expenses created by the current user and returns them in a list of expense dictionaries
+    """
+    expenses = Expense.query.filter(Expense.creator_id == current_user.id).all()
     return {'expenses': [expense.to_dict() for expense in expenses]}
 
 
-# A user can get a list of all their unsettled expenses
-# GET /api/expenses/unsettled
 @expense_routes.route('/unsettled')
 @login_required
 def unsettled_expenses():
-    # grab all friendships where user id is friend_id
-    friendships = Friendship.query.filter(Friendship.friend_id == current_user.to_dict()['id']).all()
-    friendship_ids = (friendship.to_dict()['id'] for friendship in friendships)
-    # return friendship_ids
+    """
+    Query for all unsettled expenses charged to the current user and returns them in a list of expense dictionaries
+    """
+    friendships = Friendship.query.filter(Friendship.friend_id == current_user.id).all()
+    friendship_ids = [friendship.id for friendship in friendships]
     unsettled = ExpenseParticipant.query.filter(ExpenseParticipant.friendship_id.in_(friendship_ids), ExpenseParticipant.is_settled == False).all()
     return {'unsettled': [expense.to_dict() for expense in unsettled]}
 
 
-# A user can get a list of all their settled expenses
-# GET /api/expenses/settled
 @expense_routes.route('/settled')
 @login_required
 def settled_expenses():
-    # grab all friendships where user id is friend_id
-    friendships = Friendship.query.filter(Friendship.friend_id == current_user.to_dict()['id']).all()
-    friendship_ids = (friendship.to_dict()['id'] for friendship in friendships)
-    # return friendship_ids
+    """
+    Query for all settled expenses charged to the current user and returns them in a list of expense dictionaries
+    """
+    friendships = Friendship.query.filter(Friendship.friend_id == current_user.id).all()
+    friendship_ids = [friendship.id for friendship in friendships]
     settled = ExpenseParticipant.query.filter(ExpenseParticipant.friendship_id.in_(friendship_ids), ExpenseParticipant.is_settled == True).all()
     return {'settled': [expense.to_dict() for expense in settled]}
 
@@ -48,6 +46,9 @@ def settled_expenses():
 @expense_routes.route('/<int:id>')
 @login_required
 def expense(id):
+    """
+    Query for an expense by id and returns that expense in a dictionary
+    """
     expense = Expense.query.get(id)
     return expense.to_dict()
 
@@ -57,29 +58,32 @@ def expense(id):
 @expense_routes.route('/', methods=['POST'])
 @login_required
 def create_expense():
+    """
+    Creates a new expense, creates corresponding expense participant information, and updates friendships' bill amounts
+    """
     form = ExpenseForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    form.friends.choices = [(friendship.to_dict()['id'], friendship.to_dict()['friend']['name']) for friendship in Friendship.query.filter(Friendship.user_id == current_user.to_dict()['id']).all()]
+    form.friends.choices = [(friendship.id, friendship.friend.to_dict()['name']) for friendship in Friendship.query.filter(Friendship.user_id == current_user.id).all()]
     # [(6, 'Demo L.'), (7, 'Justin D.'), (8, 'Dmytro Y.'), (9, 'Will D.'), (10, 'Anthony R.')]
     if form.validate_on_submit():
         expense = Expense(
             description=form.data['description'],
             amount=form.data['amount'],
-            creator_id=current_user.to_dict()['id']
+            creator_id=current_user.id
         )
         # print(form.data['friends'])
         db.session.add(expense)
         db.session.commit()
-        bill_delta = expense.to_dict()['amount']/(len(form.data['friends'])+1)
+        bill_delta = expense.amount/(len(form.data['friends'])+1)
         for id in form.data['friends']: # each friendship id is user -> friend
             expense_participant = ExpenseParticipant(
-                expense_id=expense.to_dict()['id'],
+                expense_id=expense.id,
                 friendship_id=id,
                 amount_due=bill_delta
             )
             db.session.add(expense_participant)
             user_to_friend = Friendship.query.get(id)
-            friend_to_user = Friendship.query.filter(Friendship.user_id == user_to_friend.to_dict()['friend_id'], Friendship.friend_id == user_to_friend.to_dict()['user_id']).first()
+            friend_to_user = Friendship.query.filter(Friendship.user_id == user_to_friend.friend_id, Friendship.friend_id == user_to_friend.user_id).first()
             user_to_friend.bill -= bill_delta
             friend_to_user.bill += bill_delta
         db.session.commit()
@@ -96,6 +100,9 @@ def create_expense():
 @expense_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_expense(id):
+    """
+    Deletes an expense, corresponding expense participant information, and corresponding comments
+    """
     expense = Expense.query.get(id)
     db.session.delete(expense)
     db.session.commit()
