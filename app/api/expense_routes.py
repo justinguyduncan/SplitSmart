@@ -70,13 +70,18 @@ def create_expense():
         # print(form.data['friends'])
         db.session.add(expense)
         db.session.commit()
-        for id in form.data['friends']:
+        bill_delta = expense.to_dict()['amount']/(len(form.data['friends'])+1)
+        for id in form.data['friends']: # each friendship id is user -> friend
             expense_participant = ExpenseParticipant(
                 expense_id=expense.to_dict()['id'],
                 friendship_id=id,
-                amount_due=expense.to_dict()['amount']/(len(form.data['friends'])+1)
+                amount_due=bill_delta
             )
             db.session.add(expense_participant)
+            user_to_friend = Friendship.query.get(id)
+            friend_to_user = Friendship.query.filter(Friendship.user_id == user_to_friend.to_dict()['friend_id'], Friendship.friend_id == user_to_friend.to_dict()['user_id']).first()
+            user_to_friend.bill -= bill_delta
+            friend_to_user.bill += bill_delta
         db.session.commit()
         return expense.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
