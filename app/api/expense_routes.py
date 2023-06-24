@@ -41,8 +41,6 @@ def settled_expenses():
     return {'settled': [expense.to_dict() for expense in settled]}
 
 
-# A user can get an expense's details
-# GET /api/expenses/:id
 @expense_routes.route('/<int:id>')
 @login_required
 def expense(id):
@@ -50,11 +48,15 @@ def expense(id):
     Query for an expense by id and returns that expense in a dictionary
     """
     expense = Expense.query.get(id)
+    # checks if expense exists
+    if not expense:
+        return {'errors': f"Expense {id} does not exist"}
+    # checks if current user is a creator of the expense
+    if expense.creator_id != current_user.id:
+        return {'errors': f"User is not the creator of expense {id}"}
     return expense.to_dict()
 
 
-# A user can create a new expense.
-# POST /api/expenses
 @expense_routes.route('/', methods=['POST'])
 @login_required
 def create_expense():
@@ -93,34 +95,19 @@ def create_expense():
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
-# A user can update an expense.
-# PUT /api/expenses/:id
 @expense_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def update_expense(id):
     """
     Updates an expense, corresponding expense participant information, and friendships' bill amounts
     """
-    # expense = Expense.query.get(id)
-    # # expense id
-    # # new amount
-    # # new description
-    # for participant in expense.participants:
-    #     # need to update amount due
-    #     print('>>>>>>>', participant.id)
-    #     # need to update bill amounts for each friendship
-    #     print('>>>>>>>>>>>>>>>', participant.friendship)
-    # return expense.to_dict()
-
-    # expense = Expense.query.get(id)
-    # if 'description' in request.json:
-    #     expense.description = request.json['description']
-    # if 'amount' in request.json:
-    #     expense.amount = request.json['amount']
-    # db.session.commit()
-    # return expense.to_dict()
-
     expense = Expense.query.get(id)
+    # checks if expense exists
+    if not expense:
+        return {'errors': f"Expense {id} does not exist"}
+    # checks if current user is a creator of the expense
+    if expense.creator_id != current_user.id:
+        return {'errors': f"User is not the creator of expense {id}"}
     old_bill = expense.amount/(len(expense.participants)+1)
     form = ExpenseForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -135,24 +122,18 @@ def update_expense(id):
         for participant in participants:
             participant.amount_due = new_bill
             user_to_friend = Friendship.query.get(participant.friendship_id)
-            print('>>>>>>>>>>>', user_to_friend)
             friend_to_user = Friendship.query.filter(Friendship.user_id == user_to_friend.friend_id, Friendship.friend_id == user_to_friend.user_id).first()
-            print('>>>>>>>>>>>', friend_to_user)
-            print('>>>>>>>>>>>', bill_delta)
             # update both friendships' bill amounts to reflect new expense
             user_to_friend.bill -= bill_delta
             friend_to_user.bill += bill_delta
             if bill_delta > 0:
                 # set is_settled to False, when their amount due increased
                 participant.is_settled = False
-            db.session.commit()
+        db.session.commit()
         return expense.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
-
-# A user can delete an expense.
-# DELETE /api/expenses/:id
 @expense_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_expense(id):
@@ -160,6 +141,12 @@ def delete_expense(id):
     Deletes an expense, corresponding expense participant information, and corresponding comments
     """
     expense = Expense.query.get(id)
+    # checks if expense exists
+    if not expense:
+        return {'errors': f"Expense {id} does not exist"}
+    # checks if current user is a creator of the expense
+    if expense.creator_id != current_user.id:
+        return {'errors': f"User is not the creator of expense {id}"}
     db.session.delete(expense)
     db.session.commit()
     return {'message': 'Delete successful'}
