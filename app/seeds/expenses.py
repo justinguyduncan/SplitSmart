@@ -11,6 +11,7 @@ from sqlalchemy.sql import text
 # demo to expense $10 -> self, dmytro
 
 def seed_expenses():
+
     expense1 = Expense(
         description='demo n aurora - dinner', amount=100, creator_id=1)
     expense2 = Expense(
@@ -19,11 +20,14 @@ def seed_expenses():
         description='demo n aurora n justin - disneyland', amount=300, creator_id=1)
     expense4 = Expense(
         description='demo n dmytro - smoothies', amount=10, creator_id=1)
+    expense5 = Expense(
+        description='will n demo n justin n anthony - spotify', amount=120, creator_id=5)
+    expense6 = Expense(
+        description='anthony n dmytro - draft beer', amount=20, creator_id=6)
 
-    db.session.add(expense1)
-    db.session.add(expense2)
-    db.session.add(expense3)
-    db.session.add(expense4)
+    db.session.add_all([
+        expense1, expense2, expense3, expense4, expense5, expense6
+    ])
     db.session.commit()
 
 
