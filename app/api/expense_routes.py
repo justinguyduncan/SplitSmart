@@ -63,25 +63,27 @@ def create_expense():
     """
     form = ExpenseForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    form.friends.choices = [(friendship.id, friendship.friend.to_dict()['name']) for friendship in Friendship.query.filter(Friendship.user_id == current_user.id).all()]
-    # [(6, 'Demo L.'), (7, 'Justin D.'), (8, 'Dmytro Y.'), (9, 'Will D.'), (10, 'Anthony R.')]
+    # set form's SelectMultipleField choices to active friends of current user
+    form.friends.choices = [(friendship.id, friendship.friend.to_dict()['name']) for friendship in Friendship.query.filter(Friendship.user_id == current_user.id, Friendship.is_active == True).all()]
     if form.validate_on_submit():
         expense = Expense(
             description=form.data['description'],
             amount=form.data['amount'],
             creator_id=current_user.id
         )
-        # print(form.data['friends'])
         db.session.add(expense)
         db.session.commit()
+        # split expense amount equally by all participants, including current user
         bill_delta = expense.amount/(len(form.data['friends'])+1)
-        for id in form.data['friends']: # each friendship id is user -> friend
+        for id in form.data['friends']:
+            # create an expense participant row for every friend indicated in expense
             expense_participant = ExpenseParticipant(
                 expense_id=expense.id,
                 friendship_id=id,
                 amount_due=bill_delta
             )
             db.session.add(expense_participant)
+            # update both friendships' bill amounts to reflect new expense
             user_to_friend = Friendship.query.get(id)
             friend_to_user = Friendship.query.filter(Friendship.user_id == user_to_friend.friend_id, Friendship.friend_id == user_to_friend.user_id).first()
             user_to_friend.bill -= bill_delta
@@ -93,6 +95,60 @@ def create_expense():
 
 # A user can update an expense.
 # PUT /api/expenses/:id
+@expense_routes.route('/<int:id>', methods=['PUT'])
+@login_required
+def update_expense(id):
+    """
+    Updates an expense, corresponding expense participant information, and friendships' bill amounts
+    """
+    # expense = Expense.query.get(id)
+    # # expense id
+    # # new amount
+    # # new description
+    # for participant in expense.participants:
+    #     # need to update amount due
+    #     print('>>>>>>>', participant.id)
+    #     # need to update bill amounts for each friendship
+    #     print('>>>>>>>>>>>>>>>', participant.friendship)
+    # return expense.to_dict()
+
+    # expense = Expense.query.get(id)
+    # if 'description' in request.json:
+    #     expense.description = request.json['description']
+    # if 'amount' in request.json:
+    #     expense.amount = request.json['amount']
+    # db.session.commit()
+    # return expense.to_dict()
+
+    expense = Expense.query.get(id)
+    old_bill = expense.amount/(len(expense.participants)+1)
+    form = ExpenseForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    form.friends.choices = [(friendship.id, friendship.friend.to_dict()['name']) for friendship in Friendship.query.filter(Friendship.user_id == current_user.id, Friendship.is_active == True).all()]
+    if form.validate_on_submit():
+        form.populate_obj(expense)
+        db.session.commit()
+        new_bill = expense.amount/(len(expense.participants)+1)
+        bill_delta = new_bill - old_bill
+        # update every expense participant row for every friend indicated in expense
+        participants = ExpenseParticipant.query.filter(ExpenseParticipant.expense_id == expense.id).all()
+        for participant in participants:
+            participant.amount_due = new_bill
+            user_to_friend = Friendship.query.get(participant.friendship_id)
+            print('>>>>>>>>>>>', user_to_friend)
+            friend_to_user = Friendship.query.filter(Friendship.user_id == user_to_friend.friend_id, Friendship.friend_id == user_to_friend.user_id).first()
+            print('>>>>>>>>>>>', friend_to_user)
+            print('>>>>>>>>>>>', bill_delta)
+            # update both friendships' bill amounts to reflect new expense
+            user_to_friend.bill -= bill_delta
+            friend_to_user.bill += bill_delta
+            if bill_delta > 0:
+                # set is_settled to False, when their amount due increased
+                participant.is_settled = False
+            db.session.commit()
+        return expense.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
 
 
 # A user can delete an expense.

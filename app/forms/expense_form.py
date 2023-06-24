@@ -6,4 +6,4 @@ from wtforms.validators import DataRequired
 class ExpenseForm(FlaskForm):
     description = StringField('description', validators=[DataRequired()])
     amount = DecimalField('amount', validators=[DataRequired()])
-    friends = SelectMultipleField('friends', validators=[DataRequired()], coerce=int)
+    friends = SelectMultipleField('friends', coerce=int)
