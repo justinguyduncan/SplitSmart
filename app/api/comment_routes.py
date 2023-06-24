@@ -1,22 +1,18 @@
-from flask import Blueprint, jsonify, request, render_template
-from flask_login import login_required
-from app.models import db, Comment
+from flask import Blueprint, jsonify, request
+from flask_login import current_user, login_required
+from app.models import db, Comment, Expense
 from app.forms.comment_form import CommentForm
 
 
 comment_routes = Blueprint('comments', __name__)
 
-
-
-
-
-
-
 # Get comments by expense_id
-
 @comment_routes.route('/<int:expense_id>')
 @login_required
 def get_comment(expense_id):
+    expense=Expense.query.get(expense_id)
+    if not expense:
+     return {'errors': f"Expense {expense_id} does not exist"}
     comments = Comment.query.filter(Comment.expense_id==expense_id).all()
     comment_list = []
     for comment in comments:
@@ -24,27 +20,26 @@ def get_comment(expense_id):
         comment_list.append(comment_dict)
     return jsonify({'comments': comment_list})
 
-
-
-
 # # Create new comment
 
 @comment_routes.route('/',methods=["POST"])
-# @login_required
+@login_required
 def create_comment():
-    # form['csrf_token'].data= request.cookies['csrf_token']
-    data=request.json
-    comment = Comment(**data)    
-    db.session.add(comment)
-    db.session.commit()
-       
-    return comment.to_dict()
+    form=CommentForm()
+    print(form['csrf_token'].data, request.cookies['csrf_token'],111111)
+    if form['csrf_token'].data == request.cookies['csrf_token']:
+        
+        data=request.json
+        comment = Comment(**data)    
+        db.session.add(comment)
+        db.session.commit() 
+        return comment.to_dict()
     
     
     #Update comment
     
 @comment_routes.route('/<int:comment_id>',methods=["PUT"]) 
-# @login_required
+@login_required
 def update_comment(comment_id):
     comment = Comment.query.get(comment_id)
     if not comment:
