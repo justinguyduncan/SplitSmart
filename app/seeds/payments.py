@@ -5,7 +5,7 @@ from sqlalchemy.sql import text
 def seed_payments():
 
     # Demo payments
-    payment1 = Payment(friendship_id=1, amount=50.00,)
+    payment1 = Payment(friendship_id=1, amount=50.00)
     payment2 = Payment(friendship_id=2, amount=75.00)
     payment3 = Payment(friendship_id=3, amount=100.00)
     payment4 = Payment(friendship_id=4,amount=50.00)
@@ -13,9 +13,9 @@ def seed_payments():
 
     #Aurora payments
     payment6 = Payment(friendship_id=6, amount=100.00)
-    payment7 = Payment(friendship_id=7, amount=50.00,)
-    payment8 = Payment(friendship_id=8, amount=75.00,)
-    payment9 = Payment(friendship_id=9, amount=100.00,)
+    payment7 = Payment(friendship_id=7, amount=50.00)
+    payment8 = Payment(friendship_id=8, amount=75.00)
+    payment9 = Payment(friendship_id=9, amount=100.00)
     payment10 = Payment(friendship_id=10, amount=50.00)
 
     #justin payments
