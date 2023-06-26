@@ -43,7 +43,7 @@ def settled_expenses():
 
 @expense_routes.route('/<int:id>')
 @login_required
-def expense(id):
+def get_expense(id):
     """
     Query for an expense by id and returns that expense in a dictionary
     """
