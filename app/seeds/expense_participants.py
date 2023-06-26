@@ -11,6 +11,7 @@ from sqlalchemy.sql import text
 # demo to expense $10 -> self, dmytro
 
 def seed_expense_participants():
+
     expense1_1 = ExpenseParticipant(
         expense_id=1, friendship_id=1, amount_due=50)
     expense2_1 = ExpenseParticipant(
@@ -23,13 +24,23 @@ def seed_expense_participants():
         expense_id=3, friendship_id=2, amount_due=100)
     expense4_1 = ExpenseParticipant(
         expense_id=4, friendship_id=3, amount_due=5)
+    expense5_1 = ExpenseParticipant(
+        expense_id=5, friendship_id=21, amount_due=30)
+    expense5_2 = ExpenseParticipant(
+        expense_id=5, friendship_id=23, amount_due=30)
+    expense5_3 = ExpenseParticipant(
+        expense_id=5, friendship_id=25, amount_due=30)
+    expense6_1 = ExpenseParticipant(
+        expense_id=6, friendship_id=29, amount_due=10)
 
-    db.session.add(expense1_1)
-    db.session.add(expense2_1)
-    db.session.add(expense2_2)
-    db.session.add(expense3_1)
-    db.session.add(expense3_2)
-    db.session.add(expense4_1)
+    db.session.add_all([
+        expense1_1,
+        expense2_1, expense2_2,
+        expense3_1, expense3_2,
+        expense4_1,
+        expense5_1, expense5_2, expense5_3,
+        expense6_1
+    ])
     db.session.commit()
 
 

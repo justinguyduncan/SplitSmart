@@ -1,21 +1,21 @@
 from app.models import db, Payment, environment, SCHEMA
 from sqlalchemy.sql import text
 
+
 def seed_payments():
 
-
-    # Demo payments
-    payment1 = Payment(friendship_id=1, amount=50.00,)
+    #demo payments
+    payment1 = Payment(friendship_id=1, amount=50.00)
     payment2 = Payment(friendship_id=2, amount=75.00)
     payment3 = Payment(friendship_id=3, amount=100.00)
     payment4 = Payment(friendship_id=4,amount=50.00)
     payment5 = Payment(friendship_id=5, amount=75.00)
 
-    #Aurora payments
+    #aurora payments
     payment6 = Payment(friendship_id=6, amount=100.00)
-    payment7 = Payment(friendship_id=7, amount=50.00,)
-    payment8 = Payment(friendship_id=8, amount=75.00,)
-    payment9 = Payment(friendship_id=9, amount=100.00,)
+    payment7 = Payment(friendship_id=7, amount=50.00)
+    payment8 = Payment(friendship_id=8, amount=75.00)
+    payment9 = Payment(friendship_id=9, amount=100.00)
     payment10 = Payment(friendship_id=10, amount=50.00)
 
     #justin payments
@@ -47,11 +47,12 @@ def seed_payments():
     payment30 = Payment(friendship_id=30, amount=100.00)
 
     db.session.add_all([
-        payment1, payment2, payment3, payment4, payment5, payment6, payment7,
-        payment8, payment9, payment10, payment11, payment12, payment13,
-        payment14, payment15, payment16, payment17, payment18, payment19,
-        payment20, payment21, payment22, payment23, payment24, payment25,
-        payment26, payment27, payment28, payment29, payment30,
+        payment1, payment2, payment3, payment4, payment5,
+        payment6, payment7, payment8, payment9, payment10,
+        payment11, payment12, payment13, payment14, payment15,
+        payment16, payment17, payment18, payment19, payment20,
+        payment21, payment22, payment23, payment24, payment25,
+        payment26, payment27, payment28, payment29, payment30
     ])
     db.session.commit()
 
