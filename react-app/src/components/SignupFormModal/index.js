@@ -18,7 +18,7 @@ function SignupFormModal() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (password === confirmPassword) {
-			const data = await dispatch(signUp(firstName, lastName, email,phoneNumber, password));
+			const data = await dispatch(signUp(firstName, lastName, email, phoneNumber, password));
 			if (data) {
 				setErrors(data);
 			} else {
@@ -40,7 +40,6 @@ function SignupFormModal() {
 						<li key={idx}>{error}</li>
 					))}
 				</ul>
-				
 				<label className="label">
 					First Name
 					<input
@@ -74,7 +73,6 @@ function SignupFormModal() {
 						type="text"
 						value={phoneNumber}
 						onChange={(e) => setPhoneNumber(e.target.value)}
-						required
 					/>
 				</label>
 				<label className="label">
