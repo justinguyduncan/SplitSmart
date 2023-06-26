@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, session, request
 from flask_login import current_user, login_required
-from app.models import db, Comment, Expense
+from app.models import db, Comment, Expense, ExpenseParticipant
 from app.forms import CommentForm
 from app.api.auth_routes import validation_errors_to_error_messages
 
@@ -31,6 +31,10 @@ def create_comment(expense_id):
     # checks if expense exists
     if not expense:
         return {'errors': f"Expense {expense_id} does not exist"}, 400
+    participants = ExpenseParticipant.query.filter(ExpenseParticipant.expense_id == expense.id).all()
+    participant_ids = [participant.id for participant in participants]
+    if current_user.id != expense.creator_id and current_user.id not in participant_ids:
+        return {'errors': f"User is not a participant of expense {expense.id}."}, 401
     form = CommentForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():

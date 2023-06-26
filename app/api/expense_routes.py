@@ -51,9 +51,10 @@ def get_expense(id):
     # checks if expense exists
     if not expense:
         return {'errors': f"Expense {id} does not exist."}
-    # checks if current user is a creator of the expense
-    # if expense.creator_id != current_user.id:
-    #     return {'errors': f"User is not the creator of expense {id}"}
+    participants = ExpenseParticipant.query.filter(ExpenseParticipant.expense_id == expense.id).all()
+    participant_ids = [participant.id for participant in participants]
+    if current_user.id != expense.creator_id and current_user.id not in participant_ids:
+        return {'errors': f"User is not a participant of expense {expense.id}."}, 401
     return expense.to_dict()
 
 

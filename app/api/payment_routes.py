@@ -7,11 +7,11 @@ from app.api.auth_routes import validation_errors_to_error_messages
 payment_routes = Blueprint('payments', __name__)
 
 
-def format_amount(amount):
-    """
-    Format the amount as a dollar amount
-    """
-    return "${:.2f}".format(amount)
+# def format_amount(amount):
+#     """
+#     Format the amount as a dollar amount
+#     """
+#     return "${:.2f}".format(amount)
 
 
 @payment_routes.route('/', methods=['POST'])
@@ -20,24 +20,6 @@ def create_payment():
     """
     Creates a new payment
     """
-
-    # data = request.json
-    # amount = data.get('amount')
-    # friendship_id = data.get('friendship_id')  # Fetch the friendship_id from the request data
-    # if not amount:
-    #     return {'errors': ['Amount is required.']}, 400
-    # payment = Payment(amount=amount, friendship_id=friendship_id)  # Use the fetched friendship_id
-    # db.session.add(payment)
-    # db.session.commit()
-    # # Return a dictionary representation of the payment object with formatted amount
-    # return jsonify({
-    #     'id': payment.id,
-    #     'friendship_id': payment.friendship_id,
-    #     'amount': format_amount(payment.amount),
-    #     'created_at': payment.created_at.isoformat(),
-    #     'updated_at': payment.updated_at.isoformat()
-    # }), 201
-
     form = PaymentForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     # set form's SelectField choices to active friends of current user with positive bill amounts
@@ -61,6 +43,30 @@ def create_payment():
         db.session.commit()
         return payment.to_dict(), 201
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
+
+
+# @payment_routes.route('/', methods=['POST'])
+# @login_required
+# def create_payment():
+    """
+    Creates a new payment
+    """
+    # data = request.json
+    # amount = data.get('amount')
+    # friendship_id = data.get('friendship_id')  # Fetch the friendship_id from the request data
+    # if not amount:
+    #     return {'errors': ['Amount is required.']}, 400
+    # payment = Payment(amount=amount, friendship_id=friendship_id)  # Use the fetched friendship_id
+    # db.session.add(payment)
+    # db.session.commit()
+    # # Return a dictionary representation of the payment object with formatted amount
+    # return jsonify({
+    #     'id': payment.id,
+    #     'friendship_id': payment.friendship_id,
+    #     'amount': format_amount(payment.amount),
+    #     'created_at': payment.created_at.isoformat(),
+    #     'updated_at': payment.updated_at.isoformat()
+    # }), 201
 
 
 @payment_routes.route('/sent', methods=['GET'])

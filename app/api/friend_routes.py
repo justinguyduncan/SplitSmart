@@ -85,6 +85,7 @@ def create_friendship():
 
 
 @friend_routes.route('/<int:id>', methods=['GET'])
+@login_required
 def get_friendship(id):
     """
     Query for a friendship by id and returns that friendship in a dictionary
@@ -92,10 +93,13 @@ def get_friendship(id):
     friendship = Friendship.query.get(id)
     if not friendship:
         return {'errors': f"Friendship {id} does not exist."}, 400
+    if current_user.id not in [friendship.user_id, friendship.friend_id]:
+        return {'errors': f"User is not a part of friendship {id}."}, 401
     return friendship.to_dict()
 
 
 @friend_routes.route('/', methods=['GET'])
+@login_required
 def get_friendships():
     """
     Query for all active friendships of the current user and returns them in a list of friendship dictionaries
@@ -108,7 +112,7 @@ def get_friendships():
 @login_required
 def update_friendship(id):
     """
-    Updates a friendship active status
+    Updates a friendship's active status
     """
     user_to_friend = Friendship.query.get(id)
     if not user_to_friend:

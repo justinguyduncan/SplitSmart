@@ -8,7 +8,7 @@ def amount_is_whole(form, field):
     amount = field.data
     friendship = Friendship.query.get(form.data['friendship'])
     if amount != friendship.bill:
-        raise ValidationError('Payment amount must cover all unsettled expenses.')
+        raise ValidationError('Payment amount must settle up the entire bill.')
 
 
 class PaymentForm(FlaskForm):
