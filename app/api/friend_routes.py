@@ -42,8 +42,8 @@ def create_friendship():
         )
         db.session.add_all([user_to_friend, friend_to_user])
         db.session.commit()
-        return user_to_friend.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+        return user_to_friend.to_dict(), 201
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
 # @friend_routes.route('/<int:friend_id>', methods=['POST'])
@@ -91,7 +91,7 @@ def get_friendship(id):
     """
     friendship = Friendship.query.get(id)
     if not friendship:
-        return {'errors': f"Friendship {id} does not exist."}
+        return {'errors': f"Friendship {id} does not exist."}, 400
     return friendship.to_dict()
 
 
@@ -112,9 +112,9 @@ def update_friendship(id):
     """
     user_to_friend = Friendship.query.get(id)
     if not user_to_friend:
-        return {'errors': f"Friendship {id} does not exist."}
+        return {'errors': f"Friendship {id} does not exist."}, 400
     if user_to_friend.user_id != current_user.id:
-        return {'errors': f"User is not the creator of friendship {id}."}
+        return {'errors': f"User is not the creator of friendship {id}."}, 401
     friend_to_user = Friendship.query.filter(Friendship.user_id == user_to_friend.friend_id, Friendship.friend_id == user_to_friend.user_id).first()
     user_to_friend.is_active = not user_to_friend.is_active
     friend_to_user.is_active = not friend_to_user.is_active

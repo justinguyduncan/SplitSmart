@@ -91,8 +91,8 @@ def create_expense():
             user_to_friend.bill -= bill_delta
             friend_to_user.bill += bill_delta
         db.session.commit()
-        return expense.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+        return expense.to_dict(), 201
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
 @expense_routes.route('/<int:id>', methods=['PUT'])
@@ -104,10 +104,10 @@ def update_expense(id):
     expense = Expense.query.get(id)
     # checks if expense exists
     if not expense:
-        return {'errors': f"Expense {id} does not exist."}
+        return {'errors': f"Expense {id} does not exist."}, 400
     # checks if current user is a creator of the expense
     if expense.creator_id != current_user.id:
-        return {'errors': f"User is not the creator of expense {id}."}
+        return {'errors': f"User is not the creator of expense {id}."}, 401
     old_bill = expense.amount/(len(expense.participants)+1)
     form = ExpenseForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -131,7 +131,7 @@ def update_expense(id):
                 participant.is_settled = False
         db.session.commit()
         return expense.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
 @expense_routes.route('/<int:id>', methods=['DELETE'])
@@ -143,10 +143,10 @@ def delete_expense(id):
     expense = Expense.query.get(id)
     # checks if expense exists
     if not expense:
-        return {'errors': f"Expense {id} does not exist."}
+        return {'errors': f"Expense {id} does not exist."}, 400
     # checks if current user is a creator of the expense
     if expense.creator_id != current_user.id:
-        return {'errors': f"User is not the creator of expense {id}."}
+        return {'errors': f"User is not the creator of expense {id}."}, 401
     # update both friendships' bill amounts to reflect deleted expense
     old_bill = expense.amount/(len(expense.participants)+1)
     participants = ExpenseParticipant.query.filter(ExpenseParticipant.expense_id == expense.id).all()

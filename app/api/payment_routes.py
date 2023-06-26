@@ -59,8 +59,8 @@ def create_payment():
         for expense in expenses:
             expense.is_settled = True
         db.session.commit()
-        return payment.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+        return payment.to_dict(), 201
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
 @payment_routes.route('/sent', methods=['GET'])
@@ -106,10 +106,10 @@ def delete_payment(id):
     payment = Payment.query.get(id)
     # checks if payment exists
     if not payment:
-        return {'errors': f"Payment {id} does not exist."}
+        return {'errors': f"Payment {id} does not exist."}, 400
     # checks if current user is a creator of the payment
     if payment.friendship.user_id != current_user.id:
-        return {'errors': f"User is not the creator of payment {id}."}
+        return {'errors': f"User is not the creator of payment {id}."}, 401
     db.session.delete(payment)
     db.session.commit()
     return {'message': 'Delete successful.'}
