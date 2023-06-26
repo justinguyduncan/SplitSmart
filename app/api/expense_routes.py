@@ -50,7 +50,7 @@ def expense(id):
     expense = Expense.query.get(id)
     # checks if expense exists
     if not expense:
-        return {'errors': f"Expense {id} does not exist"}
+        return {'errors': f"Expense {id} does not exist."}
     # checks if current user is a creator of the expense
     # if expense.creator_id != current_user.id:
     #     return {'errors': f"User is not the creator of expense {id}"}
@@ -104,10 +104,10 @@ def update_expense(id):
     expense = Expense.query.get(id)
     # checks if expense exists
     if not expense:
-        return {'errors': f"Expense {id} does not exist"}
+        return {'errors': f"Expense {id} does not exist."}
     # checks if current user is a creator of the expense
     if expense.creator_id != current_user.id:
-        return {'errors': f"User is not the creator of expense {id}"}
+        return {'errors': f"User is not the creator of expense {id}."}
     old_bill = expense.amount/(len(expense.participants)+1)
     form = ExpenseForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -143,10 +143,10 @@ def delete_expense(id):
     expense = Expense.query.get(id)
     # checks if expense exists
     if not expense:
-        return {'errors': f"Expense {id} does not exist"}
+        return {'errors': f"Expense {id} does not exist."}
     # checks if current user is a creator of the expense
     if expense.creator_id != current_user.id:
-        return {'errors': f"User is not the creator of expense {id}"}
+        return {'errors': f"User is not the creator of expense {id}."}
     db.session.delete(expense)
     db.session.commit()
     return {'message': 'Delete successful'}
