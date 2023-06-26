@@ -138,7 +138,7 @@ def update_expense(id):
 @login_required
 def delete_expense(id):
     """
-    Deletes an expense, corresponding expense participant information, and corresponding comments
+    Deletes an expense, corresponding expense participant information, and corresponding comments; and updates friendships' bill amounts
     """
     expense = Expense.query.get(id)
     # checks if expense exists
@@ -147,6 +147,14 @@ def delete_expense(id):
     # checks if current user is a creator of the expense
     if expense.creator_id != current_user.id:
         return {'errors': f"User is not the creator of expense {id}."}
+    # update both friendships' bill amounts to reflect deleted expense
+    old_bill = expense.amount/(len(expense.participants)+1)
+    participants = ExpenseParticipant.query.filter(ExpenseParticipant.expense_id == expense.id).all()
+    for participant in participants:
+        user_to_friend = Friendship.query.get(participant.friendship_id)
+        friend_to_user = Friendship.query.filter(Friendship.user_id == user_to_friend.friend_id, Friendship.friend_id == user_to_friend.user_id).first()
+        user_to_friend.bill += old_bill
+        friend_to_user.bill -= old_bill
     db.session.delete(expense)
     db.session.commit()
     return {'message': 'Delete successful.'}
