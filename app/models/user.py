@@ -38,5 +38,7 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'name': f"{self.first_name} {self.last_name}",
             'short_name': f"{self.first_name} {self.last_name[0]}.",
-            'email': self.email
+            'email': self.email,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
         }

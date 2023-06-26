@@ -26,5 +26,7 @@ class ExpenseParticipant(db.Model):
             'friendship_id': self.friendship_id,
             'amount_due': self.amount_due,
             'is_settled': self.is_settled,
-            'friendship': self.friendship.to_dict()
+            'friendship': self.friendship.to_dict(),
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
         }
