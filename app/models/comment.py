@@ -17,14 +17,12 @@ class Comment(db.Model):
 
     expense = db.relationship('Expense', back_populates='comments')
     user = db.relationship('User', back_populates='comments')
-    
-    
-    def to_dict(self):
 
+    def to_dict(self):
         return {
             'id': self.id,
             'comment': self.comment,
             'user_id': self.user_id,
             'expense_id': self.expense_id,
-           
+            'user': self.user.to_dict()
         }
