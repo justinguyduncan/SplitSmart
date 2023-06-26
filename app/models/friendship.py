@@ -20,3 +20,16 @@ class Friendship(db.Model):
     friend = db.relationship('User', foreign_keys=[friend_id])
     expenses = db.relationship('ExpenseParticipant', back_populates='friendship')
     payments = db.relationship('Payment', back_populates='friendship')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'friend_id': self.friend_id,
+            'bill': self.bill,
+            'is_active': self.is_active,
+            'user': self.user.to_dict(),
+            'friend': self.friend.to_dict(),
+            # 'expenses': [expense.to_dict() for expense in self.expenses],
+            # 'payments': [payment.to_dict() for payment in self.payments]
+        }
