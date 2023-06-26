@@ -149,4 +149,4 @@ def delete_expense(id):
         return {'errors': f"User is not the creator of expense {id}."}
     db.session.delete(expense)
     db.session.commit()
-    return {'message': 'Delete successful'}
+    return {'message': 'Delete successful.'}
