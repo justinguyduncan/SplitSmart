@@ -31,7 +31,7 @@ def create_friendship():
             return {'message': 'Friendship is already active.'}
         if existing_friendship and existing_friendship.is_active == False:
             update_friendship(existing_friendship.id)
-            return {'message': 'Friendship has been made active again.'}
+            return {'message': 'Friendship has been reactivated.'}
         user_to_friend = Friendship(
             user_id=current_user.id,
             friend_id=friend.id
@@ -91,8 +91,10 @@ def get_friendship(id):
     Query for a friendship by id and returns that friendship in a dictionary
     """
     friendship = Friendship.query.get(id)
+    # checks if friendship exists
     if not friendship:
         return {'errors': f"Friendship {id} does not exist."}, 400
+    # checks if current user is a part of the friendship
     if current_user.id not in [friendship.user_id, friendship.friend_id]:
         return {'errors': f"User is not a part of friendship {id}."}, 401
     return friendship.to_dict()
@@ -115,8 +117,10 @@ def update_friendship(id):
     Updates a friendship's active status
     """
     user_to_friend = Friendship.query.get(id)
+    # checks if friendship exists
     if not user_to_friend:
         return {'errors': f"Friendship {id} does not exist."}, 400
+    # checks if current user is a creator of the friendship
     if user_to_friend.user_id != current_user.id:
         return {'errors': f"User is not the creator of friendship {id}."}, 401
     friend_to_user = Friendship.query.filter(Friendship.user_id == user_to_friend.friend_id, Friendship.friend_id == user_to_friend.user_id).first()

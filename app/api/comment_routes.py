@@ -17,6 +17,11 @@ def get_comments(expense_id):
     # checks if expense exists
     if not expense:
         return {'errors': f"Expense {expense_id} does not exist"}, 400
+    participants = ExpenseParticipant.query.filter(ExpenseParticipant.expense_id == expense.id).all()
+    participant_ids = [participant.id for participant in participants]
+    # checks if current user is a part of the expense
+    if current_user.id != expense.creator_id and current_user.id not in participant_ids:
+        return {'errors': f"User is not a participant of expense {expense.id}."}, 401
     comments = Comment.query.filter(Comment.expense_id == expense_id).all()
     return {'comments': [comment.to_dict() for comment in comments]}
 
@@ -33,6 +38,7 @@ def create_comment(expense_id):
         return {'errors': f"Expense {expense_id} does not exist"}, 400
     participants = ExpenseParticipant.query.filter(ExpenseParticipant.expense_id == expense.id).all()
     participant_ids = [participant.id for participant in participants]
+    # checks if current user is a part of the expense
     if current_user.id != expense.creator_id and current_user.id not in participant_ids:
         return {'errors': f"User is not a participant of expense {expense.id}."}, 401
     form = CommentForm()
