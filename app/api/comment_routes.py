@@ -30,7 +30,7 @@ def get_comments(expense_id):
 @login_required
 def create_comment(expense_id):
     """
-    Creates a new comment for the current expense
+    Creates a new comment
     """
     expense = Expense.query.get(expense_id)
     # checks if expense exists

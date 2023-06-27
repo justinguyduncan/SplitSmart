@@ -7,6 +7,28 @@ from app.api.auth_routes import validation_errors_to_error_messages
 expense_routes = Blueprint('expenses', __name__)
 
 
+@expense_routes.route('/summary')
+@login_required
+def summary():
+    """
+    Query for the current user's balance summary
+    """
+    friendships = Friendship.query.filter(Friendship.user_id == current_user.id).all()
+    positive_bills = 0
+    negative_bills = 0
+    for friendship in friendships:
+        if friendship.bill < 0:
+            negative_bills += friendship.bill
+        elif friendship.bill > 0:
+            positive_bills += friendship.bill
+    balance = positive_bills + negative_bills
+    return {
+        'balance': balance,
+        'you owe': positive_bills,
+        'you are owed': abs(negative_bills)
+    }
+
+
 @expense_routes.route('/')
 @login_required
 def my_expenses():

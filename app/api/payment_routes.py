@@ -116,6 +116,12 @@ def delete_payment(id):
     # checks if current user is a creator of the payment
     if payment.friendship.user_id != current_user.id:
         return {'errors': f"User is not the creator of payment {id}."}, 401
+    # update both friendships' bill amounts to reflect deleted payment
+    amount = payment.amount
+    user_to_friend = Friendship.query.get(payment.friendship_id)
+    friend_to_user = Friendship.query.filter(Friendship.user_id == user_to_friend.friend_id, Friendship.friend_id == user_to_friend.user_id).first()
+    user_to_friend.bill += amount
+    friend_to_user.bill -= amount
     db.session.delete(payment)
     db.session.commit()
     return {'message': 'Delete successful.'}
