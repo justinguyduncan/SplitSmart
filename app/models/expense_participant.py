@@ -18,3 +18,15 @@ class ExpenseParticipant(db.Model):
 
     expense = db.relationship('Expense', back_populates='participants')
     friendship = db.relationship('Friendship', back_populates='expenses')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'expense_id': self.expense_id,
+            'friendship_id': self.friendship_id,
+            'amount_due': self.amount_due,
+            'is_settled': self.is_settled,
+            'friendship': self.friendship.to_dict(),
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }

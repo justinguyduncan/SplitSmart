@@ -15,6 +15,19 @@ class Expense(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    participants = db.relationship('ExpenseParticipant', back_populates='expense')
+    participants = db.relationship('ExpenseParticipant', back_populates='expense', cascade="all, delete-orphan")
     user = db.relationship('User', back_populates='expenses')
-    comments = db.relationship('Comment', back_populates='expense')
+    comments = db.relationship('Comment', back_populates='expense', cascade="all, delete-orphan")
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'description': self.description,
+            'amount': self.amount,
+            'creator_id': self.creator_id,
+            'particpants': [participant.to_dict() for participant in self.participants],
+            'user': self.user.to_dict(),
+            'comments': [comment.to_dict() for comment in self.comments],
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
