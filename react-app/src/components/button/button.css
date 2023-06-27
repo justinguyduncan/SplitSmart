@@ -1,0 +1,18 @@
+.secondary{
+color: #000;
+background-color: #fff;
+}
+
+.primary{
+    color: #fff;
+    background-color: #1CC29F;
+
+}
+
+.btn{
+    padding: 15px;
+    font-weight: 600px;
+    font-size: 16px;
+    border:none;
+    border-radius: 5px;
+}

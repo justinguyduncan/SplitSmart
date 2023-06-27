@@ -5,3 +5,30 @@
 .hidden {
   display: none;
 }
+
+.header{
+  background-color: #1CC29F;
+  height: 80px;
+  width: 100%;
+  position: fixed;
+}
+
+.header img{
+  height: 50px;
+  width: 50px;
+}
+.logo{
+  display: flex;
+  align-items: center;
+}
+
+.logo h1{
+  color: #fff;
+  margin-left: 10px;
+}
+.navigation{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+}

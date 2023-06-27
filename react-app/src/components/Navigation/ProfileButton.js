@@ -4,12 +4,13 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import Button from "../button";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
-
+  console.log(user)
   const openMenu = () => {
     if (showMenu) return;
     setShowMenu(true);
@@ -39,9 +40,11 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
+      {user && < Button onClick={openMenu} text={user.name} className="secondary"/>}
+      {!user && < Button onClick={openMenu} text='<i className="fas fa-user-circle" />' className="secondary"/>}
+       {/* {!user && <i className="fas fa-user-circle" />}
+       {user && <span>{user.name}</span>}
+      </Button> */}
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
