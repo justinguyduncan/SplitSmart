@@ -21,4 +21,6 @@
 #modal-content {
   position: absolute;
   background-color:white;
+  max-width: 500px;
+  width: 100%;
 }

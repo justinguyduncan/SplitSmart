@@ -6,8 +6,10 @@ import "./SignupForm.css";
 
 function SignupFormModal() {
 	const dispatch = useDispatch();
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
-	const [username, setUsername] = useState("");
+	const [phoneNumber, setPhoneNumber] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [errors, setErrors] = useState([]);
@@ -16,7 +18,7 @@ function SignupFormModal() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (password === confirmPassword) {
-			const data = await dispatch(signUp(username, email, password));
+			const data = await dispatch(signUp(firstName, lastName, email, phoneNumber, password));
 			if (data) {
 				setErrors(data);
 			} else {
@@ -32,13 +34,31 @@ function SignupFormModal() {
 	return (
 		<>
 			<h1>Sign Up</h1>
-			<form onSubmit={handleSubmit}>
+			<form className="form" onSubmit={handleSubmit}>
 				<ul>
 					{errors.map((error, idx) => (
 						<li key={idx}>{error}</li>
 					))}
 				</ul>
-				<label>
+				<label className="label">
+					First Name
+					<input
+						type="text"
+						value={firstName}
+						onChange={(e) => setFirstName(e.target.value)}
+						required
+					/>
+				</label>
+				<label className="label">
+					Last Name
+					<input
+						type="text"
+						value={lastName}
+						onChange={(e) => setLastName(e.target.value)}
+						required
+					/>
+				</label>
+				<label className="label">
 					Email
 					<input
 						type="text"
@@ -47,16 +67,15 @@ function SignupFormModal() {
 						required
 					/>
 				</label>
-				<label>
-					Username
+				<label className="label">
+					Phone Number
 					<input
 						type="text"
-						value={username}
-						onChange={(e) => setUsername(e.target.value)}
-						required
+						value={phoneNumber}
+						onChange={(e) => setPhoneNumber(e.target.value)}
 					/>
 				</label>
-				<label>
+				<label className="label">
 					Password
 					<input
 						type="password"
@@ -65,7 +84,7 @@ function SignupFormModal() {
 						required
 					/>
 				</label>
-				<label>
+				<label className="label">
 					Confirm Password
 					<input
 						type="password"

@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField
-from wtforms.validators import DataRequired, Email, ValidationError
+from wtforms.validators import DataRequired, Email, Regexp, Optional, ValidationError
 from app.models import User
 
 
@@ -12,16 +12,18 @@ def user_exists(form, field):
         raise ValidationError('Email address is already in use.')
 
 
-def username_exists(form, field):
-    # Checking if username is already in use
-    username = field.data
-    user = User.query.filter(User.username == username).first()
+def phone_number_exists(form, field):
+    # Checking if phone_number exists
+    phone_number = field.data
+    user = User.query.filter(User.phone_number == phone_number).first()
     if user:
-        raise ValidationError('Username is already in use.')
+        raise ValidationError('Phone number is already in use.')
 
 
 class SignUpForm(FlaskForm):
-    username = StringField(
-        'username', validators=[DataRequired(), username_exists])
-    email = StringField('email', validators=[DataRequired(), user_exists])
-    password = StringField('password', validators=[DataRequired()])
+    first_name = StringField('first_name', validators=[DataRequired(message='First name is required.')])
+    last_name = StringField('last_name', validators=[DataRequired(message='Last name is required.')])
+    email = StringField('email', validators=[DataRequired(message='Email is required.'), Email(message='Not a valid email address.'), user_exists])
+    phone_number = StringField('phone_number', validators=[Optional(), Regexp('^[0-9]{10}$', message='Not a valid phone number.'), phone_number_exists])
+    image_url = StringField('image_url', validators=[Optional(), Regexp('[^\\s]+(.*?)\\.(jpg|jpeg|png|gif|JPG|JPEG|PNG|GIF)$', message='Not a valid image url.')])
+    password = StringField('password', validators=[DataRequired(message='Password is required.')])
