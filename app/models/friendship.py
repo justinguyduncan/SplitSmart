@@ -30,6 +30,6 @@ class Friendship(db.Model):
             'is_active': self.is_active,
             'user': self.user.to_dict(),
             'friend': self.friend.to_dict(),
-            # 'expenses': [expense.to_dict() for expense in self.expenses],
-            # 'payments': [payment.to_dict() for payment in self.payments]
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
         }

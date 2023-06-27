@@ -27,5 +27,7 @@ class Expense(db.Model):
             'creator_id': self.creator_id,
             'particpants': [participant.to_dict() for participant in self.participants],
             'user': self.user.to_dict(),
-            'comments': [comment.to_dict() for comment in self.comments]
+            'comments': [comment.to_dict() for comment in self.comments],
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
         }

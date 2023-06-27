@@ -7,6 +7,28 @@ from app.api.auth_routes import validation_errors_to_error_messages
 expense_routes = Blueprint('expenses', __name__)
 
 
+@expense_routes.route('/summary')
+@login_required
+def summary():
+    """
+    Query for the current user's balance summary
+    """
+    friendships = Friendship.query.filter(Friendship.user_id == current_user.id).all()
+    positive_bills = 0
+    negative_bills = 0
+    for friendship in friendships:
+        if friendship.bill < 0:
+            negative_bills += friendship.bill
+        elif friendship.bill > 0:
+            positive_bills += friendship.bill
+    balance = positive_bills + negative_bills
+    return {
+        'balance': balance,
+        'you owe': positive_bills,
+        'you are owed': abs(negative_bills)
+    }
+
+
 @expense_routes.route('/')
 @login_required
 def my_expenses():
@@ -43,7 +65,7 @@ def settled_expenses():
 
 @expense_routes.route('/<int:id>')
 @login_required
-def expense(id):
+def get_expense(id):
     """
     Query for an expense by id and returns that expense in a dictionary
     """
@@ -51,9 +73,11 @@ def expense(id):
     # checks if expense exists
     if not expense:
         return {'errors': f"Expense {id} does not exist."}
-    # checks if current user is a creator of the expense
-    # if expense.creator_id != current_user.id:
-    #     return {'errors': f"User is not the creator of expense {id}"}
+    participants = ExpenseParticipant.query.filter(ExpenseParticipant.expense_id == expense.id).all()
+    participant_ids = [participant.id for participant in participants]
+    # checks if current user is a part of the expense
+    if current_user.id != expense.creator_id and current_user.id not in participant_ids:
+        return {'errors': f"User is not a participant of expense {expense.id}."}, 401
     return expense.to_dict()
 
 
@@ -91,8 +115,8 @@ def create_expense():
             user_to_friend.bill -= bill_delta
             friend_to_user.bill += bill_delta
         db.session.commit()
-        return expense.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+        return expense.to_dict(), 201
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
 @expense_routes.route('/<int:id>', methods=['PUT'])
@@ -104,10 +128,10 @@ def update_expense(id):
     expense = Expense.query.get(id)
     # checks if expense exists
     if not expense:
-        return {'errors': f"Expense {id} does not exist."}
+        return {'errors': f"Expense {id} does not exist."}, 400
     # checks if current user is a creator of the expense
     if expense.creator_id != current_user.id:
-        return {'errors': f"User is not the creator of expense {id}."}
+        return {'errors': f"User is not the creator of expense {id}."}, 401
     old_bill = expense.amount/(len(expense.participants)+1)
     form = ExpenseForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -131,22 +155,30 @@ def update_expense(id):
                 participant.is_settled = False
         db.session.commit()
         return expense.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
 @expense_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_expense(id):
     """
-    Deletes an expense, corresponding expense participant information, and corresponding comments
+    Deletes an expense, corresponding expense participant information, and corresponding comments; and updates friendships' bill amounts
     """
     expense = Expense.query.get(id)
     # checks if expense exists
     if not expense:
-        return {'errors': f"Expense {id} does not exist."}
+        return {'errors': f"Expense {id} does not exist."}, 400
     # checks if current user is a creator of the expense
     if expense.creator_id != current_user.id:
-        return {'errors': f"User is not the creator of expense {id}."}
+        return {'errors': f"User is not the creator of expense {id}."}, 401
+    # update both friendships' bill amounts to reflect deleted expense
+    old_bill = expense.amount/(len(expense.participants)+1)
+    participants = ExpenseParticipant.query.filter(ExpenseParticipant.expense_id == expense.id).all()
+    for participant in participants:
+        user_to_friend = Friendship.query.get(participant.friendship_id)
+        friend_to_user = Friendship.query.filter(Friendship.user_id == user_to_friend.friend_id, Friendship.friend_id == user_to_friend.user_id).first()
+        user_to_friend.bill += old_bill
+        friend_to_user.bill -= old_bill
     db.session.delete(expense)
     db.session.commit()
     return {'message': 'Delete successful.'}
