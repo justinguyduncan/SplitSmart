@@ -15,6 +15,7 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
     phone_number = db.Column(db.String(10), unique=True)
+    image_url = db.Column(db.String(255), nullable=False, default="https://i.ibb.co/nLrYRrP/default.png")
     hashed_password = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -39,6 +40,8 @@ class User(db.Model, UserMixin):
             'name': f"{self.first_name} {self.last_name}",
             'short_name': f"{self.first_name} {self.last_name[0]}.",
             'email': self.email,
+            'phone_number': self.phone_number,
+            'image_url': self.image_url,
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
