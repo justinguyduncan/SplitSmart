@@ -50,10 +50,10 @@ const editExpense = (expense) => {
         expense
     };
 };
-const removeExpense = (expense) => {
+const removeExpense = (id) => {
     return {
         type: REMOVE_EXPENSE,
-        expense
+        id
     };
 };
 
@@ -67,19 +67,19 @@ export const getSummary = () => async dispatch => {
 export const getCreatedExpenses = () => async dispatch => {
     const response = await fetch('/api/expenses/');
     const data = await response.json();
-    dispatch(loadCreatedExpenses(data));
+    dispatch(loadCreatedExpenses(data.expenses));
     return response;
 };
 export const getUnsettledExpenses = () => async dispatch => {
     const response = await fetch('/api/expenses/unsettled');
     const data = await response.json();
-	dispatch(loadUnsettledExpenses(data));
+	dispatch(loadUnsettledExpenses(data.unsettled));
 	return response;
 };
 export const getSettledExpenses = () => async dispatch => {
     const response = await fetch('/api/expenses/settled');
     const data = await response.json();
-	dispatch(loadSettledExpenses(data));
+	dispatch(loadSettledExpenses(data.settled));
 	return response;
 };
 export const getCurrentExpense = (id) => async dispatch => {
@@ -88,9 +88,45 @@ export const getCurrentExpense = (id) => async dispatch => {
 	dispatch(loadCurrentExpense(data));
     return response;
 };
-export const createExpense = () => async dispatch => {};
-export const updateExpense = () => async dispatch => {};
-export const deleteExpense = () => async dispatch => {};
+export const createExpense = (description, amount, friends) => async dispatch => {
+    const response = await fetch('/api/expenses/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            description,
+            amount,
+            friends
+        })
+    });
+    const data = await response.json();
+    dispatch(addExpense(data));
+    return response;
+};
+export const updateExpense = (id, description, amount, friends) => async dispatch => {
+    const response = await fetch(`/api/expenses/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            description,
+            amount,
+            friends
+        })
+    });
+    const data = await response.json();
+    dispatch(editExpense(data));
+    return response;
+};
+export const deleteExpense = (id) => async dispatch => {
+    const response = await fetch(`/api/expenses/${id}`, {
+        method: 'DELETE'
+    });
+    dispatch(removeExpense(id));
+    return response;
+};
 
 const initialState = {
     summary: {},
@@ -104,26 +140,43 @@ const expense = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case LOAD_SUMMARY:
-            newState = { ...state, summary: action.summary };
+            newState = { ...state, summary: {} };
+            newState.summary = action.summary;
             return newState;
         case LOAD_CREATED_EXPENSES:
-            newState = { ...state, createdExpenses: action.expenses };
+            newState = { ...state, createdExpenses: {} };
+            action.expenses.forEach(expenseObj => {
+                newState.createdExpenses[expenseObj.id] = expenseObj
+            });
             return newState;
         case LOAD_UNSETTLED_EXPENSES:
-            newState = { ...state, unsettledExpenses: action.expenses };
+            newState = { ...state, unsettledExpenses: {} };
+            action.expenses.forEach(expenseObj => {
+                newState.unsettledExpenses[expenseObj.id] = expenseObj
+            });
             return newState;
         case LOAD_SETTLED_EXPENSES:
-            newState = { ...state, settledExpenses: action.expenses };
+            newState = { ...state, settledExpenses: {} };
+            action.expenses.forEach(expenseObj => {
+                newState.settledExpenses[expenseObj.id] = expenseObj
+            });
             return newState;
         case LOAD_CURRENT_EXPENSE:
-            newState = { ...state, currentExpense: action.expense };
+            newState = { ...state, currentExpense: {} };
+            newState.currentExpense = action.expense;
             return newState;
         case ADD_EXPENSE:
-            return state;
-        case EDIT_EXPENSE:
-            return state;
-        case REMOVE_EXPENSE:
-            return state;
+            newState = { ...state };
+            newState.createdExpenses[action.expense.id] = action.expense;
+            return newState;
+        case EDIT_EXPENSE: // prev and next state the same - prev state gets updated already?
+            newState = { ...state };
+            newState.createdExpenses[action.expense.id] = action.expense;
+            return newState;
+        case REMOVE_EXPENSE: // prev and next state the same - prev state gets updated already?
+            newState = { ...state };
+            delete newState.createdExpenses[action.id];
+            return newState;
         default:
             return state;
     }
