@@ -169,11 +169,11 @@ const expense = (state = initialState, action) => {
             newState = { ...state };
             newState.createdExpenses[action.expense.id] = action.expense;
             return newState;
-        case EDIT_EXPENSE: // prev and next state the same - prev state gets updated already?
+        case EDIT_EXPENSE:
             newState = { ...state };
             newState.createdExpenses[action.expense.id] = action.expense;
             return newState;
-        case REMOVE_EXPENSE: // prev and next state the same - prev state gets updated already?
+        case REMOVE_EXPENSE:
             newState = { ...state };
             delete newState.createdExpenses[action.id];
             return newState;
