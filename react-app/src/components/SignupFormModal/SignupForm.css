@@ -1,15 +1,12 @@
-.form{
+/* .form{
     display:flex;
-
     flex-direction: column;
     max-width: 450px;
-    padding: 30px;
+    padding: 15px;
     width: 100%;
     gap:15px;
     justify-content: center;
-   
 }
-
 .form>button{
     background-color: #1CC29F;
     padding: 15px;
@@ -24,8 +21,4 @@
     margin-top: 10px;
     width: 95%;
 
-}
-
-.modal-body{
-    text-align: center;
-}
+} */

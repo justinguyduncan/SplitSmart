@@ -4,12 +4,12 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-import Button from "../button";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+
   const openMenu = () => {
     if (showMenu) return;
     setShowMenu(true);
@@ -36,14 +36,12 @@ function ProfileButton({ user }) {
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
- 
+
   return (
     <>
-      {user && < Button onClick={openMenu} text={<>{user.name} <img src={user.image_url} alt="user photo"/></>} className="secondary"/>}
-      {!user && < Button onClick={openMenu} text={<i className="fas fa-user-circle" />} className="secondary"/>}
-       {/* {!user && <i className="fas fa-user-circle" />}
-       {user && <span>{user.name}</span>}
-      </Button> */}
+      <button onClick={openMenu}>
+        <i className="fas fa-user-circle" />
+      </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>

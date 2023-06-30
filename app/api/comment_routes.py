@@ -32,23 +32,18 @@ def create_comment(expense_id):
     """
     Creates a new comment
     """
-    
-    data= request.json
-   
-    # checks if expense exists
     expense = Expense.query.get(expense_id)
+    # checks if expense exists
     if not expense:
         return {'errors': f"Expense {expense_id} does not exist"}, 400
     participants = ExpenseParticipant.query.filter(ExpenseParticipant.expense_id == expense.id).all()
     participant_ids = [participant.id for participant in participants]
     # checks if current user is a part of the expense
     if current_user.id != expense.creator_id and current_user.id not in participant_ids:
-        
         return {'errors': f"User is not a participant of expense {expense.id}."}, 401
     form = CommentForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-       
         comment = Comment(
             comment=form.data['comment'],
             user_id=current_user.id,
@@ -60,13 +55,13 @@ def create_comment(expense_id):
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
-@comment_routes.route('/<int:comment_id>', methods=["PUT"])
+@comment_routes.route('/<int:id>', methods=["PUT"])
 @login_required
-def update_comment(comment_id):
+def update_comment(id):
     """
     Updates a comment
     """
-    comment = Comment.query.get(comment_id)
+    comment = Comment.query.get(id)
     # checks if comment exists
     if not comment:
         return {'errors': f"Comment {id} does not exist."}, 400
