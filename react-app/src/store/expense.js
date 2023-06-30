@@ -166,15 +166,13 @@ const expense = (state = initialState, action) => {
             newState.currentExpense = action.expense;
             return newState;
         case ADD_EXPENSE:
-            newState = { ...state };
-            newState.createdExpenses[action.expense.id] = action.expense;
+            newState = { ...state, createdExpenses: { ...state.createdExpenses, [action.expense.id]: action.expense } };
             return newState;
         case EDIT_EXPENSE:
-            newState = { ...state };
-            newState.createdExpenses[action.expense.id] = action.expense;
+            newState = { ...state, createdExpenses: { ...state.createdExpenses, [action.expense.id]: { ...state.createdExpenses[action.expense.id], ...action.expense } } };
             return newState;
         case REMOVE_EXPENSE:
-            newState = { ...state };
+            newState = { ...state, createdExpenses: { ...state.createdExpenses } };
             delete newState.createdExpenses[action.id];
             return newState;
         default:
