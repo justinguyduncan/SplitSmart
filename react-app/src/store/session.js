@@ -77,8 +77,8 @@ export const signUp = (firstName, lastName, email, phoneNumber, imgURL, password
 			first_name: firstName,
 			last_name: lastName,
 			email: email,
-			phone_number: phoneNumber,
-			image_url: imgURL,
+			...phoneNumber.length > 0 && {phone_number: phoneNumber},
+			...imgURL.length > 0 && {image_url: imgURL},
 			password: password,
 		}),
 	});
