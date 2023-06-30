@@ -21,7 +21,7 @@ def seed_comments():
     comment3_2 = Comment(
         comment='happiest place on earth, absolutely!', user_id=1, expense_id=3)
     comment3_3 = Comment(
-        comment='so expensive tho, i\'ll send the money in a month or so', user_id=3, expense_id=3)
+        comment='so expensive tho, i\'ll send the $$ in a month or so', user_id=3, expense_id=3)
     comment4_1 = Comment(
         comment='was this juice it up or jamba juice', user_id=4, expense_id=4)
     comment4_2 = Comment(

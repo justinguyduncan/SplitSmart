@@ -9,7 +9,7 @@ class Expense(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    description = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String(255), nullable=False)
     amount = db.Column(db.Numeric, nullable=False)
     creator_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
