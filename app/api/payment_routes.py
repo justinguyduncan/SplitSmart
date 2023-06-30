@@ -20,6 +20,7 @@ def create_payment():
     """
     Creates a new payment
     """
+    print('INSIDE ROUTE')
     form = PaymentForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     # set form's SelectField choices to active friends of current user with positive bill amounts

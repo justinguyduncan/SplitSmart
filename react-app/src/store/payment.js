@@ -5,33 +5,33 @@ const SET_RECEIVED_PAYMENTS = 'payment/SET_RECEIVED_PAYMENTS';
 const SET_SENT_PAYMENTS = 'payment/SET_SENT_PAYMENTS';
 const ADD_PAYMENT = 'payment/ADD_PAYMENT';
 const DELETE_PAYMENT = 'payment/DELETE_PAYMENT';
-const SET_SELECTED_PAYMENT = 'payment/SET_SELECTED_PAYMENT';
+// const SET_SELECTED_PAYMENT = 'payment/SET_SELECTED_PAYMENT';
 
 // Action creators
-export const setReceivedPayments = (payments) => ({
+const setReceivedPayments = (payments) => ({
   type: SET_RECEIVED_PAYMENTS,
   payload: payments,
 });
 
-export const setSentPayments = (payments) => ({
+const setSentPayments = (payments) => ({
   type: SET_SENT_PAYMENTS,
   payload: payments,
 });
 
-export const addPayment = (payment) => ({
+const addPayment = (payment) => ({
   type: ADD_PAYMENT,
   payload: payment,
 });
 
-export const deletePayment = (paymentId) => ({
+const deletePayment = (paymentId) => ({
   type: DELETE_PAYMENT,
   payload: paymentId,
 });
 
-export const setSelectedPayment = (payment) => ({
-  type: SET_SELECTED_PAYMENT,
-  payload: payment,
-});
+// const setSelectedPayment = (payment) => ({
+//   type: SET_SELECTED_PAYMENT,
+//   payload: payment,
+// });
 
 // Async action: Fetch received payments
 export const fetchReceivedPayments = () => async (dispatch) => {
@@ -62,30 +62,31 @@ export const fetchSentPayments = () => async (dispatch) => {
 };
 
 // Async action: Fetch payment by ID
-export const fetchPaymentById = (paymentId) => async (dispatch) => {
-    try {
-      const response = await fetch(`/api/payments/${paymentId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch payment');
-      }
-      const data = await response.json();
-      dispatch(setSelectedPayment(data));
-    } catch (error) {
-      console.error('Error fetching payment:', error.message);
-    }
-  };
+// export const fetchPaymentById = (paymentId) => async (dispatch) => {
+//     try {
+//       const response = await fetch(`/api/payments/${paymentId}`);
+//       if (!response.ok) {
+//         throw new Error('Failed to fetch payment');
+//       }
+//       const data = await response.json();
+//       dispatch(setSelectedPayment(data));
+//     } catch (error) {
+//       console.error('Error fetching payment:', error.message);
+//     }
+//   };
 
 // Async action: Create a payment
 export const createPayment = (amount, friendshipId) => async (dispatch) => {
     try {
-      const response = await fetch('/api/payments', {
+      console.log('INSIDE ACTION', amount, friendshipId);
+      const response = await fetch('/api/payments/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           amount,
-          friendship_id: friendshipId,
+          friendship: friendshipId,
         }),
       });
       if (!response.ok) {
@@ -107,7 +108,7 @@ export const fetchDeletePayment = (paymentId) => async (dispatch) => {
       if (!response.ok) {
         throw new Error('Failed to delete payment');
       }
-      dispatch({ type: DELETE_PAYMENT, payload: paymentId });
+      dispatch(deletePayment(paymentId));
     } catch (error) {
       console.error('Error deleting payment:', error.message);
     }
@@ -115,9 +116,9 @@ export const fetchDeletePayment = (paymentId) => async (dispatch) => {
 
 // Reducer
 const initialState = {
-  receivedPayments: [],
-  sentPayments: [],
-  selectedPayment: null,
+  receivedPayments: {},
+  sentPayments: {},
+  // selectedPayment: null,
 };
 
 export default function paymentReducer(state = initialState, action) {
@@ -155,11 +156,11 @@ export default function paymentReducer(state = initialState, action) {
         ...state,
         sentPayments: updatedSentPayments,
       };
-    case SET_SELECTED_PAYMENT:
-      return {
-        ...state,
-        selectedPayment: action.payload,
-      };
+    // case SET_SELECTED_PAYMENT:
+    //   return {
+    //     ...state,
+    //     selectedPayment: action.payload,
+    //   };
     default:
       return state;
   }
