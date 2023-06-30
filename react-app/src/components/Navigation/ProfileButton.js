@@ -10,7 +10,6 @@ function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
-  console.log(user)
   const openMenu = () => {
     if (showMenu) return;
     setShowMenu(true);
@@ -37,11 +36,11 @@ function ProfileButton({ user }) {
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
-
+ 
   return (
     <>
-      {user && < Button onClick={openMenu} text={user.name} className="secondary"/>}
-      {!user && < Button onClick={openMenu} text='<i className="fas fa-user-circle" />' className="secondary"/>}
+      {user && < Button onClick={openMenu} text={<>{user.name} <img src={user.image_url} alt="user photo"/></>} className="secondary"/>}
+      {!user && < Button onClick={openMenu} text={<i className="fas fa-user-circle" />} className="secondary"/>}
        {/* {!user && <i className="fas fa-user-circle" />}
        {user && <span>{user.name}</span>}
       </Button> */}
