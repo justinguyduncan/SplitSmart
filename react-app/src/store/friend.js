@@ -3,6 +3,7 @@
 // Action Types
 const SET_FRIENDSHIPS = 'friend/SET_FRIENDSHIPS';
 const SET_SELECTED_FRIENDSHIP = 'friend/SET_SELECTED_FRIENDSHIP';
+const ADD_FRIENDSHIP = 'friend/ADD_FRIENDSHIP';
 
 // Action Creators
 export const setFriendships = (friendships) => ({
@@ -15,13 +16,18 @@ export const setSelectedFriendship = (friendship) => ({
   payload: friendship,
 });
 
+export const addFriendship = (friendship) => ({
+  type: ADD_FRIENDSHIP,
+  payload: friendship,
+});
+
 // Thunks
 
 
 // Fetch all friendships
 export const fetchFriendships = () => async (dispatch) => {
     try {
-      const response = await fetch('/api/friends');
+      const response = await fetch('/api/friendships/');
       if (response.ok) {
         const data = await response.json();
         dispatch(setFriendships(data.friendships));
@@ -30,13 +36,13 @@ export const fetchFriendships = () => async (dispatch) => {
       }
     } catch (error) {
       console.error(error);
-      // Handle error if necessary
+
     }
   };
 
   export const fetchFriendshipById = (friendshipId) => async (dispatch) => {
     try {
-      const response = await fetch(`/api/friends/${friendshipId}`);
+      const response = await fetch(`/api/friendships/${friendshipId}`);
       if (response.ok) {
         const data = await response.json();
         dispatch(setSelectedFriendship(data));
@@ -45,26 +51,25 @@ export const fetchFriendships = () => async (dispatch) => {
       }
     } catch (error) {
       console.error(error);
-      // Handle error if necessary
+
     }
   };
 
   export const createFriendship = (email) => async (dispatch) => {
     try {
-      const response = await fetch('/api/friends', {
+      const response = await fetch('/api/friendships', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
       if (response.ok) {
         const data = await response.json();
-        dispatch(fetchFriendships()); // Refresh the friendships after creating a new one
+        dispatch(fetchFriendships(data));
       } else {
         throw new Error('Failed to create friendship');
       }
     } catch (error) {
       console.error(error);
-      // Handle error if necessary
     }
   };
 
@@ -78,9 +83,15 @@ const initialState = {
 const friendReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_FRIENDSHIPS:
-      return { ...state, friendships: action.payload };
+      const friendships = {};
+      action.payload.forEach((friendship) => {
+        friendships[friendship.id] = friendship;
+      });
+      return { ...state, friendships };
     case SET_SELECTED_FRIENDSHIP:
       return { ...state, selectedFriendship: action.payload };
+    case ADD_FRIENDSHIP:
+      return { ...state, friendships: { ...state.friendships, [action.payload.id]: action.payload } };
     default:
       return state;
   }

@@ -123,24 +123,37 @@ const initialState = {
 export default function paymentReducer(state = initialState, action) {
   switch (action.type) {
     case SET_RECEIVED_PAYMENTS:
+      const receivedPayments = {};
+      action.payload.forEach((payment) => {
+        receivedPayments[payment.id] = payment;
+      });
       return {
         ...state,
-        receivedPayments: action.payload,
+        receivedPayments,
       };
     case SET_SENT_PAYMENTS:
+      const sentPayments = {};
+      action.payload.forEach((payment) => {
+        sentPayments[payment.id] = payment;
+      });
       return {
         ...state,
-        sentPayments: action.payload,
+        sentPayments,
       };
     case ADD_PAYMENT:
       return {
         ...state,
-        sentPayments: [...state.sentPayments, action.payload],
+        sentPayments: {
+          ...state.sentPayments,
+          [action.payload.id]: action.payload,
+        },
       };
     case DELETE_PAYMENT:
+      const { [action.payload]: deletedPayment, ...updatedSentPayments } =
+        state.sentPayments;
       return {
         ...state,
-        sentPayments: state.sentPayments.filter((payment) => payment.id !== action.payload),
+        sentPayments: updatedSentPayments,
       };
     case SET_SELECTED_PAYMENT:
       return {
