@@ -10,6 +10,7 @@ function SignupFormPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [imgURL, setImgURL] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
@@ -19,7 +20,7 @@ function SignupFormPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
-      const data = await dispatch(signUp(name.split(" ")[0], name.split(" ")[1], email, phoneNumber, password));
+      const data = await dispatch(signUp(name.split(" ")[0], name.split(" ")[1], email, phoneNumber, imgURL, password));
       if (data) {
         setErrors(data)
       }
@@ -59,6 +60,14 @@ function SignupFormPage() {
             type="text"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
+          />
+        </label>
+        <label>
+          Here's my profile picture:
+          <input
+            type="text"
+            value={imgURL}
+            onChange={(e) => setImgURL(e.target.value)}
           />
         </label>
         <label>
