@@ -3,10 +3,10 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
-import "./Navigation.css";
+import "./TopNavigation.css";
 
 
-function TopNavigation({ isLoaded }) {
+function TopNavigationBar({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
   const headerLogin = sessionUser?"header-login":""
   const titleLogin = sessionUser?"title-login":""
@@ -38,4 +38,4 @@ function TopNavigation({ isLoaded }) {
   );
 }
 
-export default TopNavigation;
+export default TopNavigationBar;
