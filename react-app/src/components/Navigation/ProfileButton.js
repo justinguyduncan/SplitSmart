@@ -4,6 +4,7 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import { NavLink } from "react-router-dom";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -39,7 +40,29 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
+      <ul className="navigation-menu">
+        {user ? (
+          <>
+            <button className ="nav-btn" onClick={openMenu}>
+            <img src={user.image_url} alt="user photo"/>
+            </button>
+          </>
+        ) : (
+          <>
+            <li>
+              <NavLink to="/login" className="navigation-link nav-login">
+                Log in
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/signup" className="navigation-link nav-signup">
+                Sign up
+              </NavLink>
+            </li>
+          </>
+        )}
+      </ul>
+      {/* <button onClick={openMenu}>
         <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
@@ -66,7 +89,7 @@ function ProfileButton({ user }) {
             />
           </>
         )}
-      </ul>
+      </ul> */}
     </>
   );
 }
