@@ -3,19 +3,19 @@
     background-repeat: repeat;
     width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-rows: 300px 300px 300px;
-    grid-template-columns: 30% 30%;
+    /* display: grid;
+    grid-template-rows: 200px 200px 200px;
+    grid-template-columns: 200px 200px;
     grid-template-areas:
     "slideshow slideshow"
     "track-balances organize-expenses"
-    "add-expenses-easily pay-friends-back";
+    "add-expenses-easily pay-friends-back"; */
     place-items: center;
     justify-content: center;
     text-align: center;
 }
 
-.slideshow {
+/* .slideshow {
     grid-area: slideshow;
 }
 
@@ -33,8 +33,19 @@
 
 .pay-friends-back {
     grid-area: pay-friends-back;
+} */
+
+.slideshow {
+    padding: 50px;
+    height: 500px;
 }
 
+
+.about-page-images {
+    display: flex;
+    flex-wrap: wrap;
+
+}
 #swap-text::before {
     content: " on trips.";
     color: #1CC29F;
@@ -59,4 +70,9 @@
         content: " with anyone.";
         color: #1CC29F;
     }
+}
+
+.about-page-container img {
+    min-width: 200px;
+    min-height: 200px;
 }
