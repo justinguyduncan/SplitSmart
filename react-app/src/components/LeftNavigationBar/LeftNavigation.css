@@ -1,0 +1,14 @@
+.left-nav-bar {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.dashboard-logo {
+    width: 20px;
+    height: 20px;
+}
+
+.left-nav-bar > a > * {
+    padding: 0px 5px;
+}
