@@ -45,14 +45,15 @@ export const login = (email, password) => async (dispatch) => {
 		const data = await response.json();
 		dispatch(setUser(data));
 		return null;
-	} else if (response.status < 500) {
-		const data = await response.json();
-		if (data.errors) {
-			return data.errors;
-		}
-	} else {
-		return ["An error occurred. Please try again."];
-	}
+	} 
+	// else if (response.status < 500) {
+	// 	const data = await response.json();
+	// 	if (data.errors) {
+	// 		return data.errors;
+	// 	}
+	// } else {
+	// 	return ["An error occurred. Please try again."];
+	// }
 };
 
 export const logout = () => async (dispatch) => {
