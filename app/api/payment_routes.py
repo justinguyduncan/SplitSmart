@@ -20,6 +20,7 @@ def create_payment():
     """
     Creates a new payment
     """
+    print('INSIDE ROUTE')
     form = PaymentForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     # set form's SelectField choices to active friends of current user with positive bill amounts
@@ -45,30 +46,6 @@ def create_payment():
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
-# @payment_routes.route('/', methods=['POST'])
-# @login_required
-# def create_payment():
-    """
-    Creates a new payment
-    """
-    # data = request.json
-    # amount = data.get('amount')
-    # friendship_id = data.get('friendship_id')  # Fetch the friendship_id from the request data
-    # if not amount:
-    #     return {'errors': ['Amount is required.']}, 400
-    # payment = Payment(amount=amount, friendship_id=friendship_id)  # Use the fetched friendship_id
-    # db.session.add(payment)
-    # db.session.commit()
-    # # Return a dictionary representation of the payment object with formatted amount
-    # return jsonify({
-    #     'id': payment.id,
-    #     'friendship_id': payment.friendship_id,
-    #     'amount': format_amount(payment.amount),
-    #     'created_at': payment.created_at.isoformat(),
-    #     'updated_at': payment.updated_at.isoformat()
-    # }), 201
-
-
 @payment_routes.route('/sent', methods=['GET'])
 @login_required
 def sent_payments():
@@ -79,16 +56,6 @@ def sent_payments():
     friendship_ids = [friendship.id for friendship in friendships]
     sent_payments = Payment.query.filter(Payment.friendship_id.in_(friendship_ids)).all()
     return {'sent': [payment.to_dict() for payment in sent_payments]}
-    # payments_list = []
-    # for payment in payments:
-    #     payments_list.append({
-    #         'id': payment.id,
-    #         'friendship_id': payment.friendship_id,
-    #         'amount': format_amount(payment.amount),  # Format amount as a dollar amount
-    #         'created_at': payment.created_at.isoformat(),
-    #         'updated_at': payment.updated_at.isoformat()
-    #     })
-    # return jsonify(payments_list)
 
 
 @payment_routes.route('/received', methods=['GET'])

@@ -9,6 +9,7 @@ import * as sessionActions from "./store/session";
 import * as friendActions from "./store/friend";
 import * as paymentActions from "./store/payment";
 import * as expenseActions from "./store/expense";
+import * as commentActions from "./store/comment";
 import App from "./App";
 
 import "./index.css";
@@ -21,6 +22,7 @@ if (process.env.NODE_ENV !== "production") {
 	window.friendActions = friendActions;
 	window.paymentActions = paymentActions;
 	window.expenseActions = expenseActions;
+	window.commentActions = commentActions;
 }
 
 // Wrap the application with the Modal provider and render the Modal component

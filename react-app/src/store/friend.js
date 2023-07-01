@@ -4,21 +4,27 @@
 const SET_FRIENDSHIPS = 'friend/SET_FRIENDSHIPS';
 const SET_SELECTED_FRIENDSHIP = 'friend/SET_SELECTED_FRIENDSHIP';
 const ADD_FRIENDSHIP = 'friend/ADD_FRIENDSHIP';
+const EDIT_FRIENDSHIP = 'friend/EDIT_FRIENDSHIP';
 
 // Action Creators
-export const setFriendships = (friendships) => ({
+const setFriendships = (friendships) => ({
   type: SET_FRIENDSHIPS,
   payload: friendships,
 });
 
-export const setSelectedFriendship = (friendship) => ({
+const setSelectedFriendship = (friendship) => ({
   type: SET_SELECTED_FRIENDSHIP,
   payload: friendship,
 });
 
-export const addFriendship = (friendship) => ({
+const addFriendship = (friendship) => ({
   type: ADD_FRIENDSHIP,
   payload: friendship,
+});
+
+const editFriendship = (friendship) => ({
+  type: EDIT_FRIENDSHIP,
+  payload: friendship
 });
 
 // Thunks
@@ -57,14 +63,14 @@ export const fetchFriendships = () => async (dispatch) => {
 
   export const createFriendship = (email) => async (dispatch) => {
     try {
-      const response = await fetch('/api/friendships', {
+      const response = await fetch('/api/friendships/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
       if (response.ok) {
         const data = await response.json();
-        dispatch(fetchFriendships(data));
+        dispatch(addFriendship(data));
       } else {
         throw new Error('Failed to create friendship');
       }
@@ -73,10 +79,26 @@ export const fetchFriendships = () => async (dispatch) => {
     }
   };
 
+  export const updateFriendship = (id) => async dispatch => {
+    try {
+      const response = await fetch(`/api/friendships/${id}`, {
+        method: 'PUT'
+      });
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(editFriendship(data));
+      } else {
+        throw new Error('Failed to update friendship');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 // Initial State
 const initialState = {
-  friendships: [],
-  selectedFriendship: null,
+  friendships: {},
+  selectedFriendship: {},
 };
 
 // Reducer
@@ -92,6 +114,8 @@ const friendReducer = (state = initialState, action) => {
       return { ...state, selectedFriendship: action.payload };
     case ADD_FRIENDSHIP:
       return { ...state, friendships: { ...state.friendships, [action.payload.id]: action.payload } };
+    case EDIT_FRIENDSHIP:
+      return { ...state, friendships: { ...state.friendships, [action.payload.id]: { ...state.friendships[action.payload.id], ...action.payload } } };
     default:
       return state;
   }
