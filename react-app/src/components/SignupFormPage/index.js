@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, NavLink } from "react-router-dom";
 import { signUp } from "../../store/session";
 import './SignupForm.css';
+import logo from './splitsmart-logo.png';
 
 function SignupFormPage() {
   const dispatch = useDispatch();
@@ -30,67 +31,55 @@ function SignupFormPage() {
   };
 
   return (
-    <>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
+    <div className="signup-form-container">
+      <NavLink to="/" className="signup-form-image"><img src={logo} alt="splitsmart-logo"></img></NavLink>
+      <form className="signup-form" onSubmit={handleSubmit}>
+        {errors.length > 0 && <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-        </ul>
-        <label>
-          Hi there! My name is
+        </ul>}
+        <label>Hi there! My name is</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Here's my email address:
+        <label>Here's my email address:</label>
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Here's my phone number:
+        <label>Here's my phone number:</label>
           <input
             type="text"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
-        </label>
-        <label>
-          Here's my profile picture:
+        <label>Here's my profile picture:</label>
           <input
             type="text"
             value={imgURL}
             onChange={(e) => setImgURL(e.target.value)}
           />
-        </label>
-        <label>
-          And here's my password:
+        <label>And here's my password:</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Confirm password:
+        <label>Confirm password:</label>
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
-        </label>
-        <button type="submit">Sign me up!</button>
+        <button className="accent" type="submit">Sign me up!</button>
       </form>
-    </>
+    </div>
   );
 }
 
