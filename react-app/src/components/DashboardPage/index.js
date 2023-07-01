@@ -1,11 +1,22 @@
 import LeftNavigationBar from "../LeftNavigationBar";
-import TopNavigation from "../TopNavigationBar";
+import TopNavigationBar from "../TopNavigationBar";
+import MainHeader from "../MainHeader"
+import { useEffect } from "react";
+import { getSettledExpenses, getUnsettledExpenses } from "../../store/expense";
+import { useSelector, useDispatch } from "react-redux";
 function DashboardPage() {
+    const dispatch=useDispatch()
+    const unsettledExpenses=useSelector((state)=>console.log(state))
+    useEffect(()=>{
+        dispatch(getUnsettledExpenses())
+        dispatch(getSettledExpenses())
+    },[])
     return (
         <>
-            <h1>Dashboard Page</h1>
-            <TopNavigation/>
-            <LeftNavigationBar />
+            
+            <TopNavigationBar/>
+            <LeftNavigationBar/>
+            <MainHeader/>
         </>
     );
 }
