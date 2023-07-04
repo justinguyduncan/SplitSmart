@@ -9,7 +9,8 @@ import AllExpensesPage from "./components/AllExpensesPage";
 import EditFriendPage from "./components/EditFriendPage";
 import FriendPage from "./components/FriendPage";
 import { authenticate } from "./store/session";
-// import Navigation from "./components/Navigation";
+import TopNavigationBar from "./components/TopNavigationBar";
+import PaymentDetailsSection from "./components/PaymentDetailsSection";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,7 +21,11 @@ function App() {
 
   return (
     <>
-      {/* <Navigation isLoaded={isLoaded} /> */}
+      <TopNavigationBar isLoaded={isLoaded} />
+
+    <PaymentDetailsSection paymentId={2}/>
+
+
       {isLoaded && (
         <Switch>
           <Route exact path="/">
@@ -44,6 +49,9 @@ function App() {
           <Route path="/friends/:id">
             <FriendPage />
           </Route>
+
+
+          
         </Switch>
       )}
     </>
