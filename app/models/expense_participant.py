@@ -27,6 +27,11 @@ class ExpenseParticipant(db.Model):
             'amount_due': self.amount_due,
             'is_settled': self.is_settled,
             'friendship': self.friendship.to_dict(),
+            'expense': {
+                'id': self.expense.id,
+                'description': self.expense.description,
+                'amount': self.expense.amount
+            },
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }

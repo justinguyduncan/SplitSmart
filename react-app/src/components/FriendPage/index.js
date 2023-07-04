@@ -72,7 +72,7 @@ function FriendPage() {
                                 <p>Expense Date: {dateFormat}</p>
                                 <p>Description: {expenseObj.description}</p>
                                 <p>You Paid: {expenseObj.amount}</p>
-                                <p>You Lent {friend.friend.name}: {expenseObj.participants[0].amount_due} </p>
+                                <p>You Lent {friend.friend.short_name}: {expenseObj.participants[0].amount_due} </p>
                             </li>
                         );
                     })
@@ -86,9 +86,9 @@ function FriendPage() {
                         return (
                             <li key={expenseObj.id}>
                                 <p>Expense Date: {dateFormat}</p>
-                                {/* <p>Description: {expenseObj.description}</p> */}
-                                {/* <p>{friend.friend.name} Paid: {expenseObj.amount}</p> */}
-                                <p>{friend.friend.name} Lent You: {expenseObj.amount_due} </p>
+                                <p>Description: {expenseObj.expense.description}</p>
+                                <p>{friend.friend.short_name} Paid: {expenseObj.expense.amount}</p>
+                                <p>{friend.friend.short_name} Lent You: {expenseObj.amount_due} </p>
                             </li>
                         );
                     })
@@ -102,9 +102,9 @@ function FriendPage() {
                         return (
                             <li key={expenseObj.id}>
                                 <p>Expense Date: {dateFormat}</p>
-                                {/* <p>Description: {expenseObj.description}</p> */}
-                                {/* <p>{friend.friend.name} Paid: {expenseObj.amount}</p> */}
-                                <p>{friend.friend.name} Lent You: {expenseObj.amount_due} </p>
+                                <p>Description: {expenseObj.expense.description}</p>
+                                <p>{friend.friend.short_name} Paid: {expenseObj.expense.amount}</p>
+                                <p>{friend.friend.short_name} Lent You: {expenseObj.amount_due} </p>
                             </li>
                         );
                     })
