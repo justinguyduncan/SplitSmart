@@ -1,6 +1,6 @@
 .expense-header {
     display: grid;
-    grid-template-columns: 5% 5% auto 15% 15%;
+    grid-template-columns: 5% 5% auto 15% 15% 5%;
     grid-template-rows: min-content;
     border: gray 1px solid;
 }
@@ -57,7 +57,7 @@
 
 .payment-header {
     display: grid;
-    grid-template-columns: 5% auto 15% 15%;
+    grid-template-columns: 5% auto 15% 15% 5%;
     grid-template-rows: min-content;
     border: gray 1px solid;
 }
@@ -93,4 +93,18 @@
 
 .teal-amount {
     color: rgb(82, 197, 167);
+}
+
+.delete-expense,
+.delete-payment {
+    justify-self: center;
+    align-self: center;
+    border: none;
+    background: none;
+    color: red;
+}
+
+.delete-expense:hover,
+.delete-payment:hover {
+    text-decoration: underline;
 }

@@ -105,6 +105,16 @@ function FriendPage() {
                                     <p>you lent {friend.friend.short_name}</p>
                                     <p>{formatMoney(expenseObj.participants[0].amount_due)}</p>
                                 </div>
+                                <button className="delete-expense" onClick={() => {
+                                    let answer = window.confirm("Are you sure you want to delete this expense? This will completely remove this expense for ALL people involved, not just you.");
+                                    if (answer) {
+                                        window.alert("TRUE")
+                                    } else {
+                                        window.alert("FALSE")
+                                    }
+                                }}>
+                                    &#x2715;
+                                </button>
                             </div>
                         );
                     })
@@ -135,6 +145,16 @@ function FriendPage() {
                                     <p>{friend.friend.short_name} lent you</p>
                                     <p>{formatMoney(expenseObj.amount_due)}</p>
                                 </div>
+                                <button className="delete-expense" onClick={() => {
+                                    let answer = window.confirm("Are you sure you want to delete this expense? This will completely remove this expense for ALL people involved, not just you.");
+                                    if (answer) {
+                                        window.alert("TRUE")
+                                    } else {
+                                        window.alert("FALSE")
+                                    }
+                                }}>
+                                    &#x2715;
+                                </button>
                             </div>
                         );
                     })
@@ -165,6 +185,16 @@ function FriendPage() {
                                     <p>{friend.friend.short_name} lent you</p>
                                     <p>{formatMoney(expenseObj.amount_due)}</p>
                                 </div>
+                                <button className="delete-expense" onClick={() => {
+                                    let answer = window.confirm("Are you sure you want to delete this expense? This will completely remove this expense for ALL people involved, not just you.");
+                                    if (answer) {
+                                        window.alert("TRUE")
+                                    } else {
+                                        window.alert("FALSE")
+                                    }
+                                }}>
+                                    &#x2715;
+                                </button>
                             </div>
                         );
                     })
@@ -186,6 +216,16 @@ function FriendPage() {
                                 <div className="payment-header-B teal-amount">
                                     {formatMoney(paymentObj.amount)}
                                 </div>
+                                <button className="delete-payment" onClick={() => {
+                                    let answer = window.confirm("Are you sure you want to delete this payment?");
+                                    if (answer) {
+                                        window.alert("TRUE")
+                                    } else {
+                                        window.alert("FALSE")
+                                    }
+                                }}>
+                                    &#x2715;
+                                </button>
                             </div>
                         );
                     })
@@ -207,6 +247,16 @@ function FriendPage() {
                                 <div className="payment-header-B orange-amount">
                                     {formatMoney(paymentObj.amount)}
                                 </div>
+                                <button className="delete-payment" onClick={() => {
+                                    let answer = window.confirm("Are you sure you want to delete this payment?");
+                                    if (answer) {
+                                        window.alert("TRUE")
+                                    } else {
+                                        window.alert("FALSE")
+                                    }
+                                }}>
+                                    &#x2715;
+                                </button>
                             </div>
                         );
                     })
