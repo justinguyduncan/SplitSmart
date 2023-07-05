@@ -6,6 +6,7 @@ import * as expenseActions from '../../store/expense';
 import * as paymentActions from '../../store/payment';
 import LeftNavigationBar from "../LeftNavigationBar";
 import receipt from "./receipt.jpeg";
+import dollar from "./dollar.jpeg";
 import './FriendPage.css';
 
 
@@ -92,7 +93,7 @@ function FriendPage() {
                                     <p className="expense-header-month">{dateMonth}</p>
                                     <p className="expense-header-day">{dateDay}</p>
                                 </div>
-                                <img className="expense-header-logo-img" src={receipt}></img>
+                                <img className="expense-header-logo" src={receipt}></img>
                                 <div className="expense-header-description">
                                     {expenseObj.description}
                                 </div>
@@ -100,7 +101,7 @@ function FriendPage() {
                                     <p>you paid</p>
                                     <p>{formatMoney(expenseObj.amount)}</p>
                                 </div>
-                                <div className="expense-header-B">
+                                <div className="expense-header-B teal-amount">
                                     <p>you lent {friend.friend.short_name}</p>
                                     <p>{formatMoney(expenseObj.participants[0].amount_due)}</p>
                                 </div>
@@ -122,7 +123,7 @@ function FriendPage() {
                                     <p className="expense-header-month">{dateMonth}</p>
                                     <p className="expense-header-day">{dateDay}</p>
                                 </div>
-                                <img className="expense-header-logo-img" src={receipt}></img>
+                                <img className="expense-header-logo" src={receipt}></img>
                                 <div className="expense-header-description">
                                     {expenseObj.expense.description}
                                 </div>
@@ -130,7 +131,7 @@ function FriendPage() {
                                     <p>{friend.friend.short_name} paid</p>
                                     <p>{formatMoney(expenseObj.expense.amount)}</p>
                                 </div>
-                                <div className="expense-header-B">
+                                <div className="expense-header-B orange-amount">
                                     <p>{friend.friend.short_name} lent you</p>
                                     <p>{formatMoney(expenseObj.amount_due)}</p>
                                 </div>
@@ -152,7 +153,7 @@ function FriendPage() {
                                     <p className="expense-header-month">{dateMonth}</p>
                                     <p className="expense-header-day">{dateDay}</p>
                                 </div>
-                                <img className="expense-header-logo-img" src={receipt}></img>
+                                <img className="expense-header-logo" src={receipt}></img>
                                 <div className="expense-header-description">
                                     {expenseObj.expense.description}
                                 </div>
@@ -160,7 +161,7 @@ function FriendPage() {
                                     <p>{friend.friend.short_name} paid</p>
                                     <p>{formatMoney(expenseObj.expense.amount)}</p>
                                 </div>
-                                <div className="expense-header-B">
+                                <div className="expense-header-B orange-amount">
                                     <p>{friend.friend.short_name} lent you</p>
                                     <p>{formatMoney(expenseObj.amount_due)}</p>
                                 </div>
@@ -169,36 +170,48 @@ function FriendPage() {
                     })
                 }
             </div>
-            {/* <h3>User Sent Payments</h3>
-            <ul>
+            <h3>User Sent Payments</h3>
+            <div>
                 {isSentPaymentsLoaded &&
                     sentPayments.map(paymentObj => {
-                        const dateStr = new Date(paymentObj.created_at).toDateString();
-                        const dateFormat = `${dateStr.split(" ")[1]} ${dateStr.split(" ")[2]}`
                         return (
-                            <li key={paymentObj.id}>
-                                <p>Payment Date: {dateFormat}</p>
-                                <p>{sessionUser.short_name} paid {friend.friend.short_name} {paymentObj.amount}</p>
-                            </li>
+                            <div className="payment-header">
+                                <img className="payment-header-logo" src={dollar}></img>
+                                <div className="payment-header-description">
+                                    {sessionUser.short_name} paid {friend.friend.short_name} {formatMoney(paymentObj.amount)}
+                                </div>
+                                <div className="payment-header-A">
+                                    you paid
+                                </div>
+                                <div className="payment-header-B teal-amount">
+                                    {formatMoney(paymentObj.amount)}
+                                </div>
+                            </div>
                         );
                     })
                 }
-            </ul> */}
-            {/* <h3>User Received Payments</h3>
-            <ul>
+            </div>
+            <h3>User Received Payments</h3>
+            <div>
                 {isReceivedPaymentsLoaded &&
                     receivedPayments.map(paymentObj => {
-                        const dateStr = new Date(paymentObj.created_at).toDateString();
-                        const dateFormat = `${dateStr.split(" ")[1]} ${dateStr.split(" ")[2]}`
                         return (
-                            <li key={paymentObj.id}>
-                                <p>Payment Date: {dateFormat}</p>
-                                <p>{friend.friend.short_name} paid {sessionUser.short_name} {paymentObj.amount}</p>
-                            </li>
+                            <div className="payment-header">
+                                <img className="payment-header-logo" src={dollar}></img>
+                                <div className="payment-header-description">
+                                    {friend.friend.short_name} paid {sessionUser.short_name} {formatMoney(paymentObj.amount)}
+                                </div>
+                                <div className="payment-header-A">
+                                    you received
+                                </div>
+                                <div className="payment-header-B orange-amount">
+                                    {formatMoney(paymentObj.amount)}
+                                </div>
+                            </div>
                         );
                     })
                 }
-            </ul> */}
+            </div>
         </>
     );
 }
