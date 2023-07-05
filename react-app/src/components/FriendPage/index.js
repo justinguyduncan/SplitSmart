@@ -5,7 +5,13 @@ import * as friendActions from '../../store/friend';
 import * as expenseActions from '../../store/expense';
 import * as paymentActions from '../../store/payment';
 import LeftNavigationBar from "../LeftNavigationBar";
+import receipt from "./receipt.jpeg";
+import './FriendPage.css';
 
+
+function formatMoney(amount) {
+    return "$" + String(Number(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+};
 
 function FriendPage() {
     const { id } = useParams();
@@ -74,57 +80,96 @@ function FriendPage() {
             {isFriendLoaded && <h1>Friend Page - {friend.friend.name}</h1>}
             <LeftNavigationBar />
             <h3>User Created Expenses</h3>
-            <ul>
+            <div>
                 {isUserExpensesLoaded &&
                     userExpenses.map(expenseObj => {
                         const dateStr = new Date(expenseObj.created_at).toDateString();
-                        const dateFormat = `${dateStr.split(" ")[1]} ${dateStr.split(" ")[2]}`
+                        const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;
+                        const dateDay = `${dateStr.split(" ")[2]}`;
                         return (
-                            <li key={expenseObj.id}>
-                                <p>Expense Date: {dateFormat}</p>
-                                <p>Description: {expenseObj.description}</p>
-                                <p>You Paid: {expenseObj.amount}</p>
-                                <p>You Lent {friend.friend.short_name}: {expenseObj.participants[0].amount_due} </p>
-                            </li>
+                            <div className="expense-header">
+                                <div className="expense-header-date">
+                                    <p className="expense-header-month">{dateMonth}</p>
+                                    <p className="expense-header-day">{dateDay}</p>
+                                </div>
+                                <img className="expense-header-logo-img" src={receipt}></img>
+                                <div className="expense-header-description">
+                                    {expenseObj.description}
+                                </div>
+                                <div className="expense-header-A">
+                                    <p>you paid</p>
+                                    <p>{formatMoney(expenseObj.amount)}</p>
+                                </div>
+                                <div className="expense-header-B">
+                                    <p>you lent {friend.friend.short_name}</p>
+                                    <p>{formatMoney(expenseObj.participants[0].amount_due)}</p>
+                                </div>
+                            </div>
                         );
                     })
                 }
-            </ul>
+            </div>
             <h3>Friend Created Expenses - Unsettled</h3>
-            <ul>
+            <div>
                 {isUnsettledExpensesLoaded &&
                     unsettledExpenses.map(expenseObj => {
                         const dateStr = new Date(expenseObj.created_at).toDateString();
-                        const dateFormat = `${dateStr.split(" ")[1]} ${dateStr.split(" ")[2]}`
+                        const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;
+                        const dateDay = `${dateStr.split(" ")[2]}`;
                         return (
-                            <li key={expenseObj.id}>
-                                <p>Expense Date: {dateFormat}</p>
-                                <p>Description: {expenseObj.expense.description}</p>
-                                <p>{friend.friend.short_name} Paid: {expenseObj.expense.amount}</p>
-                                <p>{friend.friend.short_name} Lent You: {expenseObj.amount_due} </p>
-                            </li>
+                            <div className="expense-header">
+                                <div className="expense-header-date">
+                                    <p className="expense-header-month">{dateMonth}</p>
+                                    <p className="expense-header-day">{dateDay}</p>
+                                </div>
+                                <img className="expense-header-logo-img" src={receipt}></img>
+                                <div className="expense-header-description">
+                                    {expenseObj.expense.description}
+                                </div>
+                                <div className="expense-header-A">
+                                    <p>{friend.friend.short_name} paid</p>
+                                    <p>{formatMoney(expenseObj.expense.amount)}</p>
+                                </div>
+                                <div className="expense-header-B">
+                                    <p>{friend.friend.short_name} lent you</p>
+                                    <p>{formatMoney(expenseObj.amount_due)}</p>
+                                </div>
+                            </div>
                         );
                     })
                 }
-            </ul>
+            </div>
             <h3>Friend Created Expenses - Settled</h3>
-            <ul>
+            <div>
                 {isSettledExpensesLoaded &&
                     settledExpenses.map(expenseObj => {
                         const dateStr = new Date(expenseObj.created_at).toDateString();
-                        const dateFormat = `${dateStr.split(" ")[1]} ${dateStr.split(" ")[2]}`
+                        const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;
+                        const dateDay = `${dateStr.split(" ")[2]}`;
                         return (
-                            <li key={expenseObj.id}>
-                                <p>Expense Date: {dateFormat}</p>
-                                <p>Description: {expenseObj.expense.description}</p>
-                                <p>{friend.friend.short_name} Paid: {expenseObj.expense.amount}</p>
-                                <p>{friend.friend.short_name} Lent You: {expenseObj.amount_due} </p>
-                            </li>
+                            <div className="expense-header">
+                                <div className="expense-header-date">
+                                    <p className="expense-header-month">{dateMonth}</p>
+                                    <p className="expense-header-day">{dateDay}</p>
+                                </div>
+                                <img className="expense-header-logo-img" src={receipt}></img>
+                                <div className="expense-header-description">
+                                    {expenseObj.expense.description}
+                                </div>
+                                <div className="expense-header-A">
+                                    <p>{friend.friend.short_name} paid</p>
+                                    <p>{formatMoney(expenseObj.expense.amount)}</p>
+                                </div>
+                                <div className="expense-header-B">
+                                    <p>{friend.friend.short_name} lent you</p>
+                                    <p>{formatMoney(expenseObj.amount_due)}</p>
+                                </div>
+                            </div>
                         );
                     })
                 }
-            </ul>
-            <h3>User Sent Payments</h3>
+            </div>
+            {/* <h3>User Sent Payments</h3>
             <ul>
                 {isSentPaymentsLoaded &&
                     sentPayments.map(paymentObj => {
@@ -138,8 +183,8 @@ function FriendPage() {
                         );
                     })
                 }
-            </ul>
-            <h3>User Received Payments</h3>
+            </ul> */}
+            {/* <h3>User Received Payments</h3>
             <ul>
                 {isReceivedPaymentsLoaded &&
                     receivedPayments.map(paymentObj => {
@@ -153,7 +198,7 @@ function FriendPage() {
                         );
                     })
                 }
-            </ul>
+            </ul> */}
         </>
     );
 }
