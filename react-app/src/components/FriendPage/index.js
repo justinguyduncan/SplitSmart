@@ -7,6 +7,7 @@ import * as paymentActions from '../../store/payment';
 import LeftNavigationBar from "../LeftNavigationBar";
 import receipt from "./receipt.jpeg";
 import dollar from "./dollar.jpeg";
+import checkmark from "./checkmark.png";
 import './FriendPage.css';
 
 
@@ -118,11 +119,10 @@ function FriendPage() {
         }
     }, [isFriendLoaded, isUserExpensesLoaded, isSettledExpensesLoaded, isUnsettledExpensesLoaded, isSentPaymentsLoaded, isReceivedPaymentsLoaded]);
 
-    return (
+    return (isFriendLoaded &&
         <>
-            {isFriendLoaded && <h1>Friend Page - {friend.friend.name}</h1>}
             <LeftNavigationBar />
-            <div className="unsettled-items"> UNSETTLED EXPENSES
+            <div id="unsettled-items">
                 {unsettledItems.map(obj => {
                     const dateStr = new Date(obj.created_at).toDateString();
                     const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;
@@ -195,7 +195,26 @@ function FriendPage() {
                     }
                 })}
             </div>
-            <div className="settled-items"> SETTLED EXPENSES
+            <div id="show-container">
+                {unsettledItems.length === 0 &&
+                    <>
+                        <img id="settled-up-logo" src={checkmark} alt="checkmark-logo"></img>
+                        <div id="show-button-description">You and {friend.friend.name} are all settled up.</div>
+                    </>
+                }
+                {unsettledItems.length > 0 &&
+                    <div id="show-button-description">All expenses before this date have been settled up.</div>
+                }
+                <button id="show-button" onClick={() => {
+                    document.getElementById("settled-items").classList.remove("hidden");
+                    document.getElementById("show-container").classList.add("hidden");
+                    // document.getElementById("settled-up-logo")?.classList.add("hidden");
+                    // document.getElementById("show-button-description").classList.add("hidden");
+                }}>
+                    Show settled expenses
+                </button>
+            </div>
+            <div id="settled-items" className="hidden">
                 {settledItems.map(obj => {
                     const dateStr = new Date(obj.created_at).toDateString();
                     const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;
