@@ -20,11 +20,18 @@ function FriendPage() {
     const sessionUser = useSelector((state) => state.session.user);
     const friend = useSelector(state => state.friend.selectedFriendship);
     const userExpenses = useSelector(state => {
-        let expenses = Object.values(state.expense.createdExpenses).filter(expense => {
-            const friendOnly = expense.participants.filter(participant => participant.friendship_id == id);
+        let settledExpenses = Object.values(state.expense.createdExpenses).filter(expense => {
+            const friendOnly = expense.participants.filter(participant => participant.friendship_id == id && participant.is_settled);
             return friendOnly.length > 0;
         });
-        return expenses;
+        let unsettledExpenses = Object.values(state.expense.createdExpenses).filter(expense => {
+            const friendOnly = expense.participants.filter(participant => participant.friendship_id == id && !participant.is_settled);
+            return friendOnly.length > 0;
+        });
+        return {
+            settled: settledExpenses,
+            unsettled: unsettledExpenses
+        };
     });
     const unsettledExpenses = useSelector(state => {
         let expenses = Object.values(state.expense.unsettledExpenses).filter(expense => {
@@ -57,6 +64,8 @@ function FriendPage() {
     const [isSettledExpensesLoaded, setIsSettledExpensesLoaded] = useState(false);
     const [isSentPaymentsLoaded, setIsSentPaymentsLoaded] = useState(false);
     const [isReceivedPaymentsLoaded, setIsReceivedPaymentsLoaded] = useState(false);
+    const [settledItems, setSettledItems] = useState([]);
+    const [unsettledItems, setUnsettledItems] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
@@ -76,191 +85,238 @@ function FriendPage() {
         fetchData();
     }, [dispatch, id]);
 
+
+    useEffect(() => {
+        if (isFriendLoaded && isUserExpensesLoaded && isSettledExpensesLoaded && isUnsettledExpensesLoaded && isSentPaymentsLoaded && isReceivedPaymentsLoaded) {
+            const userUnsettledExpenses = userExpenses.unsettled.map(expenseObj => {
+                return { ...expenseObj, type: 'created' };
+            });
+            const friendUnsettledExpenses = unsettledExpenses.map(expenseObj => {
+                return { ...expenseObj, type: 'charged' };
+            });
+
+            setUnsettledItems([...userUnsettledExpenses, ...friendUnsettledExpenses].sort((e1, e2) => {
+                return new Date(e2.created_at).getTime() - new Date(e1.created_at).getTime()
+            }));
+
+            const userSettledExpenses = userExpenses.settled.map(expenseObj => {
+                return { ...expenseObj, type: 'created' };
+            });
+            const friendSettledExpenses = settledExpenses.map(expenseObj => {
+                return { ...expenseObj, type: 'charged' };
+            });
+            const userSentPayments = sentPayments.map(paymentObj => {
+                return { ...paymentObj, type: 'sent' };
+            });
+            const userReceivedPayments = receivedPayments.map(paymentObj => {
+                return { ...paymentObj, type: 'received' };
+            });
+
+            setSettledItems([...userSettledExpenses, ...friendSettledExpenses, ...userSentPayments, ...userReceivedPayments].sort((e1, e2) => {
+                return new Date(e2.created_at).getTime() - new Date(e1.created_at).getTime()
+            }));
+        }
+    }, [isFriendLoaded, isUserExpensesLoaded, isSettledExpensesLoaded, isUnsettledExpensesLoaded, isSentPaymentsLoaded, isReceivedPaymentsLoaded]);
+
     return (
         <>
             {isFriendLoaded && <h1>Friend Page - {friend.friend.name}</h1>}
             <LeftNavigationBar />
-            <h3>User Created Expenses</h3>
-            <div>
-                {isUserExpensesLoaded &&
-                    userExpenses.map(expenseObj => {
-                        const dateStr = new Date(expenseObj.created_at).toDateString();
-                        const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;
-                        const dateDay = `${dateStr.split(" ")[2]}`;
-                        return (
-                            <div className="expense-header">
-                                <div className="expense-header-date">
-                                    <p className="expense-header-month">{dateMonth}</p>
-                                    <p className="expense-header-day">{dateDay}</p>
+            <div className="unsettled-items"> UNSETTLED EXPENSES
+                {unsettledItems.map(obj => {
+                    const dateStr = new Date(obj.created_at).toDateString();
+                    const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;
+                    const dateDay = `${dateStr.split(" ")[2]}`;
+                    switch (obj.type) {
+                        case 'created':
+                            return (
+                                <div className="expense-header">
+                                    <div className="expense-header-date">
+                                        <p className="expense-header-month">{dateMonth}</p>
+                                        <p className="expense-header-day">{dateDay}</p>
+                                    </div>
+                                    <img className="expense-header-logo" src={receipt} alt="receipt-logo"></img>
+                                    <div className="expense-header-description">
+                                        {obj.description}
+                                    </div>
+                                    <div className="expense-header-A">
+                                        <p>you paid</p>
+                                        <p>{formatMoney(obj.amount)}</p>
+                                    </div>
+                                    <div className="expense-header-B teal-amount">
+                                        <p>you lent {friend.friend.short_name}</p>
+                                        <p>{formatMoney(obj.participants[0].amount_due)}</p>
+                                    </div>
+                                    <button className="delete-expense" onClick={() => {
+                                        let answer = window.confirm("Are you sure you want to delete this expense? This will completely remove this expense for ALL people involved, not just you.");
+                                        if (answer) {
+                                            window.alert("TRUE")
+                                        } else {
+                                            window.alert("FALSE")
+                                        }
+                                    }}>
+                                        &#x2715;
+                                    </button>
                                 </div>
-                                <img className="expense-header-logo" src={receipt}></img>
-                                <div className="expense-header-description">
-                                    {expenseObj.description}
+                            );
+                        case 'charged':
+                            return (
+                                <div className="expense-header">
+                                    <div className="expense-header-date">
+                                        <p className="expense-header-month">{dateMonth}</p>
+                                        <p className="expense-header-day">{dateDay}</p>
+                                    </div>
+                                    <img className="expense-header-logo" src={receipt} alt="receipt-logo"></img>
+                                    <div className="expense-header-description">
+                                        {obj.expense.description}
+                                    </div>
+                                    <div className="expense-header-A">
+                                        <p>{friend.friend.short_name} paid</p>
+                                        <p>{formatMoney(obj.expense.amount)}</p>
+                                    </div>
+                                    <div className="expense-header-B orange-amount">
+                                        <p>{friend.friend.short_name} lent you</p>
+                                        <p>{formatMoney(obj.amount_due)}</p>
+                                    </div>
+                                    <button className="delete-expense" onClick={() => {
+                                        let answer = window.confirm("Are you sure you want to delete this expense? This will completely remove this expense for ALL people involved, not just you.");
+                                        if (answer) {
+                                            window.alert("TRUE")
+                                        } else {
+                                            window.alert("FALSE")
+                                        }
+                                    }}>
+                                        &#x2715;
+                                    </button>
                                 </div>
-                                <div className="expense-header-A">
-                                    <p>you paid</p>
-                                    <p>{formatMoney(expenseObj.amount)}</p>
-                                </div>
-                                <div className="expense-header-B teal-amount">
-                                    <p>you lent {friend.friend.short_name}</p>
-                                    <p>{formatMoney(expenseObj.participants[0].amount_due)}</p>
-                                </div>
-                                <button className="delete-expense" onClick={() => {
-                                    let answer = window.confirm("Are you sure you want to delete this expense? This will completely remove this expense for ALL people involved, not just you.");
-                                    if (answer) {
-                                        window.alert("TRUE")
-                                    } else {
-                                        window.alert("FALSE")
-                                    }
-                                }}>
-                                    &#x2715;
-                                </button>
-                            </div>
-                        );
-                    })
-                }
+                            );
+                        default:
+                            return <></>;
+                    }
+                })}
             </div>
-            <h3>Friend Created Expenses - Unsettled</h3>
-            <div>
-                {isUnsettledExpensesLoaded &&
-                    unsettledExpenses.map(expenseObj => {
-                        const dateStr = new Date(expenseObj.created_at).toDateString();
-                        const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;
-                        const dateDay = `${dateStr.split(" ")[2]}`;
-                        return (
-                            <div className="expense-header">
-                                <div className="expense-header-date">
-                                    <p className="expense-header-month">{dateMonth}</p>
-                                    <p className="expense-header-day">{dateDay}</p>
+            <div className="settled-items"> SETTLED EXPENSES
+                {settledItems.map(obj => {
+                    const dateStr = new Date(obj.created_at).toDateString();
+                    const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;
+                    const dateDay = `${dateStr.split(" ")[2]}`;
+                    switch (obj.type) {
+                        case 'created':
+                            return (
+                                <div className="expense-header">
+                                    <div className="expense-header-date">
+                                        <p className="expense-header-month">{dateMonth}</p>
+                                        <p className="expense-header-day">{dateDay}</p>
+                                    </div>
+                                    <img className="expense-header-logo" src={receipt} alt="receipt-logo"></img>
+                                    <div className="expense-header-description">
+                                        {obj.description}
+                                    </div>
+                                    <div className="expense-header-A">
+                                        <p>you paid</p>
+                                        <p>{formatMoney(obj.amount)}</p>
+                                    </div>
+                                    <div className="expense-header-B teal-amount">
+                                        <p>you lent {friend.friend.short_name}</p>
+                                        <p>{formatMoney(obj.participants[0].amount_due)}</p>
+                                    </div>
+                                    <button className="delete-expense" onClick={() => {
+                                        let answer = window.confirm("Are you sure you want to delete this expense? This will completely remove this expense for ALL people involved, not just you.");
+                                        if (answer) {
+                                            window.alert("TRUE")
+                                        } else {
+                                            window.alert("FALSE")
+                                        }
+                                    }}>
+                                        &#x2715;
+                                    </button>
                                 </div>
-                                <img className="expense-header-logo" src={receipt}></img>
-                                <div className="expense-header-description">
-                                    {expenseObj.expense.description}
+                            );
+                        case 'charged':
+                            return (
+                                <div className="expense-header">
+                                    <div className="expense-header-date">
+                                        <p className="expense-header-month">{dateMonth}</p>
+                                        <p className="expense-header-day">{dateDay}</p>
+                                    </div>
+                                    <img className="expense-header-logo" src={receipt} alt="receipt-logo"></img>
+                                    <div className="expense-header-description">
+                                        {obj.expense.description}
+                                    </div>
+                                    <div className="expense-header-A">
+                                        <p>{friend.friend.short_name} paid</p>
+                                        <p>{formatMoney(obj.expense.amount)}</p>
+                                    </div>
+                                    <div className="expense-header-B orange-amount">
+                                        <p>{friend.friend.short_name} lent you</p>
+                                        <p>{formatMoney(obj.amount_due)}</p>
+                                    </div>
+                                    <button className="delete-expense" onClick={() => {
+                                        let answer = window.confirm("Are you sure you want to delete this expense? This will completely remove this expense for ALL people involved, not just you.");
+                                        if (answer) {
+                                            window.alert("TRUE")
+                                        } else {
+                                            window.alert("FALSE")
+                                        }
+                                    }}>
+                                        &#x2715;
+                                    </button>
                                 </div>
-                                <div className="expense-header-A">
-                                    <p>{friend.friend.short_name} paid</p>
-                                    <p>{formatMoney(expenseObj.expense.amount)}</p>
+                            );
+                        case 'sent':
+                            return (
+                                <div className="payment-header">
+                                    <img className="payment-header-logo" src={dollar} alt="dollar-logo"></img>
+                                    <div className="payment-header-description">
+                                        {sessionUser.short_name} paid {friend.friend.short_name} {formatMoney(obj.amount)}
+                                    </div>
+                                    <div className="payment-header-A">
+                                        you paid
+                                    </div>
+                                    <div className="payment-header-B teal-amount">
+                                        {formatMoney(obj.amount)}
+                                    </div>
+                                    <button className="delete-payment" onClick={() => {
+                                        let answer = window.confirm("Are you sure you want to delete this payment?");
+                                        if (answer) {
+                                            window.alert("TRUE")
+                                        } else {
+                                            window.alert("FALSE")
+                                        }
+                                    }}>
+                                        &#x2715;
+                                    </button>
                                 </div>
-                                <div className="expense-header-B orange-amount">
-                                    <p>{friend.friend.short_name} lent you</p>
-                                    <p>{formatMoney(expenseObj.amount_due)}</p>
+                            );
+                        case 'received':
+                            return (
+                                <div className="payment-header">
+                                    <img className="payment-header-logo" src={dollar} alt="dollar-logo"></img>
+                                    <div className="payment-header-description">
+                                        {friend.friend.short_name} paid {sessionUser.short_name} {formatMoney(obj.amount)}
+                                    </div>
+                                    <div className="payment-header-A">
+                                        you received
+                                    </div>
+                                    <div className="payment-header-B orange-amount">
+                                        {formatMoney(obj.amount)}
+                                    </div>
+                                    <button className="delete-payment" onClick={() => {
+                                        let answer = window.confirm("Are you sure you want to delete this payment?");
+                                        if (answer) {
+                                            window.alert("TRUE")
+                                        } else {
+                                            window.alert("FALSE")
+                                        }
+                                    }}>
+                                        &#x2715;
+                                    </button>
                                 </div>
-                                <button className="delete-expense" onClick={() => {
-                                    let answer = window.confirm("Are you sure you want to delete this expense? This will completely remove this expense for ALL people involved, not just you.");
-                                    if (answer) {
-                                        window.alert("TRUE")
-                                    } else {
-                                        window.alert("FALSE")
-                                    }
-                                }}>
-                                    &#x2715;
-                                </button>
-                            </div>
-                        );
-                    })
-                }
-            </div>
-            <h3>Friend Created Expenses - Settled</h3>
-            <div>
-                {isSettledExpensesLoaded &&
-                    settledExpenses.map(expenseObj => {
-                        const dateStr = new Date(expenseObj.created_at).toDateString();
-                        const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;
-                        const dateDay = `${dateStr.split(" ")[2]}`;
-                        return (
-                            <div className="expense-header">
-                                <div className="expense-header-date">
-                                    <p className="expense-header-month">{dateMonth}</p>
-                                    <p className="expense-header-day">{dateDay}</p>
-                                </div>
-                                <img className="expense-header-logo" src={receipt}></img>
-                                <div className="expense-header-description">
-                                    {expenseObj.expense.description}
-                                </div>
-                                <div className="expense-header-A">
-                                    <p>{friend.friend.short_name} paid</p>
-                                    <p>{formatMoney(expenseObj.expense.amount)}</p>
-                                </div>
-                                <div className="expense-header-B orange-amount">
-                                    <p>{friend.friend.short_name} lent you</p>
-                                    <p>{formatMoney(expenseObj.amount_due)}</p>
-                                </div>
-                                <button className="delete-expense" onClick={() => {
-                                    let answer = window.confirm("Are you sure you want to delete this expense? This will completely remove this expense for ALL people involved, not just you.");
-                                    if (answer) {
-                                        window.alert("TRUE")
-                                    } else {
-                                        window.alert("FALSE")
-                                    }
-                                }}>
-                                    &#x2715;
-                                </button>
-                            </div>
-                        );
-                    })
-                }
-            </div>
-            <h3>User Sent Payments</h3>
-            <div>
-                {isSentPaymentsLoaded &&
-                    sentPayments.map(paymentObj => {
-                        return (
-                            <div className="payment-header">
-                                <img className="payment-header-logo" src={dollar}></img>
-                                <div className="payment-header-description">
-                                    {sessionUser.short_name} paid {friend.friend.short_name} {formatMoney(paymentObj.amount)}
-                                </div>
-                                <div className="payment-header-A">
-                                    you paid
-                                </div>
-                                <div className="payment-header-B teal-amount">
-                                    {formatMoney(paymentObj.amount)}
-                                </div>
-                                <button className="delete-payment" onClick={() => {
-                                    let answer = window.confirm("Are you sure you want to delete this payment?");
-                                    if (answer) {
-                                        window.alert("TRUE")
-                                    } else {
-                                        window.alert("FALSE")
-                                    }
-                                }}>
-                                    &#x2715;
-                                </button>
-                            </div>
-                        );
-                    })
-                }
-            </div>
-            <h3>User Received Payments</h3>
-            <div>
-                {isReceivedPaymentsLoaded &&
-                    receivedPayments.map(paymentObj => {
-                        return (
-                            <div className="payment-header">
-                                <img className="payment-header-logo" src={dollar}></img>
-                                <div className="payment-header-description">
-                                    {friend.friend.short_name} paid {sessionUser.short_name} {formatMoney(paymentObj.amount)}
-                                </div>
-                                <div className="payment-header-A">
-                                    you received
-                                </div>
-                                <div className="payment-header-B orange-amount">
-                                    {formatMoney(paymentObj.amount)}
-                                </div>
-                                <button className="delete-payment" onClick={() => {
-                                    let answer = window.confirm("Are you sure you want to delete this payment?");
-                                    if (answer) {
-                                        window.alert("TRUE")
-                                    } else {
-                                        window.alert("FALSE")
-                                    }
-                                }}>
-                                    &#x2715;
-                                </button>
-                            </div>
-                        );
-                    })
-                }
+                            );
+                        default:
+                            return <></>;
+                    }
+                })}
             </div>
         </>
     );
