@@ -23,7 +23,7 @@ function App() {
     <>
       <TopNavigationBar isLoaded={isLoaded} />
 
-    <PaymentDetailsSection paymentId={2}/>
+   
 
 
       {isLoaded && (
