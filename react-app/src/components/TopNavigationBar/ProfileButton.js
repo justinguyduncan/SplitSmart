@@ -29,7 +29,7 @@ function ProfileButton({ user }) {
     dispatch(logout());
   };
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
- 
+
   return (
     <>
       <ul className="navigation-menu" ref={ulRef}>
@@ -38,11 +38,13 @@ function ProfileButton({ user }) {
             <button className="nav-btn" onClick={openMenu}>
               <img src={user.image_url} alt={user.name} />
             </button>
-            <ul className={ulClassName} >
+            <ul className={ulClassName}>
               <li> Hello, {user.name}!</li>
-             
+
               <li>
-                <button className="log-out" onClick={handleLogout}>Log Out</button>
+                <button className="log-out" onClick={handleLogout}>
+                  Log Out
+                </button>
               </li>
             </ul>
           </>
@@ -61,7 +63,6 @@ function ProfileButton({ user }) {
           </>
         )}
       </ul>
-     
     </>
   );
 }

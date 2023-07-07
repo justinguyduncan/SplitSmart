@@ -1,6 +1,5 @@
 .profile-dropdown {
     position: absolute;
-   
     background-color: #fff;
     top: 100px;
     right: 50px;
@@ -12,121 +11,109 @@
     padding: 15px;
     align-items: flex-start;
     justify-content: flex-start;
-  }
+}
   
-  .hidden {
+.hidden {
     display: none;
-  }
+}
   
   
-  .header-login{
+.header-login {
     background-color: #1CC29F;
-  }
+}
   
-  .header{
-   
+.header {
     height: 100px;
     width: 100%;
     /* position: fixed; */
-  }
-  .header img{
+}
+
+.header img {
     height: 70px;
     width: 70px;
-  }
-  .nav-btn img{
+}
+
+.nav-btn img {
     height: 72px;
     width: 72px;
     border-radius: 50%;
-  
-  }
-  .logo{
+}
+
+.logo { 
     display: flex;
     align-items: center;
-  }
+}
   
-  .title{
+.title {
     font-size: 20px;
     text-transform: uppercase;
     font-weight: 700;
     margin-left: 15px;
     color: #000;
     
-  }
-  
-  
-  .title-login{
+}
+   
+.title-login {
     color: #fff;
-  }
-  
-  .navigation{
+}
+
+.navigation {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0;
     height: 100px;
-  }
-  
-  
-  .navigation-menu{
+}
+   
+.navigation-menu { 
     display: flex;
     gap:10px
-  }
+}
   
-  
-  
-  .nav-login{
+.nav-login {
     color: #1CC29F;
-  }
+}
   
-  
-  .nav-signup{
+.nav-signup {
     color: #fff;
     background-color: #1CC29F;
     border-radius: 4px;
-  }
+}
   
-  
-  .navigation-link{
+.navigation-link {
     font-size: 18px;
     padding: 15px;
-  }
+}
   
-  
-  
-  .nav-btn{
+.nav-btn {
     border-radius: 50%;
     width: 70px;
     height: 70px;
     border: none;
     padding: 0;
     margin: 0;
-  }
+}
   
-  
-  ul{
+ul {
     list-style: none;
-    
-  }
-  .container{
+}
+
+.container {
     max-width: 1200px;
     margin: 0 auto;
-  }
+}
   
-  a{
+a {
     text-decoration: none;
-  }
-  
-  
-  
-  .log-out{
+}
+   
+.log-out {
     padding: 10px;
     border: none;
-    border-radius: 3px;
-    
-  }
+    border-radius: 3px;  
+}
   
-  .log-out:hover{
+.log-out:hover {
     background-color: #1CC29F;
-    color: #fff;
-    
-  }
+    color: #fff; 
+}

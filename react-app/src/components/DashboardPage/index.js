@@ -2,22 +2,20 @@ import LeftNavigationBar from "../LeftNavigationBar";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import {
-  getSummary,
-} from "../../store/expense";
+import { getSummary } from "../../store/expense";
 import { fetchFriendships } from "../../store/friend";
 import MainHeader from "../MainHeader";
 import "./DashboardPage.css";
 function DashboardPage() {
   const dispatch = useDispatch();
   const summary = useSelector((state) => state.expense.summary);
-  const friend =useSelector((state)=>(state.friend))
-  const friendship = Object.values(friend.friendships)
-  const youOwe=friendship.filter(item=>item.bill>0)
-  const youAreOwed=friendship.filter(item=>item.bill<0)
+  const friend = useSelector((state) => state.friend);
+  const friendship = Object.values(friend.friendships);
+  const youOwe = friendship.filter((item) => item.bill > 0);
+  const youAreOwed = friendship.filter((item) => item.bill < 0);
   useEffect(() => {
     dispatch(getSummary());
-    dispatch(fetchFriendships())
+    dispatch(fetchFriendships());
   }, [dispatch]);
   return (
     <>
@@ -34,24 +32,19 @@ function DashboardPage() {
             you owe:
             <p className={`subheader-text `}>${+summary["you owe"]}.00</p>
           </li>
-          <li>you are owed:
-            <p className={`subheader-text `}>
-            ${+summary["you are owed"]}.00
-            </p>
-            
-             </li>
+          <li>
+            you are owed:
+            <p className={`subheader-text `}>${+summary["you are owed"]}.00</p>
+          </li>
         </ul>
       </section>
 
       <section>
         <ul>
           {youAreOwed.map((item) => (
-            <li className ="dashboard-list" key={item.id}>
+            <li className="dashboard-list" key={item.id}>
               <NavLink to={`/friend/${item.friend_id}`}>
-                <img
-                  src={item.friend.image_url}
-                  alt={item.friend.name}
-                />
+                <img src={item.friend.image_url} alt={item.friend.name} />
                 <p>{item.friend.name}</p>
                 <p>${+item.bill}.00</p>
               </NavLink>
@@ -60,13 +53,10 @@ function DashboardPage() {
         </ul>
 
         <ul>
-        {youOwe.map((item) => (
-            <li className ="dashboard-list" key={item.id}>
+          {youOwe.map((item) => (
+            <li className="dashboard-list" key={item.id}>
               <NavLink to={`/friend/${item.friend_id}`}>
-                <img
-                  src={item.friend.image_url}
-                  alt={item.friend.name}
-                />
+                <img src={item.friend.image_url} alt={item.friend.name} />
                 <p>{item.friend.name}</p>
                 <p>${+item.bill}.00</p>
               </NavLink>

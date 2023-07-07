@@ -1,7 +1,6 @@
 .subheader-list{
     display: flex;
     justify-content: space-between;
-
 }
 
 .subheader{
@@ -12,9 +11,7 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-
 }
-
 
 .dashboard-list a{
     text-decoration:  none;
