@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchReceivedPayments, fetchSentPayments } from "../../store/payment";
-import { fetchFriendshipById } from "../../store/friend";
 import "./ExpenseDetailsSection.css";
 import { getCurrentExpense } from "../../store/expense";
 
@@ -27,7 +25,6 @@ function ExpenseDetailsSection({ expenseId }) {
     month[date.getMonth()]
   } ${date.getDate()}, ${date.getFullYear()} `;
   const participants = expense?.particpants || [];
-
   useEffect(() => {
     dispatch(getCurrentExpense(expenseId));
   }, [dispatch, expenseId]);
@@ -60,7 +57,7 @@ function ExpenseDetailsSection({ expenseId }) {
 
       <section className="main-content">
         <div className="main-content-wrapper">
-          <img src={expense?.user?.image_url} alt="photo of user" />
+          <img src={expense?.user?.image_url} alt={expense?.user?.short_name} />
           <p>
             {expense?.user?.short_name} paid ${+expense?.amount}.00 and owes $
             {+expense?.amount / (participants.length + 1)}.00
@@ -71,7 +68,7 @@ function ExpenseDetailsSection({ expenseId }) {
             <li key={participant?.id}>
               <img
                 src={participant?.friendship?.friend?.image_url}
-                alt="photo of friend"
+                alt={participant?.friendship?.friend?.short_name}
               />
               <p>
                 {participant?.friendship?.friend?.short_name} owes $
