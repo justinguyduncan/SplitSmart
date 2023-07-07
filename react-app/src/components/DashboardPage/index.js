@@ -1,13 +1,9 @@
 import LeftNavigationBar from "../LeftNavigationBar";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
-  getSettledExpenses,
-  getUnsettledExpenses,
   getSummary,
-  getCreatedExpenses,
-  getCurrentExpense,
 } from "../../store/expense";
 import { fetchFriendships } from "../../store/friend";
 import MainHeader from "../MainHeader";
@@ -51,7 +47,6 @@ function DashboardPage() {
         <ul>
           {youAreOwed.map((item) => (
             <li className ="dashboard-list" key={item.id}>
-              {console.log(item)}
               <NavLink to={`/friend/${item.friend_id}`}>
                 <img
                   src={item.friend.image_url}
@@ -67,7 +62,6 @@ function DashboardPage() {
         <ul>
         {youOwe.map((item) => (
             <li className ="dashboard-list" key={item.id}>
-              {console.log(item)}
               <NavLink to={`/friend/${item.friend_id}`}>
                 <img
                   src={item.friend.image_url}
