@@ -11,10 +11,6 @@ import checkmark from "./checkmark.png";
 import './FriendPage.css';
 
 
-function formatMoney(amount) {
-    return "$" + String(Number(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-};
-
 function FriendPage() {
     const { id } = useParams();
     const dispatch = useDispatch();
@@ -119,6 +115,50 @@ function FriendPage() {
         }
     }, [isFriendLoaded, isUserExpensesLoaded, isSettledExpensesLoaded, isUnsettledExpensesLoaded, isSentPaymentsLoaded, isReceivedPaymentsLoaded]);
 
+
+    function formatMoney(amount) {
+        return "$" + String(Number(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+    };
+
+    function deleteExpense(expenseId, settled, type) {
+        let answer = window.confirm("Are you sure you want to delete this expense? This will completely remove this expense for ALL people involved, not just you.");
+        if (answer) {
+            dispatch(expenseActions.deleteExpense(expenseId));
+            if (settled) {
+                if (type === 'created') {
+                    setSettledItems(settledItems.filter(obj => {
+                        return !(!obj.expense && obj.id == expenseId);
+                    }));
+                } else if (type === 'charged') {
+                    setSettledItems(settledItems.filter(obj => {
+                        return !(obj.expense.id == expenseId);
+                    }));
+                }
+            } else {
+                if (type === 'created') {
+                    setUnsettledItems(unsettledItems.filter(obj => {
+                        return !(!obj.expense && obj.id == expenseId)
+                    }));
+                } else if (type === 'charged') {
+                    setUnsettledItems(unsettledItems.filter(obj => {
+                        return !(obj.expense.id == expenseId);
+                    }));
+                }
+            }
+        }
+    };
+
+    function deletePayment(paymentId) {
+        let answer = window.confirm("Are you sure you want to delete this payment?");
+        if (answer) {
+            dispatch(paymentActions.fetchDeletePayment(paymentId))
+            setSettledItems(settledItems.filter(obj => {
+                return !((obj.type === 'sent' || obj.type === 'received') && obj.id == paymentId)
+            }));
+        }
+    };
+
+
     return (isFriendLoaded &&
         <>
             <LeftNavigationBar />
@@ -147,14 +187,7 @@ function FriendPage() {
                                         <p>you lent {friend.friend.short_name}</p>
                                         <p>{formatMoney(obj.participants[0].amount_due)}</p>
                                     </div>
-                                    <button className="delete-expense" onClick={() => {
-                                        let answer = window.confirm("Are you sure you want to delete this expense? This will completely remove this expense for ALL people involved, not just you.");
-                                        if (answer) {
-                                            window.alert("TRUE")
-                                        } else {
-                                            window.alert("FALSE")
-                                        }
-                                    }}>
+                                    <button className="delete-expense" onClick={() => deleteExpense(obj.id, false, obj.type)}>
                                         &#x2715;
                                     </button>
                                 </div>
@@ -178,14 +211,7 @@ function FriendPage() {
                                         <p>{friend.friend.short_name} lent you</p>
                                         <p>{formatMoney(obj.amount_due)}</p>
                                     </div>
-                                    <button className="delete-expense" onClick={() => {
-                                        let answer = window.confirm("Are you sure you want to delete this expense? This will completely remove this expense for ALL people involved, not just you.");
-                                        if (answer) {
-                                            window.alert("TRUE")
-                                        } else {
-                                            window.alert("FALSE")
-                                        }
-                                    }}>
+                                    <button className="delete-expense" onClick={() => deleteExpense(obj.expense.id, false, obj.type)}>
                                         &#x2715;
                                     </button>
                                 </div>
@@ -239,14 +265,7 @@ function FriendPage() {
                                         <p>you lent {friend.friend.short_name}</p>
                                         <p>{formatMoney(obj.participants[0].amount_due)}</p>
                                     </div>
-                                    <button className="delete-expense" onClick={() => {
-                                        let answer = window.confirm("Are you sure you want to delete this expense? This will completely remove this expense for ALL people involved, not just you.");
-                                        if (answer) {
-                                            window.alert("TRUE")
-                                        } else {
-                                            window.alert("FALSE")
-                                        }
-                                    }}>
+                                    <button className="delete-expense" onClick={() => deleteExpense(obj.id, true, obj.type)}>
                                         &#x2715;
                                     </button>
                                 </div>
@@ -270,14 +289,7 @@ function FriendPage() {
                                         <p>{friend.friend.short_name} lent you</p>
                                         <p>{formatMoney(obj.amount_due)}</p>
                                     </div>
-                                    <button className="delete-expense" onClick={() => {
-                                        let answer = window.confirm("Are you sure you want to delete this expense? This will completely remove this expense for ALL people involved, not just you.");
-                                        if (answer) {
-                                            window.alert("TRUE")
-                                        } else {
-                                            window.alert("FALSE")
-                                        }
-                                    }}>
+                                    <button className="delete-expense" onClick={() => deleteExpense(obj.expense.id, true, obj.type)}>
                                         &#x2715;
                                     </button>
                                 </div>
@@ -295,14 +307,7 @@ function FriendPage() {
                                     <div className="payment-header-B teal-amount">
                                         {formatMoney(obj.amount)}
                                     </div>
-                                    <button className="delete-payment" onClick={() => {
-                                        let answer = window.confirm("Are you sure you want to delete this payment?");
-                                        if (answer) {
-                                            window.alert("TRUE")
-                                        } else {
-                                            window.alert("FALSE")
-                                        }
-                                    }}>
+                                    <button className="delete-payment" onClick={() => deletePayment(obj.id)}>
                                         &#x2715;
                                     </button>
                                 </div>
@@ -320,14 +325,7 @@ function FriendPage() {
                                     <div className="payment-header-B orange-amount">
                                         {formatMoney(obj.amount)}
                                     </div>
-                                    <button className="delete-payment" onClick={() => {
-                                        let answer = window.confirm("Are you sure you want to delete this payment?");
-                                        if (answer) {
-                                            window.alert("TRUE")
-                                        } else {
-                                            window.alert("FALSE")
-                                        }
-                                    }}>
+                                    <button className="delete-payment" onClick={() => deletePayment(obj.id)}>
                                         &#x2715;
                                     </button>
                                 </div>
