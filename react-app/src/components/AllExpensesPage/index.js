@@ -6,7 +6,7 @@ function AllExpensesPage() {
         <>
             <h1>AllExpenses Page</h1>
             <LeftNavigationBar />
-            <PaymentDetailsSection />
+            <PaymentDetailsSection paymentId={2} />
         </>
     );
 }
