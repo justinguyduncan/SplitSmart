@@ -41,8 +41,6 @@ function PaymentDetailsSection({ paymentId }) {
     dispatch(fetchSentPayments());
   }, [dispatch]);
 
-  console.log(selectedFriendship?.user?.short_name, 3333333);
-
   useEffect(() => {
     if (payment?.friendship_id) {
       dispatch(fetchFriendshipById(payment?.friendship_id));
@@ -55,7 +53,7 @@ function PaymentDetailsSection({ paymentId }) {
         <div className="image-wrapper">
           <img
             src="https://assets.splitwise.com/assets/api/payment_icon/square/large/offline.png"
-            alt="dollar sighn"
+            alt="dollar sign"
           />
         </div>
 
@@ -76,14 +74,14 @@ function PaymentDetailsSection({ paymentId }) {
 
       <section className="main-content">
         <div className="main-content-wrapper">
-          <img src={friend?.image_url} alt="photo of friend" />
+          <img src={friend?.image_url} alt={friend?.short_name} />
           <p>
             {friend?.short_name} paid ${+payment?.amount}.00
           </p>
         </div>
 
         <div className="main-content-wrapper">
-          <img src={user?.image_url} alt="photo of user" />
+          <img src={user?.image_url} alt={user?.short_name} />
           <p>
             {user?.short_name} recieved ${+payment?.amount}.00
           </p>

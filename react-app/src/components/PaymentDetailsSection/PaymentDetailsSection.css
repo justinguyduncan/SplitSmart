@@ -1,21 +1,18 @@
-.subheader{
+.subheader {
 
 }
 
-
-
-.main-content{
-margin-top: 30px;
+.main-content {
+    margin-top: 30px;
 }
 
-.main-content-wrapper img{
+.main-content-wrapper img {
     height: 40px;
     width: 40px;
     border-radius: 50%;
 }
 
-
-.edit-btn{
+.edit-btn {
     background-color: rgb(208, 106, 71);
     color: rgb(220, 218, 215);
     text-shadow: rgb(140, 82, 61) 0px -1px 0px;
@@ -24,16 +21,13 @@ margin-top: 30px;
     border-radius: 3px;
 }
 
-
-.image-wrapper{
+.image-wrapper {
     width: 84px;
     height: 84px;
     border: 1px #ddd solid;
-    
 }
 
-
-.image-wrapper img{
+.image-wrapper img {
     height: 84px;
     width: 84px;
 }
