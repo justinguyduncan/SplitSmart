@@ -74,7 +74,7 @@ def get_expense(id):
     if not expense:
         return {'errors': f"Expense {id} does not exist."}
     participants = ExpenseParticipant.query.filter(ExpenseParticipant.expense_id == expense.id).all()
-    participant_ids = [participant.id for participant in participants]
+    participant_ids = [participant.friendship.friend_id for participant in participants]
     # checks if current user is a part of the expense
     if current_user.id != expense.creator_id and current_user.id not in participant_ids:
         return {'errors': f"User is not a participant of expense {expense.id}."}, 401
@@ -169,7 +169,7 @@ def delete_expense(id):
     if not expense:
         return {'errors': f"Expense {id} does not exist."}, 400
     participants = ExpenseParticipant.query.filter(ExpenseParticipant.expense_id == expense.id).all()
-    participant_ids = [participant.id for participant in participants]
+    participant_ids = [participant.friendship.friend_id for participant in participants]
     # checks if current user is a part of the expense
     if current_user.id != expense.creator_id and current_user.id not in participant_ids:
         return {'errors': f"User is not a participant of expense {expense.id}."}, 401

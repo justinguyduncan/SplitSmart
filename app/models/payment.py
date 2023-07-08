@@ -23,7 +23,9 @@ class Payment(db.Model):
             'amount': self.amount,
             'friendship': {
                 'user_id': self.friendship.to_dict()['user_id'],
-                'friend_id': self.friendship.to_dict()['friend_id']
+                'friend_id': self.friendship.to_dict()['friend_id'],
+                'user': self.friendship.to_dict()['user'],
+                'friend': self.friendship.to_dict()['friend']
             },
             'created_at': self.created_at,
             'updated_at': self.updated_at
