@@ -24,11 +24,11 @@
     background-color: lightgray;
 }
 
-.add-friend-button {
+.friends-list-header > button {
     border: none;
     background: none;
 }
 
-.add-friend-button:hover {
+.friends-list-header > button:hover {
     color: rgb(82, 197, 167);
 }

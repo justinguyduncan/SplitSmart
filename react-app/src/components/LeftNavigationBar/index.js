@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as friendActions from '../../store/friend';
+import OpenModalButton from '../OpenModalButton';
+import AddFriendModal from '../AddFriendModal';
 import './LeftNavigation.css';
 import logo from './splitsmart-logo.png';
 
@@ -20,9 +22,10 @@ function LeftNavigationBar() {
             <NavLink to="/dashboard"><img className="dashboard-logo" src={logo}></img>Dashboard</NavLink>
             <NavLink to="/all"><i className="fas fa-solid fa-list" />All Expenses</NavLink>
             <div className="friends-list-header">FRIENDS
-                <button className="add-friend-button">
-                    + add
-                </button>
+                <OpenModalButton
+                    modalComponent={<AddFriendModal />}
+                    buttonText="+ add"
+                />
             </div>
             {isLoaded && activeFriends?.map(friendObj => (
                 <NavLink to={`/friends/${friendObj.id}`}><i className="fas fa-solid fa-user" />{friendObj.friend.name}</NavLink>
