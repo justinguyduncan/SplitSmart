@@ -1,7 +1,7 @@
 .left-nav-bar {
     display: flex;
     flex-direction: column;
-    row-gap: 5px;
+    row-gap: 10px;
     position: fixed;
     top: 100px;
     left: 0;
@@ -15,4 +15,20 @@
 
 .left-nav-bar > a > * {
     padding: 0px 5px;
+}
+
+.friends-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: lightgray;
+}
+
+.add-friend-button {
+    border: none;
+    background: none;
+}
+
+.add-friend-button:hover {
+    color: rgb(82, 197, 167);
 }

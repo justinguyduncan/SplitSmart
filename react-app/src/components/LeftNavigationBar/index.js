@@ -19,7 +19,11 @@ function LeftNavigationBar() {
         <div className="left-nav-bar">
             <NavLink to="/dashboard"><img className="dashboard-logo" src={logo}></img>Dashboard</NavLink>
             <NavLink to="/all"><i className="fas fa-solid fa-list" />All Expenses</NavLink>
-            <p>FRIENDS</p>
+            <div className="friends-list-header">FRIENDS
+                <button className="add-friend-button">
+                    + add
+                </button>
+            </div>
             {isLoaded && activeFriends?.map(friendObj => (
                 <NavLink to={`/friends/${friendObj.id}`}><i className="fas fa-solid fa-user" />{friendObj.friend.name}</NavLink>
             ))}
