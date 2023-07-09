@@ -9,8 +9,7 @@ function ProfileButton({ user }) {
   const ulRef = useRef();
 
   const openMenu = () => {
-    if (showMenu) return;
-    setShowMenu(true);
+    setShowMenu(!showMenu);
   };
 
   useEffect(() => {
@@ -37,14 +36,13 @@ function ProfileButton({ user }) {
           <>
             <button className="nav-btn" onClick={openMenu}>
               <img src={user.image_url} alt={user.name} />
+              <span>{user.short_name}</span>
             </button>
             <ul className={ulClassName}>
               <li> Hello, {user.name}!</li>
-
-              <li>
-                <button className="log-out" onClick={handleLogout}>
-                  Log Out
-                </button>
+             
+              <li className="logout-wrapper">
+                <button className="log-out" onClick={handleLogout}>Log Out</button>
               </li>
             </ul>
           </>
