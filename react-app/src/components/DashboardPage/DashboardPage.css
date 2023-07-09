@@ -1,10 +1,21 @@
-.subheader-list{
+.subheader-list {
     display: flex;
     justify-content: space-between;
+    text-align: center;
+    padding: 0 10px;
 }
 
-.subheader{
-    max-width: 800px;
+.subheader-list li {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.subheader {
+    background-color: rgb(220, 218, 215);
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    text-align: center;
 }
 
 .dashboard-list img{
@@ -16,4 +27,43 @@
 .dashboard-list a{
     text-decoration:  none;
     color: #000;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.main {
+    max-width: 550px;
+    width: 100%;
+    border: 1px solid #000;
+   
+    
+}
+
+.main-wrapper {
+    display: flex;
+    gap: 20px;
+}
+
+.subheader-list-text {
+    color: rgb(148, 142, 133);
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+
+.subheader-text {
+    font-size: 13px;
+    padding: 5px 0;
+    margin: 0;
+}
+
+.subheader-text-orange {
+    color: #ff652f;
+}
+
+.subheader-text-green {
+    color: #5bc5a7;
 }

@@ -18,53 +18,69 @@ function DashboardPage() {
     dispatch(fetchFriendships());
   }, [dispatch]);
   return (
-    <>
+    <div className="container main-wrapper">
       <LeftNavigationBar />
-      <MainHeader />
 
-      <section className="subheader">
-        <ul className="subheader-list">
-          <li>
-            total balance:
-            <p className={`subheader-text `}>${+summary.balance}.00</p>
-          </li>
-          <li>
-            you owe:
-            <p className={`subheader-text `}>${+summary["you owe"]}.00</p>
-          </li>
-          <li>
-            you are owed:
-            <p className={`subheader-text `}>${+summary["you are owed"]}.00</p>
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <ul>
-          {youAreOwed.map((item) => (
-            <li className="dashboard-list" key={item.id}>
-              <NavLink to={`/friend/${item.friend_id}`}>
-                <img src={item.friend.image_url} alt={item.friend.name} />
-                <p>{item.friend.name}</p>
-                <p>${+item.bill}.00</p>
-              </NavLink>
+      <main className="main">
+        <MainHeader />
+        <section className="subheader">
+          <ul className="subheader-list">
+            <li>
+              <p className="subheader-list-text">total balance: </p>
+              {summary["you owe"] > summary["you are owed"] ? (
+                <p className={`subheader-text subheader-text-orange`}>
+                  - ${+summary.balance}.00
+                </p>
+              ) : (
+                <p className={`subheader-text subheader-text-green`}>
+                  + ${+summary.balance}.00
+                </p>
+              )}
             </li>
-          ))}
-        </ul>
+            <li>
+              <p className="subheader-list-text">you owe: </p>
 
-        <ul>
-          {youOwe.map((item) => (
-            <li className="dashboard-list" key={item.id}>
-              <NavLink to={`/friend/${item.friend_id}`}>
-                <img src={item.friend.image_url} alt={item.friend.name} />
-                <p>{item.friend.name}</p>
-                <p>${+item.bill}.00</p>
-              </NavLink>
+              <p className={`subheader-text subheader-text-orange`}>
+                ${+summary["you owe"]}.00
+              </p>
             </li>
-          ))}
-        </ul>
-      </section>
-    </>
+            <li>
+              <p className="subheader-list-text">you are owed: </p>
+
+              <p className={`subheader-text subheader-text-green`}>
+                ${+summary["you are owed"]}.00
+              </p>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <ul>
+            {youAreOwed.map((item) => (
+              <li className="dashboard-list" key={item.id}>
+                <NavLink to={`/friend/${item.friend_id}`}>
+                  <img src={item.friend.image_url} alt={item.friend.name} />
+                  <p>{item.friend.name}</p>
+                  <p>${+item.bill}.00</p>
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+
+          <ul>
+            {youOwe.map((item) => (
+              <li className="dashboard-list" key={item.id}>
+                <NavLink to={`/friend/${item.friend_id}`}>
+                  <img src={item.friend.image_url} alt={item.friend.name} />
+                  <p>{item.friend.name}</p>
+                  <p>${+item.bill}.00</p>
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </main>
+    </div>
   );
 }
 
