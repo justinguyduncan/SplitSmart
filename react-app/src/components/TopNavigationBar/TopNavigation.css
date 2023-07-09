@@ -1,3 +1,8 @@
+p, ul, div, li, a, img h1, h2, h3, h4, section {
+    padding: 0;
+    margin: 0;
+}
+
 .profile-dropdown {
     position: absolute;
     background-color: #fff;
@@ -110,17 +115,17 @@
 }
   
 ul {
-  list-style: none; 
+    list-style: none; 
 }
   
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px;
 }
   
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .profile-dropdown li {
@@ -129,7 +134,7 @@ a {
 }
   
 .log-out {
-    padding: 10px 5px;
+    padding: 10px 0;
     border: none;
     width: 103px;
     text-align: left;
@@ -144,8 +149,4 @@ a {
 .logout-wrapper:hover {
     background-color: #1CC29F;
     color: #fff;
-}
-
-.logout-wrapper {
-  padding: 0;
 }

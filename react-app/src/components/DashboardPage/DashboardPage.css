@@ -1,3 +1,8 @@
+p, ul, div, li, a, img h1, h2, h3, h4, section {
+    padding: 0;
+    margin: 0;
+}
+
 .subheader-list {
     display: flex;
     justify-content: space-between;
@@ -13,20 +18,35 @@
 
 .subheader {
     background-color: rgb(220, 218, 215);
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
+    border-top: 1px solid rgb(184, 180, 174);
+    border-bottom: 1px solid rgb(184, 180, 174);
     text-align: center;
 }
 
-.dashboard-list img{
-    width: 100px;
-    height: 100px;
+.subheader-item {
+    border-left: 1px solid rgb(184, 180, 174); ;
+    border-right: 1px solid rgb(184, 180, 174);;
+}
+
+.owed-item img {
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
 }
 
-.dashboard-list a{
-    text-decoration:  none;
-    color: #000;
+.owed-item {
+    padding: 5px;
+}
+
+.owed-item:hover {
+    background-color:  rgb(215, 213, 209);
+}
+
+.owed-item a {
+    text-decoration: none;
+    color: rgb(24, 26, 27);
+    display: flex;
+    gap: 10px;
 }
 
 .container {
@@ -37,9 +57,10 @@
 .main {
     max-width: 550px;
     width: 100%;
-    border: 1px solid #000;
-   
-    
+    border-left-color: rgb(184, 180, 174);
+    border-right-color: rgb(184, 180, 174);
+    height: 100vh;
+    box-shadow: rgba(24, 26, 27, 0.2) 0px 0px 12px; 
 }
 
 .main-wrapper {
@@ -66,4 +87,37 @@
 
 .subheader-text-green {
     color: #5bc5a7;
+}
+
+.owed-section {
+    display: flex;
+    gap: 20px;
+}
+
+.owed-wrapper {
+    width: 50%;
+    box-sizing: border-box;
+    margin: 10px 0;
+}
+
+.owed-wrapper-right {
+    border-left:  rgb(153, 153, 153) 1px solid;
+}
+
+.no-owe {
+    color: rgb(153, 153, 153);
+    font-size: 16px;
+    margin-top: 6px;
+    padding: 10px;
+}
+
+.owed-title {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: rgb(153, 153, 153);
+    padding: 10px;
+}
+
+.owed-title-right {
+    text-align: right;
 }

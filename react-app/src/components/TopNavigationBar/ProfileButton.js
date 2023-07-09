@@ -39,10 +39,12 @@ function ProfileButton({ user }) {
               <span>{user.short_name}</span>
             </button>
             <ul className={ulClassName}>
-              <li> Hello, {user.name}!</li>
-             
+              <li> Hello, </li>
+              <li>{user.name}!</li>
               <li className="logout-wrapper">
-                <button className="log-out" onClick={handleLogout}>Log Out</button>
+                <button className="log-out" onClick={handleLogout}>
+                  Log Out
+                </button>
               </li>
             </ul>
           </>
