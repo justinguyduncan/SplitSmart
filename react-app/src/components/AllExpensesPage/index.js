@@ -101,7 +101,7 @@ function AllExpensesPage() {
         <>
             <LeftNavigationBar />
             <TopNavigationBar />
-            <div id="all-items">
+            <div id="all-expenses">
                 {items.map(obj => {
                     const dateStr = new Date(obj.created_at).toDateString();
                     const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;

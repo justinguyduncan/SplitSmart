@@ -169,7 +169,8 @@ function FriendPage() {
         <>
             <LeftNavigationBar />
             <TopNavigationBar />
-            <div id="unsettled-items">
+            <div id="friend-expenses">
+                <div id="unsettled-items">
                 {unsettledItems.map(obj => {
                     const dateStr = new Date(obj.created_at).toDateString();
                     const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;
@@ -342,6 +343,8 @@ function FriendPage() {
                     }
                 })}
             </div>
+            </div>
+
         </>
     );
 }
