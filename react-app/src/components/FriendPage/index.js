@@ -80,8 +80,12 @@ function FriendPage() {
                 .then(() => setIsReceivedPaymentsLoaded(true));
         }
         fetchData();
-    }, [dispatch, id]);
 
+        return () => {
+            document.getElementById("settled-items")?.classList.add("hidden");
+            document.getElementById("show-container")?.classList.remove("hidden");
+        }
+    }, [dispatch, id]);
 
     useEffect(() => {
         if (isFriendLoaded && isUserExpensesLoaded && isSettledExpensesLoaded && isUnsettledExpensesLoaded && isSentPaymentsLoaded && isReceivedPaymentsLoaded) {
@@ -113,8 +117,7 @@ function FriendPage() {
                 return new Date(e2.created_at).getTime() - new Date(e1.created_at).getTime()
             }));
         }
-    }, [isFriendLoaded, isUserExpensesLoaded, isSettledExpensesLoaded, isUnsettledExpensesLoaded, isSentPaymentsLoaded, isReceivedPaymentsLoaded]);
-
+    }, [isFriendLoaded, isUserExpensesLoaded, isSettledExpensesLoaded, isUnsettledExpensesLoaded, isSentPaymentsLoaded, isReceivedPaymentsLoaded, receivedPayments, sentPayments, settledExpenses, unsettledExpenses, userExpenses.settled, userExpenses.unsettled]);
 
     function formatMoney(amount) {
         return "$" + String(Number(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));

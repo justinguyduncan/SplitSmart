@@ -23,10 +23,10 @@ function AboutPage() {
                 }}>Sign up</button>
             </div>
             <div className="about-page-images">
-                <img className="track-balances" src={trackBalances}></img>
-                <img className="organize-expenses" src={organizeExpenses}></img>
-                <img className="add-expenses-easily" src={addExpensesEasily}></img>
-                <img className="pay-friends-back" src={payFriendsBack}></img>
+                <img className="track-balances" src={trackBalances} alt="track-balances"></img>
+                <img className="organize-expenses" src={organizeExpenses} alt="organize-expenses"></img>
+                <img className="add-expenses-easily" src={addExpensesEasily} alt="add-expenses-easily"></img>
+                <img className="pay-friends-back" src={payFriendsBack} alt="pay-friends-back"></img>
             </div>
         </div>
     );
