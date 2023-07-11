@@ -7,6 +7,7 @@ import LeftNavigationBar from "../LeftNavigationBar";
 import receipt from "./receipt.jpeg";
 import dollar from "./dollar.jpeg";
 import './AllExpenses.css';
+import TopNavigationBar from '../TopNavigationBar';
 
 
 function AllExpensesPage() {
@@ -99,7 +100,7 @@ function AllExpensesPage() {
     return (
         <>
             <LeftNavigationBar />
-
+            <TopNavigationBar />
             <div id="all-items">
                 {items.map(obj => {
                     const dateStr = new Date(obj.created_at).toDateString();

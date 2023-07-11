@@ -10,6 +10,7 @@ import receipt from "./receipt.jpeg";
 import dollar from "./dollar.jpeg";
 import checkmark from "./checkmark.png";
 import './FriendPage.css';
+import TopNavigationBar from '../TopNavigationBar';
 
 
 function FriendPage() {
@@ -167,6 +168,7 @@ function FriendPage() {
     return (isFriendLoaded &&
         <>
             <LeftNavigationBar />
+            <TopNavigationBar />
             <div id="unsettled-items">
                 {unsettledItems.map(obj => {
                     const dateStr = new Date(obj.created_at).toDateString();
