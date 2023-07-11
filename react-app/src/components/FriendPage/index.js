@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router";
+import { Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import * as friendActions from '../../store/friend';
 import * as expenseActions from '../../store/expense';
@@ -161,6 +162,7 @@ function FriendPage() {
         }
     };
 
+    if (!sessionUser) return <Redirect to="/" />;
 
     return (isFriendLoaded &&
         <>
