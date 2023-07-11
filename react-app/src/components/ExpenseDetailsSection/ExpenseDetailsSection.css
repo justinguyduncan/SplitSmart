@@ -44,7 +44,7 @@ li {
 
 .main-content {
     margin-top: 30px;
-    width: 48%;
+    width: 49%;
     padding: 5px;
 }
 
@@ -52,7 +52,6 @@ li {
     height: 40px;
     width: 40px;
     border-radius: 50%;
-   
 }
 
 .btn { 
@@ -97,10 +96,16 @@ li {
     display: flex;
     gap: 10px;
     color: rgb(60, 65, 68);
+    align-items: center;
 }
 
 .main-content-wrapper span {
     font-weight: bold;
+    font-size: 13px;
+}
+
+.main-content-wrapper p {
+font-size: 14px;
 }
  
 .main-list {
@@ -137,6 +142,7 @@ li {
 }
 
 .comments-wrapper {
+    margin-left: 300px;
     max-width: 580px;
     padding: 5px;
     background-color: rgb(215, 213, 209);
@@ -195,5 +201,13 @@ li {
 .comment-form label {
     position: relative;
     margin-bottom: 10px;
+}
+
+.comment-form .error {
+    position: absolute;
+    bottom: -15px;
+    font-size: 11px;
+    left: 0;
+    color: rgb(143, 61, 61);
 }
 

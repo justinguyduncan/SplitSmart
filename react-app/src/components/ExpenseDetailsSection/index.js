@@ -1,7 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./ExpenseDetailsSection.css";
 import { getCurrentExpense } from "../../store/expense";
+import { addComment, getCommentsByExpenseId } from "../../store/comment";
+
 const month = [
   "January",
   "February",
@@ -17,8 +19,13 @@ const month = [
   "December",
 ];
 function ExpenseDetailsSection({ expenseId }) {
+  const [comment, setComment] = useState("");
+  const [error, setError] = useState({});
   const dispatch = useDispatch();
+
   const expense = useSelector((state) => state.expense?.currentExpense);
+  const comments = useSelector((state)=>Object.values(state.comment?.comments))
+  console.log(comments,2222222)
   const date = new Date(expense?.created_at);
   const createdDate = `${
     month[date.getMonth()]
@@ -26,10 +33,23 @@ function ExpenseDetailsSection({ expenseId }) {
   const participants = expense?.particpants || [];
   useEffect(() => {
     dispatch(getCurrentExpense(expenseId));
+    dispatch(getCommentsByExpenseId(expenseId))
   }, [dispatch, expenseId]);
+  useEffect(() => {
+    const error = {};
+    if (comment.length < 1) {
+      error.message = "comment to short";
+    }
+    if (comment.length > 255) {
+      error.message = "comment to long";
+    }
+    console.log(error)
+    setError(error);
+  }, [comment]);
   const handleCommentCreate = (e) => {
     e.preventDefault();
-    alert("feature is coming");
+    dispatch(addComment(comment, expenseId))
+    setComment("")
   };
 
   return (
@@ -66,8 +86,8 @@ function ExpenseDetailsSection({ expenseId }) {
               alt={expense?.user?.short_name}
             />
             <p>
-              {expense?.user?.short_name} paid
-              <span> ${+expense?.amount}.00</span> and owes <br /> $
+              {expense?.user?.short_name} paid{" "}
+              <span> ${+expense?.amount}.00</span> and owes  $
               {+expense?.amount / (participants.length + 1)}.00
             </p>
           </div>
@@ -88,6 +108,7 @@ function ExpenseDetailsSection({ expenseId }) {
             </ul>
           </div>
         </section>
+
         <section className="main-content comment">
           <p className="comment-text">
             <img
@@ -98,7 +119,7 @@ function ExpenseDetailsSection({ expenseId }) {
             Notes and Comments
           </p>
           <ul className="comment">
-            {expense?.comments?.map((comment) => (
+            {comments.map((comment) => (
               <li key={comment.id} className="comment-item">
                 <p className="comment-title">
                   {comment?.user?.short_name}
@@ -110,7 +131,7 @@ function ExpenseDetailsSection({ expenseId }) {
                   ) : (
                     <span className="comment-span">
                       {" "}
-                      {month[new Date(comment?.created_at).getMonth()]}
+                      {month[new Date(comment?.created_at).getMonth()]} {" "}
                       {new Date(comment?.created_at).getDate()}
                     </span>
                   )}
@@ -135,9 +156,11 @@ function ExpenseDetailsSection({ expenseId }) {
           </ul>
           <form className="comment-form" onSubmit={handleCommentCreate}>
             <label>
-              <textarea placeholder="Add comment"></textarea>
+            <textarea onChange={(e)=>setComment(e.target.value)} placeholder="Add comment" value={comment}></textarea>
+            {error.message && <span className="error">{error.message}</span>}
             </label>
-            <button className="btn post-btn" type="submit">
+            
+            <button disabled = {!!error.message} className="btn post-btn" type="submit">
               Post
             </button>
           </form>
@@ -148,3 +171,4 @@ function ExpenseDetailsSection({ expenseId }) {
 }
 
 export default ExpenseDetailsSection;
+
