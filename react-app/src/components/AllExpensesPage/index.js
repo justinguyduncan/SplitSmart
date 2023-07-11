@@ -60,7 +60,7 @@ function AllExpensesPage() {
                 return new Date(e2.created_at).getTime() - new Date(e1.created_at).getTime()
             }));
         }
-    }, [isCreatedExpensesLoaded, isSettledExpensesLoaded, isUnsettledExpensesLoaded, isSentPaymentsLoaded, isReceivedPaymentsLoaded]);
+    }, [isCreatedExpensesLoaded, isSettledExpensesLoaded, isUnsettledExpensesLoaded, isSentPaymentsLoaded, isReceivedPaymentsLoaded, createdExpenses, receivedPayments, sentPayments, settledExpenses, unsettledExpenses]);
 
 
     function formatMoney(amount) {
