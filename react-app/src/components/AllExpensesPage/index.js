@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
+import { Redirect } from "react-router-dom";
 import * as expenseActions from '../../store/expense';
 import * as paymentActions from '../../store/payment';
 import LeftNavigationBar from "../LeftNavigationBar";
@@ -93,6 +94,7 @@ function AllExpensesPage() {
         }
     };
 
+    if (!sessionUser) return <Redirect to="/" />;
 
     return (
         <>

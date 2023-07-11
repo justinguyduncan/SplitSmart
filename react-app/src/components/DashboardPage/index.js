@@ -1,5 +1,5 @@
 import LeftNavigationBar from "../LeftNavigationBar";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getSummary } from "../../store/expense";
@@ -8,6 +8,7 @@ import MainHeader from "../MainHeader";
 import "./DashboardPage.css";
 function DashboardPage() {
   const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user);
   const summary = useSelector((state) => state.expense.summary);
   const friend = useSelector((state) => state.friend);
   const friendship = Object.values(friend.friendships);
@@ -17,6 +18,9 @@ function DashboardPage() {
     dispatch(getSummary());
     dispatch(fetchFriendships());
   }, [dispatch]);
+
+  if (!sessionUser) return <Redirect to="/" />;
+
   return (
     <div className="container main-wrapper">
       <LeftNavigationBar />
@@ -62,7 +66,7 @@ function DashboardPage() {
                 {youAreOwed.map((item) => (
                   <li className="owed-item" key={item.id}>
                     <NavLink to={`/friend/${item.friend_id}`}>
-                      
+
                       <img src={item.friend.image_url} alt={item.friend.name} />
                       <div>
                         <p>{item.friend.name}</p>
