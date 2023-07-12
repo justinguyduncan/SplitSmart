@@ -22,21 +22,19 @@ function DashboardPage() {
   }, [dispatch]);
 
   if (!sessionUser) return <Redirect to="/" />;
-
   return (
     <>
       <LeftNavigationBar />
       <TopNavigationBar />
       {/* <MainHeader /> */}
       <main className="main">
-
         <section className="subheader">
           <ul className="subheader-list">
             <li>
               <p className="subheader-list-text">total balance: </p>
-              {summary["you owe"] > summary["you are owed"] ? (
+              {summary["you owe"] < summary["you are owed"] ? (
                 <p className={`subheader-text subheader-text-orange`}>
-                  - ${+summary.balance}.00
+                  -${+summary.balance.slice(1)}.00
                 </p>
               ) : (
                 <p className={`subheader-text subheader-text-green`}>
@@ -64,17 +62,16 @@ function DashboardPage() {
         <section className="owed-section">
           <div className="owed-wrapper">
             <h4 className="owed-title">YOU OWE</h4>
-            {youAreOwed.length ? (
+            {youOwe.length ? (
               <ul className="owed-list">
-                {youAreOwed.map((item) => (
+                {youOwe.map((item) => (
                   <li className="owed-item" key={item.id}>
                     <NavLink to={`/friend/${item.friend_id}`}>
-
                       <img src={item.friend.image_url} alt={item.friend.name} />
                       <div>
                         <p>{item.friend.name}</p>
                         <p className="subheader-text-orange">
-                          ${+item.bill}.00
+                          -${+item.bill}.00
                         </p>
                       </div>
                     </NavLink>
@@ -87,25 +84,23 @@ function DashboardPage() {
           </div>
           <div className="owed-wrapper owed-wrapper-right">
             <h4 className="owed-title owed-title-right ">YOU ARE OWED</h4>
-            {youOwe.length && (
+            {youAreOwed.length ? (
               <ul className="owed-list">
-                {youOwe.map((item) => (
+                {youAreOwed.map((item) => (
                   <li className="owed-item" key={item.id}>
                     <NavLink to={`/friend/${item.friend_id}`}>
-                    {console.log(item.friend.image_url, 33333333333)}
                       <img src={item.friend.image_url} alt={item.friend.name} />
                       <div>
                         <p>{item.friend.name}</p>
-                        <p className="subheader-text-green">${+item.bill}.00</p>
+                        <p className="subheader-text-green">
+                          ${+item.bill}.00
+                        </p>
                       </div>
                     </NavLink>
                   </li>
                 ))}
               </ul>
-            )}
-            {!youOwe.length && (
-              <p className="no-owe">You are not owed anything</p>
-            )}
+            ):(  <p className="no-owe">You are not owed anything</p>)}
           </div>
         </section>
       </main>
