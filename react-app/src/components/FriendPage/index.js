@@ -119,7 +119,7 @@ function FriendPage() {
                 return new Date(e2.created_at).getTime() - new Date(e1.created_at).getTime()
             }));
         }
-    }, [isFriendLoaded, isUserExpensesLoaded, isSettledExpensesLoaded, isUnsettledExpensesLoaded, isSentPaymentsLoaded, isReceivedPaymentsLoaded, receivedPayments, sentPayments, settledExpenses, unsettledExpenses, userExpenses.settled, userExpenses.unsettled]);
+    }, [id]);
 
     function formatMoney(amount) {
         return "$" + String(Number(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
