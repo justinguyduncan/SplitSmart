@@ -11,6 +11,7 @@ import dollar from "./dollar.jpeg";
 import checkmark from "./checkmark.png";
 import './FriendPage.css';
 import TopNavigationBar from '../TopNavigationBar';
+import MainHeader from '../MainHeader';
 
 
 function FriendPage() {
@@ -176,6 +177,7 @@ function FriendPage() {
         <>
             <LeftNavigationBar />
             <TopNavigationBar />
+            <MainHeader />
             {console.log('SETTLED ITEMS IN RETURN', settledItems)}
             {console.log('UNSETTLED ITEMS IN RETURN', unsettledItems)}
             <div id="friend-expenses">

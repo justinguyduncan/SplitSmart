@@ -27,7 +27,7 @@ function DashboardPage() {
     <>
       <LeftNavigationBar />
       <TopNavigationBar />
-      {/* <MainHeader /> */}
+      <MainHeader />
       <main className="main">
 
         <section className="subheader">

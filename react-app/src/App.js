@@ -9,7 +9,7 @@ import AllExpensesPage from "./components/AllExpensesPage";
 import EditFriendPage from "./components/EditFriendPage";
 import FriendPage from "./components/FriendPage";
 import { authenticate } from "./store/session";
-import MainHeader from "./components/MainHeader"; // Import the MainHeader component
+// import MainHeader from "./components/MainHeader"; // Import the MainHeader component
 
 function App() {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      {location.pathname !== "/" && <MainHeader />}
+      {/* {location.pathname !== "/" && <MainHeader />} */}
       {isLoaded && (
         <Switch>
           <Route exact path="/">
