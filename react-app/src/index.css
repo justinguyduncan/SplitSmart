@@ -34,6 +34,8 @@ button {
     font-style: normal;
     width: auto;
     margin: 5px 0px;
+    border-radius: 5px;
+    padding: 3px;
 }
 
 button:hover {

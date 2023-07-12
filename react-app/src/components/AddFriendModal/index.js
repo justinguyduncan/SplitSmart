@@ -2,24 +2,47 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import logo from './splitsmart-logo.png';
+import { createFriendship } from '../../store/friend';
 import './AddFriend.css'
 
 function AddFriendModal() {
     const { closeModal } = useModal();
     const dispatch = useDispatch();
+    const [email, setEmail] = useState("");
+    const [errors, setErrors] = useState([]);
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const data = await dispatch(createFriendship(email));
+        if (data && data.message) {
+            setErrors([`email : ${data.message}`]);
+        } else if (data) {
+            setErrors(data);
+        } else {
+            closeModal();
+        }
+    };
 
     return (
         <>
-            <h1><img className="add-friend-logo" src={logo} alt="add-friend-logo"></img>Invite friends</h1>
-            <form>
+            <form className="add-friend-form" onSubmit={handleSubmit}>
+                <h2><img className="add-friend-logo" src={logo} alt="add-friend-logo"></img>Invite friends</h2>
+                {errors.length > 0 && <ul>
+                    {errors.map((error, idx) => (
+                        <li key={idx}>{error}</li>
+                    ))}
+                </ul>}
                 <input
+                    type="text"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter email address"
-                ></input>
-                <input
+                    required
+                />
+                <textarea
                     placeholder="Include an optional message"
-                ></input>
-                <button className="accent">Send invites and add friends</button>
+                />
+                <button className="add-friend-button accent">Send invites and add friends</button>
             </form>
         </>
     );
