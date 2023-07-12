@@ -1,0 +1,17 @@
+.main-header {
+    margin-top: 35px;
+    margin-left: 200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10px;
+    background-color: rgb(220, 218, 215);
+}
+
+.main-header-title {
+    font-size: 16pt;
+}
+
+.main-header-buttons > button {
+    margin: 0px 5px;
+}
