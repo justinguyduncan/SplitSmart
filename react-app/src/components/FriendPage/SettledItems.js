@@ -9,7 +9,7 @@ function SettledItems({ items, user, friendship, deleteExpense, deletePayment })
     };
 
     return (
-        <div id="settled-items"> SettledItems
+        <div id="settled-items">
             {items.map(obj => {
                 const dateStr = new Date(obj.created_at).toDateString();
                 const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;
@@ -34,9 +34,9 @@ function SettledItems({ items, user, friendship, deleteExpense, deletePayment })
                                     <p>you lent {friendship.friend.short_name}</p>
                                     <p>{formatMoney(obj.participants[0].amount_due)}</p>
                                 </div>
-                                <button className="delete-expense" onClick={() => deleteExpense(obj.id, true, obj.type)}>
+                                {/* <button className="delete-expense" onClick={() => deleteExpense(obj.id, true, obj.type)}>
                                     &#x2715;
-                                </button>
+                                </button> */}
                             </div>
                         );
                     case 'charged':
@@ -58,9 +58,9 @@ function SettledItems({ items, user, friendship, deleteExpense, deletePayment })
                                     <p>{friendship.friend.short_name} lent you</p>
                                     <p>{formatMoney(obj.amount_due)}</p>
                                 </div>
-                                <button className="delete-expense" onClick={() => deleteExpense(obj.expense.id, true, obj.type)}>
+                                {/* <button className="delete-expense" onClick={() => deleteExpense(obj.expense.id, true, obj.type)}>
                                     &#x2715;
-                                </button>
+                                </button> */}
                             </div>
                         );
                     case 'sent':
@@ -76,9 +76,9 @@ function SettledItems({ items, user, friendship, deleteExpense, deletePayment })
                                 <div className="payment-header-B teal-amount">
                                     {formatMoney(obj.amount)}
                                 </div>
-                                <button className="delete-payment" onClick={() => deletePayment(obj.id)}>
+                                {/* <button className="delete-payment" onClick={() => deletePayment(obj.id)}>
                                     &#x2715;
-                                </button>
+                                </button> */}
                             </div>
                         );
                     case 'received':
@@ -94,9 +94,9 @@ function SettledItems({ items, user, friendship, deleteExpense, deletePayment })
                                 <div className="payment-header-B orange-amount">
                                     {formatMoney(obj.amount)}
                                 </div>
-                                <button className="delete-payment" onClick={() => deletePayment(obj.id)}>
+                                {/* <button className="delete-payment" onClick={() => deletePayment(obj.id)}>
                                     &#x2715;
-                                </button>
+                                </button> */}
                             </div>
                         );
                     default:

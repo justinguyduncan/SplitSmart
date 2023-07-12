@@ -8,7 +8,7 @@ function UnsettledItems({ items, friendship, deleteExpense }) {
     };
 
     return (
-        <div id="unsettled-items"> UnsettledItems
+        <div id="unsettled-items">
             {items.map(obj => {
                 const dateStr = new Date(obj.created_at).toDateString();
                 const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;
@@ -33,9 +33,9 @@ function UnsettledItems({ items, friendship, deleteExpense }) {
                                     <p>you lent {friendship.friend.short_name}</p>
                                     <p>{formatMoney(obj.participants[0].amount_due)}</p>
                                 </div>
-                                <button className="delete-expense" onClick={() => deleteExpense(obj.id, false, obj.type)}>
+                                {/* <button className="delete-expense" onClick={() => deleteExpense(obj.id, false, obj.type)}>
                                     &#x2715;
-                                </button>
+                                </button> */}
                             </div>
                         );
                     case 'charged':
@@ -57,9 +57,9 @@ function UnsettledItems({ items, friendship, deleteExpense }) {
                                     <p>{friendship.friend.short_name} lent you</p>
                                     <p>{formatMoney(obj.amount_due)}</p>
                                 </div>
-                                <button className="delete-expense" onClick={() => deleteExpense(obj.expense.id, false, obj.type)}>
+                                {/* <button className="delete-expense" onClick={() => deleteExpense(obj.expense.id, false, obj.type)}>
                                     &#x2715;
-                                </button>
+                                </button> */}
                             </div>
                         );
                     default:
