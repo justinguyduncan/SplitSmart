@@ -28,7 +28,7 @@ function LeftNavigationBar() {
                 />
             </div>
             {isLoaded && activeFriends?.map(friendObj => (
-                <NavLink to={`/friends/${friendObj.id}`}><i className="fas fa-solid fa-user" />{friendObj.friend.name}</NavLink>
+                <NavLink key={friendObj.id} to={`/friends/${friendObj.id}`}><i className="fas fa-solid fa-user" />{friendObj.friend.name}</NavLink>
             ))}
         </div>
     );

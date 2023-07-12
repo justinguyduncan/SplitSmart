@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./ExpenseDetailsSection.css";
 import { getCurrentExpense } from "../../store/expense";
-import { addComment, getCommentsByExpenseId } from "../../store/comment";
+import {
+  addComment,
+  deleteComment,
+  getCommentsByExpenseId,
+} from "../../store/comment";
 
 const month = [
   "January",
@@ -24,20 +28,21 @@ function ExpenseDetailsSection({ expenseId }) {
   const dispatch = useDispatch();
 
   const expense = useSelector((state) => state.expense?.currentExpense);
-  const comments = useSelector((state)=>Object.values(state.comment?.comments))
-  
+  const comments = useSelector((state) =>
+    Object.values(state.comment?.comments)
+  );
+
   const date = new Date(expense?.created_at);
   const createdDate = `${
     month[date.getMonth()]
   } ${date.getDate()}, ${date.getFullYear()} `;
   const participants = expense?.particpants || [];
   useEffect(() => {
-    const fetchData = async()=>{
+    const fetchData = async () => {
       dispatch(getCurrentExpense(expenseId));
-      dispatch(getCommentsByExpenseId(expenseId))
-
-    }
-   fetchData()
+      dispatch(getCommentsByExpenseId(expenseId));
+    };
+    fetchData();
   }, [dispatch, expenseId]);
   useEffect(() => {
     const error = {};
@@ -47,14 +52,22 @@ function ExpenseDetailsSection({ expenseId }) {
     if (comment.length > 255) {
       error.message = "comment to long";
     }
-    
+
     setError(error);
   }, [comment]);
   const handleCommentCreate = (e) => {
-    console.log(comment, 55555)
     e.preventDefault();
-    dispatch(addComment(comment, expenseId))
-    setComment("")
+    dispatch(addComment(comment, expenseId));
+    setComment("");
+  };
+
+  const handleDelete = (commentId) => {
+    let answer = window.confirm(
+      "Are you sure you want to delete this comment? This will completely remove this comment for ALL people involved, not just you."
+    );
+    if (answer) {
+      dispatch(deleteComment(commentId));
+    }
   };
 
   return (
@@ -67,7 +80,9 @@ function ExpenseDetailsSection({ expenseId }) {
           />
         </div>
         <div className="expense-subheader-text-wrapper">
-          <p className="expense-subheader-description">{expense?.description}</p>
+          <p className="expense-subheader-description">
+            {expense?.description}
+          </p>
           <p className="expense-subheader-amount">${+expense?.amount}.00</p>
           <p className="expense-subheader-date">
             Added by {expense?.user?.short_name} on {createdDate}
@@ -92,7 +107,7 @@ function ExpenseDetailsSection({ expenseId }) {
             />
             <p>
               {expense?.user?.short_name} paid{" "}
-              <span> ${+expense?.amount}.00</span> and owes  $
+              <span> ${+expense?.amount}.00</span> and owes $
               {+expense?.amount / (participants.length + 1)}.00
             </p>
           </div>
@@ -136,7 +151,7 @@ function ExpenseDetailsSection({ expenseId }) {
                   ) : (
                     <span className="expense-comment-span">
                       {" "}
-                      {month[new Date(comment?.created_at).getMonth()]} {" "}
+                      {month[new Date(comment?.created_at).getMonth()]}{" "}
                       {new Date(comment?.created_at).getDate()}
                     </span>
                   )}
@@ -150,7 +165,7 @@ function ExpenseDetailsSection({ expenseId }) {
                   </span>
                   <span
                     className="expense-close"
-                    onClick={() => alert("feature coming soon")}
+                    onClick={() => handleDelete(comment.id)}
                   >
                     X
                   </span>
@@ -161,11 +176,21 @@ function ExpenseDetailsSection({ expenseId }) {
           </ul>
           <form className="expense-comment-form" onSubmit={handleCommentCreate}>
             <label>
-            <textarea onChange={(e)=>setComment(e.target.value)} placeholder="Add comment" value={comment}></textarea>
-            {error.message && <span className="expense-error">{error.message}</span>}
+              <textarea
+                onChange={(e) => setComment(e.target.value)}
+                placeholder="Add comment"
+                value={comment}
+              ></textarea>
+              {error.message && (
+                <span className="expense-error">{error.message}</span>
+              )}
             </label>
-            
-            <button disabled = {!!error.message} className="expense-btn expense-post-btn" type="submit">
+
+            <button
+              disabled={!!error.message}
+              className="expense-btn expense-post-btn"
+              type="submit"
+            >
               Post
             </button>
           </form>
@@ -176,4 +201,3 @@ function ExpenseDetailsSection({ expenseId }) {
 }
 
 export default ExpenseDetailsSection;
-

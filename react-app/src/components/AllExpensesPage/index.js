@@ -7,8 +7,10 @@ import LeftNavigationBar from "../LeftNavigationBar";
 import ExpenseDetailsSection from "../ExpenseDetailsSection";
 import receipt from "./receipt.jpeg";
 import dollar from "./dollar.jpeg";
-import "./AllExpenses.css";
-import TopNavigationBar from "../TopNavigationBar";
+import './AllExpenses.css';
+import TopNavigationBar from '../TopNavigationBar';
+import MainHeader from '../MainHeader';
+
 
 function AllExpensesPage() {
   const dispatch = useDispatch();
@@ -29,6 +31,7 @@ function AllExpensesPage() {
     Object.values(state.payment.receivedPayments)
   );
 
+    const [isInitialRender, setIsInitialRender] = useState(true);
   const [isCreatedExpensesLoaded, setIsCreatedExpensesLoaded] = useState(false);
   const [isUnsettledExpensesLoaded, setIsUnsettledExpensesLoaded] =
     useState(false);
@@ -59,55 +62,29 @@ function AllExpensesPage() {
     fetchData();
   }, [dispatch]);
 
-  useEffect(() => {
-    if (
-      isCreatedExpensesLoaded &&
-      isSettledExpensesLoaded &&
-      isUnsettledExpensesLoaded &&
-      isSentPaymentsLoaded &&
-      isReceivedPaymentsLoaded
-    ) {
-      const userExpenses = createdExpenses.map((expenseObj) => {
-        return { ...expenseObj, type: "created" };
-      });
-      const friendExpenses = [...unsettledExpenses, ...settledExpenses].map(
-        (expenseObj) => {
-          return { ...expenseObj, type: "charged" };
-        }
-      );
-      const userSentPayments = sentPayments.map((paymentObj) => {
-        return { ...paymentObj, type: "sent" };
-      });
-      const userReceivedPayments = receivedPayments.map((paymentObj) => {
-        return { ...paymentObj, type: "received" };
-      });
 
-      setItems(
-        [
-          ...userExpenses,
-          ...friendExpenses,
-          ...userSentPayments,
-          ...userReceivedPayments,
-        ].sort((e1, e2) => {
-          return (
-            new Date(e2.created_at).getTime() -
-            new Date(e1.created_at).getTime()
-          );
-        })
-      );
-    }
-  }, [
-    isCreatedExpensesLoaded,
-    isSettledExpensesLoaded,
-    isUnsettledExpensesLoaded,
-    isSentPaymentsLoaded,
-    isReceivedPaymentsLoaded,
-    createdExpenses,
-    receivedPayments,
-    sentPayments,
-    settledExpenses,
-    unsettledExpenses,
-  ]);
+    useEffect(() => {
+        if (isInitialRender && isCreatedExpensesLoaded && isSettledExpensesLoaded && isUnsettledExpensesLoaded && isSentPaymentsLoaded && isReceivedPaymentsLoaded) {
+            const userExpenses = createdExpenses.map(expenseObj => {
+                return { ...expenseObj, type: 'created' };
+            });
+            const friendExpenses = [...unsettledExpenses, ...settledExpenses].map(expenseObj => {
+                return { ...expenseObj, type: 'charged' };
+            });
+            const userSentPayments = sentPayments.map(paymentObj => {
+                return { ...paymentObj, type: 'sent' };
+            });
+            const userReceivedPayments = receivedPayments.map(paymentObj => {
+                return { ...paymentObj, type: 'received' };
+            });
+
+            setItems([...userExpenses, ...friendExpenses, ...userSentPayments, ...userReceivedPayments].sort((e1, e2) => {
+                return new Date(e2.created_at).getTime() - new Date(e1.created_at).getTime()
+            }));
+
+            setIsInitialRender(false);
+        }
+    }, [isInitialRender, isCreatedExpensesLoaded, isSettledExpensesLoaded, isUnsettledExpensesLoaded, isSentPaymentsLoaded, isReceivedPaymentsLoaded, createdExpenses, receivedPayments, sentPayments, settledExpenses, unsettledExpenses]);
 
   function formatMoney(amount) {
     return (
@@ -161,150 +138,110 @@ function AllExpensesPage() {
 
   if (!sessionUser) return <Redirect to="/" />;
 
-  return (
-    <>
-      <LeftNavigationBar />
-     
-
-      <div id="all-items">
-        <TopNavigationBar />
-       
-        <div id="all-expenses">
-          {items.map((obj) => {
-            const dateStr = new Date(obj.created_at).toDateString();
-            const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;
-            const dateDay = `${dateStr.split(" ")[2]}`;
-            switch (obj.type) {
-              case "created":
-                return (
-                  <div className="expense-header">
-                    <div className="expense-header-date">
-                      <p className="expense-header-month">{dateMonth}</p>
-                      <p className="expense-header-day">{dateDay}</p>
-                    </div>
-                    <img
-                      className="expense-header-logo"
-                      src={receipt}
-                      alt="receipt-logo"
-                    ></img>
-                    <div className="expense-header-description">
-                      {obj.description}
-                    </div>
-                    <div className="expense-header-A">
-                      <p>you paid</p>
-                      <p>{formatMoney(obj.amount)}</p>
-                    </div>
-                    <div className="expense-header-B teal-amount">
-                      {obj.participants.length > 1 && <p>you lent</p>}
-                      {obj.participants.length === 1 && (
-                        <p>
-                          you lent{" "}
-                          {obj.participants[0].friendship.friend.short_name}
-                        </p>
-                      )}
-                      <p>
-                        {formatMoney(
-                          obj.amount - obj.participants[0].amount_due
-                        )}
-                      </p>
-                    </div>
-                    <button
-                      className="delete-expense"
-                      onClick={() => deleteExpense(obj.id, obj.type)}
-                    >
-                      &#x2715;
-                    </button>
-                  </div>
-                );
-              case "charged":
-                return (
-                  <div className="expense-header">
-                    <div className="expense-header-date">
-                      <p className="expense-header-month">{dateMonth}</p>
-                      <p className="expense-header-day">{dateDay}</p>
-                    </div>
-                    <img
-                      className="expense-header-logo"
-                      src={receipt}
-                      alt="receipt-logo"
-                    ></img>
-                    <div className="expense-header-description">
-                      {obj.expense.description}
-                    </div>
-                    <div className="expense-header-A">
-                      <p>{obj.friendship.user.short_name} paid</p>
-                      <p>{formatMoney(obj.expense.amount)}</p>
-                    </div>
-                    <div className="expense-header-B orange-amount">
-                      <p>{obj.friendship.user.short_name} lent you</p>
-                      <p>{formatMoney(obj.amount_due)}</p>
-                    </div>
-                    <button
-                      className="delete-expense"
-                      onClick={() => deleteExpense(obj.expense.id, obj.type)}
-                    >
-                      &#x2715;
-                    </button>
-                  </div>
-                );
-              case "sent":
-                return (
-                  <div className="payment-header">
-                    <img
-                      className="payment-header-logo"
-                      src={dollar}
-                      alt="dollar-logo"
-                    ></img>
-                    <div className="payment-header-description">
-                      {sessionUser.short_name} paid{" "}
-                      {obj.friendship.friend.short_name}{" "}
-                      {formatMoney(obj.amount)}
-                    </div>
-                    <div className="payment-header-A">you paid</div>
-                    <div className="payment-header-B teal-amount">
-                      {formatMoney(obj.amount)}
-                    </div>
-                    <button
-                      className="delete-payment"
-                      onClick={() => deletePayment(obj.id)}
-                    >
-                      &#x2715;
-                    </button>
-                  </div>
-                );
-              case "received":
-                return (
-                  <div className="payment-header">
-                    <img
-                      className="payment-header-logo"
-                      src={dollar}
-                      alt="dollar-logo"
-                    ></img>
-                    <div className="payment-header-description">
-                      {obj.friendship.user.short_name} paid{" "}
-                      {sessionUser.short_name} {formatMoney(obj.amount)}
-                    </div>
-                    <div className="payment-header-A">you received</div>
-                    <div className="payment-header-B orange-amount">
-                      {formatMoney(obj.amount)}
-                    </div>
-                    <button
-                      className="delete-payment"
-                      onClick={() => deletePayment(obj.id)}
-                    >
-                      &#x2715;
-                    </button>
-                  </div>
-                );
-              default:
-                return <></>;
-            }
-          })}
-        </div>
-      </div>
-      <ExpenseDetailsSection expenseId={2} />
-    </>
-  );
+    return (
+        <>
+            <LeftNavigationBar />
+            <TopNavigationBar />
+            <MainHeader />
+            <div id="all-expenses">
+                {items.map(obj => {
+                    const dateStr = new Date(obj.created_at).toDateString();
+                    const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;
+                    const dateDay = `${dateStr.split(" ")[2]}`;
+                    switch (obj.type) {
+                        case 'created':
+                            return (
+                                <div className="expense-header">
+                                    <div className="expense-header-date">
+                                        <p className="expense-header-month">{dateMonth}</p>
+                                        <p className="expense-header-day">{dateDay}</p>
+                                    </div>
+                                    <img className="expense-header-logo" src={receipt} alt="receipt-logo"></img>
+                                    <div className="expense-header-description">
+                                        {obj.description}
+                                    </div>
+                                    <div className="expense-header-A">
+                                        <p>you paid</p>
+                                        <p>{formatMoney(obj.amount)}</p>
+                                    </div>
+                                    <div className="expense-header-B teal-amount">
+                                        {obj.participants.length > 1 && <p>you lent</p>}
+                                        {obj.participants.length === 1 && <p>you lent {obj.participants[0].friendship.friend.short_name}</p>}
+                                        <p>{formatMoney(obj.amount - obj.participants[0].amount_due)}</p>
+                                    </div>
+                                    <button className="delete-expense" onClick={() => deleteExpense(obj.id, obj.type)}>
+                                        &#x2715;
+                                    </button>
+                                </div>
+                            );
+                        case 'charged':
+                            return (
+                                <div className="expense-header">
+                                    <div className="expense-header-date">
+                                        <p className="expense-header-month">{dateMonth}</p>
+                                        <p className="expense-header-day">{dateDay}</p>
+                                    </div>
+                                    <img className="expense-header-logo" src={receipt} alt="receipt-logo"></img>
+                                    <div className="expense-header-description">
+                                        {obj.expense.description}
+                                    </div>
+                                    <div className="expense-header-A">
+                                        <p>{obj.friendship.user.short_name} paid</p>
+                                        <p>{formatMoney(obj.expense.amount)}</p>
+                                    </div>
+                                    <div className="expense-header-B orange-amount">
+                                        <p>{obj.friendship.user.short_name} lent you</p>
+                                        <p>{formatMoney(obj.amount_due)}</p>
+                                    </div>
+                                    <button className="delete-expense" onClick={() => deleteExpense(obj.expense.id, obj.type)}>
+                                        &#x2715;
+                                    </button>
+                                </div>
+                            );
+                        case 'sent':
+                            return (
+                                <div className="payment-header">
+                                    <img className="payment-header-logo" src={dollar} alt="dollar-logo"></img>
+                                    <div className="payment-header-description">
+                                        {sessionUser.short_name} paid {obj.friendship.friend.short_name} {formatMoney(obj.amount)}
+                                    </div>
+                                    <div className="payment-header-A">
+                                        you paid
+                                    </div>
+                                    <div className="payment-header-B teal-amount">
+                                        {formatMoney(obj.amount)}
+                                    </div>
+                                    <button className="delete-payment" onClick={() => deletePayment(obj.id)}>
+                                        &#x2715;
+                                    </button>
+                                </div>
+                            );
+                        case 'received':
+                            return (
+                                <div className="payment-header">
+                                    <img className="payment-header-logo" src={dollar} alt="dollar-logo"></img>
+                                    <div className="payment-header-description">
+                                        {obj.friendship.user.short_name} paid {sessionUser.short_name} {formatMoney(obj.amount)}
+                                    </div>
+                                    <div className="payment-header-A">
+                                        you received
+                                    </div>
+                                    <div className="payment-header-B orange-amount">
+                                        {formatMoney(obj.amount)}
+                                    </div>
+                                    <button className="delete-payment" onClick={() => deletePayment(obj.id)}>
+                                        &#x2715;
+                                    </button>
+                                </div>
+                            );
+                        default:
+                            return <></>;
+                    }
+                })}
+            </div>
+            <ExpenseDetailsSection expenseId={2}/>
+        </>
+    );
 }
 
 export default AllExpensesPage;

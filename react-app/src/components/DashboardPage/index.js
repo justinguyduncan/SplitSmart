@@ -27,11 +27,7 @@ function DashboardPage() {
     <>
       <LeftNavigationBar />
       <TopNavigationBar />
-      {/* <MainHeader /> */}
-     
-   
-
-    
+      <MainHeader />
       <main className="main">
 
         <section className="subheader">
@@ -96,7 +92,6 @@ function DashboardPage() {
                 {youOwe.map((item) => (
                   <li className="owed-item" key={item.id}>
                     <NavLink to={`/friend/${item.friend_id}`}>
-                    {console.log(item.friend.image_url, 33333333333)}
                       <img src={item.friend.image_url} alt={item.friend.name} />
                       <div>
                         <p>{item.friend.name}</p>
