@@ -45,7 +45,8 @@ export const login = (email, password) => async (dispatch) => {
 		const data = await response.json();
 		dispatch(setUser(data));
 		return null;
-	} else if (response.status < 500) {
+	} 
+	else if (response.status < 500) {
 		const data = await response.json();
 		if (data.errors) {
 			return data.errors;
@@ -67,7 +68,7 @@ export const logout = () => async (dispatch) => {
 	}
 };
 
-export const signUp = (firstName, lastName, email, phoneNumber, password) => async (dispatch) => {
+export const signUp = (firstName, lastName, email, phoneNumber, imgURL, password) => async (dispatch) => {
 	const response = await fetch("/api/auth/signup", {
 		method: "POST",
 		headers: {
@@ -77,7 +78,8 @@ export const signUp = (firstName, lastName, email, phoneNumber, password) => asy
 			first_name: firstName,
 			last_name: lastName,
 			email: email,
-			phone_number: phoneNumber,
+			...phoneNumber.length > 0 && {phone_number: phoneNumber},
+			...imgURL.length > 0 && {image_url: imgURL},
 			password: password,
 		}),
 	});

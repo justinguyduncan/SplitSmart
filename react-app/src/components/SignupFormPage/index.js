@@ -1,78 +1,90 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, NavLink } from "react-router-dom";
+import { useHistory } from "react-router";
 import { signUp } from "../../store/session";
 import './SignupForm.css';
+import logo from './splitsmart-logo.png';
+
 
 function SignupFormPage() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [imgURL, setImgURL] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
-  if (sessionUser) return <Redirect to="/" />;
+  if (sessionUser) return <Redirect to="/dashboard" />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
-        const data = await dispatch(signUp(username, email, password));
-        if (data) {
-          setErrors(data)
-        }
+      const data = await dispatch(signUp(name.split(" ")[0], name.split(" ")[1], email, phoneNumber, imgURL, password));
+      if (data) {
+        setErrors(data)
+      } else {
+        history.push('/dashboard');
+      }
     } else {
-        setErrors(['Confirm Password field must be the same as the Password field']);
+      setErrors(['Confirm Password field must be the same as the Password field']);
     }
   };
 
   return (
-    <>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
+    <div className="signup-form-container">
+      <NavLink to="/" className="signup-form-image"><img src={logo} alt="splitsmart-logo"></img></NavLink>
+      <form className="signup-form" onSubmit={handleSubmit}>
+        {errors.length > 0 && <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-        </ul>
-        <label>
-          Email
+        </ul>}
+        <label>Hi there! My name is</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        <label>Here's my email address:</label>
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Username
+        <label>Here's my phone number:</label>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
           />
-        </label>
-        <label>
-          Password
+        <label>Here's my profile picture:</label>
+          <input
+            type="text"
+            value={imgURL}
+            onChange={(e) => setImgURL(e.target.value)}
+          />
+        <label>And here's my password:</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Confirm Password
+        <label>Confirm password:</label>
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
-        </label>
-        <button type="submit">Sign Up</button>
+        <button className="accent" type="submit">Sign me up!</button>
       </form>
-    </>
+    </div>
   );
 }
 
