@@ -6,6 +6,7 @@ import AddFriendModal from '../AddFriendModal';
 import SettleUpModal from '../SettleUpModal';
 import OpenModalButton from '../OpenModalButton';
 import AddEditExpenseModal from '../AddEditExpenseModal';
+import './MainHeader.css';
 
 const MainHeader = () => {
   const location = useLocation();
@@ -32,11 +33,13 @@ const MainHeader = () => {
   });
 
   return (
-    <header>
-      <h1>{currentPage}</h1>
-      <OpenModalButton modalComponent={<AddEditExpenseModal />} buttonText={'Add expenses'}/>
-      <OpenModalButton modalComponent={<SettleUpModal />} buttonText={"Settle Up"} />
-    </header>
+    <div className="main-header">
+      <div className="main-header-title">{currentPage}</div>
+      <div className="main-header-buttons">
+        <OpenModalButton modalComponent={<AddEditExpenseModal />} buttonText={'Add expenses'} />
+        <OpenModalButton modalComponent={<SettleUpModal />} buttonText={"Settle Up"} />
+      </div>
+    </div>
   );
 };
 
