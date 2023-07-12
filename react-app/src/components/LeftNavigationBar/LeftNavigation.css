@@ -3,9 +3,14 @@
     flex-direction: column;
     row-gap: 10px;
     position: fixed;
-    top: 100px;
+    top: 35px;
     left: 0;
-    width: 250px;
+    width: 200px;
+    padding: 10px 0px;
+}
+
+.left-nav-bar * {
+    font-size: 12pt;
 }
 
 .dashboard-logo {

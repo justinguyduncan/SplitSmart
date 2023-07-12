@@ -7,54 +7,53 @@ li {
     list-style: none;
 }
 
-.icon {
+.expense-icon {
     height: 15px;
     width: 15px;
     margin-right: 3px;
 }
 
-.subheader {
+.expense-subheader {
     display: flex;
     gap: 10px;
     padding: 5px;
 }
 
-.subheader-text-wrapper {
+.expense-subheader-text-wrapper {
     display: flex;
-
     flex-direction: column;
     gap: 5px;
 }
 
-.subheader-description {
+.expense-subheader-description {
     font-size: 16px;
     color: rgb(60, 65, 68);
 }
 
-.subheader-amount {
+.expense-subheader-amount {
     font-size: 20px;
     font-weight: bold;
     color: rgb(60, 65, 68);
 }
 
-.subheader-date {
+.expense-subheader-date {
     font-size: 12px;
     color: #999;
 }
 
-.main-content {
+.expense-main-content {
     margin-top: 30px;
     width: 49%;
     padding: 5px;
 }
 
-.main-content-wrapper img {
+.expense-main-content-wrapper img {
     height: 40px;
     width: 40px;
     border-radius: 50%;
 }
 
-.btn { 
+.expense-btn { 
     background-color: rgb(208, 106, 71);
     color: rgb(220, 218, 215);
     text-shadow: rgb(140, 82, 61) 0px -1px 0px;
@@ -65,72 +64,72 @@ li {
     box-shadow: rgba(220, 218, 215, 0.2) 0px 1px 0px inset, rgba(24, 26, 27, 0.05) 0px 1px 2px;
 }
 
-.edit-btn {
+.expense-edit-btn {
     max-width: 85px;
 
 }
 
-.post-btn {
+.expense-post-btn {
     max-width: 40px;
 }
 
-.image-wrapper {
+.expense-image-wrapper {
     width: 84px;
     height: 84px;
     border: 1px #ddd solid;
 }
 
 
-.image-wrapper img {
+.expense-image-wrapper img {
     height: 84px;
     width: 84px;
 }
 
-.main {
+.expense-main {
     display: flex;
     gap: 20px;
     max-width: 550px;
 }
 
-.main-content-wrapper, .main-content-wrapper li {
+.expense-main-content-wrapper, .expense-main-content-wrapper li {
     display: flex;
     gap: 10px;
     color: rgb(60, 65, 68);
     align-items: center;
 }
 
-.main-content-wrapper span {
+.expense-main-content-wrapper span {
     font-weight: bold;
     font-size: 13px;
 }
 
-.main-content-wrapper p {
+.expense-main-content-wrapper p {
 font-size: 14px;
 }
  
-.main-list {
+.expense-main-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.content-wrapper {
+.expense-content-wrapper {
     margin-bottom: 10px;
 }
 
-.comment {
+.expense-comment {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.comment-text {
+.expense-comment-text {
     font-size: 13px;
     line-height: 18px;
     color: rgb(60, 65, 68);
 }
 
-.comment-item {
+.expense-comment-item {
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -141,7 +140,7 @@ font-size: 14px;
     position: relative;
 }
 
-.comments-wrapper {
+.expense-comments-wrapper {
     margin-left: 300px;
     max-width: 580px;
     padding: 5px;
@@ -149,7 +148,7 @@ font-size: 14px;
     box-shadow: rgba(24, 26, 27, 0.25) 0px 5px 7px -5px inset, rgba(24, 26, 27, 0.25) 0px -3px 7px -5px inset;
 }
 
-.icon-wrapper {
+.expense-icon-wrapper {
     position: absolute;
     right: 5px;
     top: 0;
@@ -158,52 +157,52 @@ font-size: 14px;
     align-items: center;
 }
 
-.icon-wrapper img {
+.expense-icon-wrapper img {
     width: 8px;
     height: 8px;
 }
 
-.icon-wrapper span {
+.expense-icon-wrapper span {
     cursor: pointer;
 }
 
-.close {
+.expense-close {
     font-size: 10px;
     color: rgb(143, 61, 61);
 }
 
-.close:hover {
+.expense-close:hover {
     text-decoration: underline;
 }
 
-.comment-title {
+.expense-comment-title {
     font-weight: bold;
     color: rgb(60, 65, 68);
     font-size: 13px;
 }
 
-.comment-span {
+.expense-comment-span {
     color: rgb(148, 142, 133);
     font-size: 11px;
     margin-left: 3px;
 }
 
-.comment-form {
+.expense-comment-form {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.comment-form textarea {
+.expense-comment-form textarea {
     border-color: rgb(184, 180, 174);
 }
 
-.comment-form label {
+.expense-comment-form label {
     position: relative;
     margin-bottom: 10px;
 }
 
-.comment-form .error {
+.expense-comment-form .expense-error {
     position: absolute;
     bottom: -15px;
     font-size: 11px;
