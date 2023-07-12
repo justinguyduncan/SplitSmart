@@ -67,6 +67,7 @@ function FriendPage() {
     const [unsettledItems, setUnsettledItems] = useState([]);
 
     useEffect(() => {
+        console.log('FETCHING DATA');
         async function fetchData() {
             await dispatch(friendActions.fetchFriendshipById(id))
                 .then(() => setIsFriendLoaded(true));
@@ -84,12 +85,15 @@ function FriendPage() {
         fetchData();
 
         return () => {
+            console.log('CLEANING UP');
             document.getElementById("settled-items")?.classList.add("hidden");
             document.getElementById("show-container")?.classList.remove("hidden");
         }
     }, [dispatch, id]);
 
     useEffect(() => {
+        setSettledItems([]);
+        setUnsettledItems([]);
         if (isFriendLoaded && isUserExpensesLoaded && isSettledExpensesLoaded && isUnsettledExpensesLoaded && isSentPaymentsLoaded && isReceivedPaymentsLoaded) {
             const userUnsettledExpenses = userExpenses.unsettled.map(expenseObj => {
                 return { ...expenseObj, type: 'created' };
@@ -119,7 +123,10 @@ function FriendPage() {
                 return new Date(e2.created_at).getTime() - new Date(e1.created_at).getTime()
             }));
         }
-    }, [id]);
+
+        console.log('SETTLED ITEMS IN USE EFFECT', settledItems);
+        console.log('UNSETTLED ITEMS IN USE EFFECT', unsettledItems);
+    }, [id, isFriendLoaded, isUserExpensesLoaded, isSettledExpensesLoaded, isUnsettledExpensesLoaded, isSentPaymentsLoaded, isReceivedPaymentsLoaded]);
 
     function formatMoney(amount) {
         return "$" + String(Number(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
@@ -169,6 +176,8 @@ function FriendPage() {
         <>
             <LeftNavigationBar />
             <TopNavigationBar />
+            {console.log('SETTLED ITEMS IN RETURN', settledItems)}
+            {console.log('UNSETTLED ITEMS IN RETURN', unsettledItems)}
             <div id="friend-expenses">
                 <div id="unsettled-items">
                 {unsettledItems.map(obj => {
