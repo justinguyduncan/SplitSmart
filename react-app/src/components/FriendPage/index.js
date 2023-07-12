@@ -18,7 +18,7 @@ function FriendPage() {
 
     return (
         <>
-            {isLoaded && <h1>Friend Page {friend.id} - {friend.friend.name}</h1>}
+            {isLoaded/* && <h1>Friend Page {friend.id} - {friend.friend.name}</h1>*/}
             <LeftNavigationBar />
         </>
     );
