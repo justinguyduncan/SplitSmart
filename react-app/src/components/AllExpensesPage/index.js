@@ -19,6 +19,7 @@ function AllExpensesPage() {
     const sentPayments = useSelector(state => Object.values(state.payment.sentPayments));
     const receivedPayments = useSelector(state => Object.values(state.payment.receivedPayments));
 
+    const [isInitialRender, setIsInitialRender] = useState(true);
     const [isCreatedExpensesLoaded, setIsCreatedExpensesLoaded] = useState(false);
     const [isUnsettledExpensesLoaded, setIsUnsettledExpensesLoaded] = useState(false);
     const [isSettledExpensesLoaded, setIsSettledExpensesLoaded] = useState(false);
@@ -44,7 +45,7 @@ function AllExpensesPage() {
 
 
     useEffect(() => {
-        if (isCreatedExpensesLoaded && isSettledExpensesLoaded && isUnsettledExpensesLoaded && isSentPaymentsLoaded && isReceivedPaymentsLoaded) {
+        if (isInitialRender && isCreatedExpensesLoaded && isSettledExpensesLoaded && isUnsettledExpensesLoaded && isSentPaymentsLoaded && isReceivedPaymentsLoaded) {
             const userExpenses = createdExpenses.map(expenseObj => {
                 return { ...expenseObj, type: 'created' };
             });
@@ -61,8 +62,10 @@ function AllExpensesPage() {
             setItems([...userExpenses, ...friendExpenses, ...userSentPayments, ...userReceivedPayments].sort((e1, e2) => {
                 return new Date(e2.created_at).getTime() - new Date(e1.created_at).getTime()
             }));
+
+            setIsInitialRender(false);
         }
-    }, [isCreatedExpensesLoaded, isSettledExpensesLoaded, isUnsettledExpensesLoaded, isSentPaymentsLoaded, isReceivedPaymentsLoaded, createdExpenses, receivedPayments, sentPayments, settledExpenses, unsettledExpenses]);
+    }, [isInitialRender, isCreatedExpensesLoaded, isSettledExpensesLoaded, isUnsettledExpensesLoaded, isSentPaymentsLoaded, isReceivedPaymentsLoaded, createdExpenses, receivedPayments, sentPayments, settledExpenses, unsettledExpenses]);
 
 
     function formatMoney(amount) {
