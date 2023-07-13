@@ -1,8 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { useModal } from '../../context/Modal';
-import AddFriendModal from '../AddFriendModal';
 import SettleUpModal from '../SettleUpModal';
 import OpenModalButton from '../OpenModalButton';
 import AddEditExpenseModal from '../AddEditExpenseModal';
@@ -10,7 +8,6 @@ import './MainHeader.css';
 
 const MainHeader = () => {
   const location = useLocation();
-  const { openModal } = useModal();
   const friendships = useSelector((state) => Object.values(state.friend.friendships));
 
   const currentPage = useSelector((state) => {

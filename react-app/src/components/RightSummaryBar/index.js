@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import expense, * as expenseActions from '../../store/expense';
+import * as expenseActions from '../../store/expense';
 import './RightSummary.css';
 
 function formatBalance(amount) {
