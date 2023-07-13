@@ -1,0 +1,29 @@
+.right-summ-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+    position: fixed;
+    top: 35px;
+    right: 0;
+    width: 200px;
+    padding: 10px 0px;
+}
+
+.right-summ-balance * {
+    font-size: 12pt;
+    padding: 5px;
+}
+
+.remove-friend-button {
+    font-size: 12pt;
+    width: 90%;
+}
+
+.orange-amount {
+    color: rgb(255, 102, 56);
+}
+
+.teal-amount {
+    color: rgb(82, 197, 167);
+}
