@@ -4,19 +4,20 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 }
 
 .profile-dropdown {
-    position: absolute;
+    position: fixed;
     background-color: #fff;
-    top: 100%;
-    right: 0;
+    top: 50px;
+    right: 5px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     border: 1px solid lightgray;
     box-shadow: 1px 1px 5px 1px darkgray;
     align-items: start;
-    justify-content: start;
+    justify-content: center;
     padding: 0;
-    width: 133px;
+    width: 150px;
+    background-color: white;
 }
 
 .hidden {
@@ -31,6 +32,7 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
     top: 0;
     padding: 0;
     background-color: white;
+    z-index: 99;
 }
 
 
@@ -132,25 +134,27 @@ a {
     text-decoration: none;
 }
 
-.profile-dropdown li {
-    font-size: 14px;
-    padding: 3px 15px;
+.profile-dropdown > * {
+    font-size: 12pt;
+    padding: 5px 10px;
 }
 
 .log-out {
-    padding: 10px 0;
+    margin: 0;
     border: none;
-    width: 103px;
+    background: none;
+    width: 100%;
     text-align: left;
     display: inline-block;
+    border-radius: 0;
 }
 
-.logout-wrapper:hover .log-out {
+.log-out:hover .log-out {
     background-color: #1CC29F;
     color: #fff;
 }
 
-.logout-wrapper:hover {
+.log-out:hover {
     background-color: #1CC29F;
     color: #fff;
 }

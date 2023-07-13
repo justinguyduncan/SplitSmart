@@ -41,11 +41,9 @@ function ProfileButton({ user }) {
             <ul className={ulClassName}>
               <li> Hello, </li>
               <li>{user.name}!</li>
-              <li className="logout-wrapper">
                 <button className="log-out" onClick={handleLogout}>
                   Log Out
                 </button>
-              </li>
             </ul>
           </>
         ) : (
