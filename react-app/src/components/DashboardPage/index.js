@@ -66,7 +66,7 @@ function DashboardPage() {
               <ul className="owed-list">
                 {youOwe.map((item) => (
                   <li className="owed-item" key={item.id}>
-                    <NavLink to={`/friend/${item.friend_id}`}>
+                    <NavLink to={`/friends/${item.friend_id}`}>
                       <img src={item.friend.image_url} alt={item.friend.name} />
                       <div>
                         <p>{item.friend.name}</p>
@@ -88,7 +88,7 @@ function DashboardPage() {
               <ul className="owed-list">
                 {youAreOwed.map((item) => (
                   <li className="owed-item" key={item.id}>
-                    <NavLink to={`/friend/${item.friend_id}`}>
+                    <NavLink to={`/friends/${item.friend_id}`}>
                       <img src={item.friend.image_url} alt={item.friend.name} />
                       <div>
                         <p>{item.friend.name}</p>
