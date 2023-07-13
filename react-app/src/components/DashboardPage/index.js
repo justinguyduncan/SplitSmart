@@ -1,11 +1,12 @@
-import LeftNavigationBar from "../LeftNavigationBar";
 import { NavLink, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getSummary } from "../../store/expense";
 import { fetchFriendships } from "../../store/friend";
+import LeftNavigationBar from "../LeftNavigationBar";
 import TopNavigationBar from "../TopNavigationBar";
 import MainHeader from "../MainHeader";
+import RightSummaryBar from "../RightSummaryBar";
 import "./DashboardPage.css";
 
 function DashboardPage() {
@@ -28,6 +29,7 @@ function DashboardPage() {
       <LeftNavigationBar />
       <TopNavigationBar />
       <MainHeader />
+      <RightSummaryBar />
       <main className="main">
 
         <section className="subheader">

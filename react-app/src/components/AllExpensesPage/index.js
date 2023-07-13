@@ -3,12 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as expenseActions from '../../store/expense';
 import * as paymentActions from '../../store/payment';
-import LeftNavigationBar from "../LeftNavigationBar";
 import receipt from "./receipt.jpeg";
 import dollar from "./dollar.jpeg";
 import './AllExpenses.css';
+import LeftNavigationBar from "../LeftNavigationBar";
 import TopNavigationBar from '../TopNavigationBar';
 import MainHeader from '../MainHeader';
+import RightSummaryBar from '../RightSummaryBar';
 
 
 function AllExpensesPage() {
@@ -106,6 +107,7 @@ function AllExpensesPage() {
             <LeftNavigationBar />
             <TopNavigationBar />
             <MainHeader />
+            <RightSummaryBar />
             <div id="all-expenses">
                 {items.map(obj => {
                     const dateStr = new Date(obj.created_at).toDateString();
