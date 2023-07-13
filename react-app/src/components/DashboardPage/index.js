@@ -9,19 +9,44 @@ import MainHeader from "../MainHeader";
 import "./DashboardPage.css";
 
 function DashboardPage() {
+  //dispatch
   const dispatch = useDispatch();
+
+  //states selector
   const sessionUser = useSelector((state) => state.session.user);
   const summary = useSelector((state) => state.expense.summary);
   const friend = useSelector((state) => state.friend);
+
+  //variables
   const friendship = Object.values(friend.friendships);
-  const youOwe = friendship.filter((item) => item.bill > 0);
-  const youAreOwed = friendship.filter((item) => item.bill < 0);
+
+  //useEffect
   useEffect(() => {
     dispatch(getSummary());
     dispatch(fetchFriendships());
   }, [dispatch]);
 
+  //utils function
+  const youOwe = friendship.filter((item) => item.bill > 0);
+  const youAreOwed = friendship.filter((item) => item.bill < 0);
+  const formatMoney = (amount) => {
+    if (amount || amount === 0) {
+      const balance = amount[0] === "-" ? amount.substring(1) : amount;
+      return (
+        "$" +
+        String(
+          Number(balance)
+            .toFixed(2)
+            .replace(/\d(?=(\d{3})+\.)/g, "$&,")
+        )
+      );
+    }
+  };
+
+  //redirect if not auth
   if (!sessionUser) return <Redirect to="/" />;
+
+  //render
   return (
     <>
       <LeftNavigationBar />
@@ -31,29 +56,49 @@ function DashboardPage() {
         <section className="dashboard-subheader">
           <ul className="dashboard-subheader-list">
             <li>
-              <p className="dashboard-subheader-list-text">total balance: </p>
-              {summary["you owe"] < summary["you are owed"] ? (
-                <p className={`dashboard-subheader-text dashboard-subheader-text-orange`}>
-                  -${Math.abs(summary.balance)}.00
+              <p className="dashboard-subheader-list-text">total balance </p>
+              {summary["you owe"] > summary["you are owed"] ? (
+                <p
+                  className={`dashboard-subheader-text dashboard-subheader-text-orange`}
+                >
+                  -{formatMoney(summary?.balance)}
                 </p>
               ) : (
-                <p className={`dashboard-subheader-text dashboard-subheader-text-green`}>
-                  + ${Math.abs(summary.balance)}.00
+                <p
+                  className={`dashboard-subheader-text ${
+                    summary?.balance
+                      ? "dashboard-subheader-text-green"
+                      : "dashboard-subheader-text-grey"
+                  }`}
+                >
+                  +{formatMoney(summary?.balance)}
                 </p>
               )}
             </li>
             <li className="dashboard-subheader-item">
-              <p className="dashboard-subheader-list-text">you owe: </p>
+              <p className="dashboard-subheader-list-text">you owe </p>
 
-              <p className={`dashboard-subheader-text dashboard-subheader-text-orange`}>
-                ${+summary["you owe"]}.00
+              <p
+                className={`dashboard-subheader-text ${
+                  summary["you owe"]
+                    ? "dashboard-subheader-text-orange"
+                    : "dashboard-subheader-text-grey"
+                }`}
+              >
+                {formatMoney(summary["you owe"])}
               </p>
             </li>
             <li>
-              <p className="dashboard-subheader-list-text">you are owed: </p>
+              <p className="dashboard-subheader-list-text">you are owed </p>
 
-              <p className={`dashboard-subheader-text dashboard-subheader-text-green`}>
-                ${+summary["you are owed"]}.00
+              <p
+                className={`dashboard-subheader-text ${
+                  summary["you are owed"]
+                    ? "dashboard-subheader-text-green"
+                    : "dashboard-subheader-text-grey"
+                }`}
+              >
+                {formatMoney(summary["you are owed"])}
               </p>
             </li>
           </ul>
@@ -71,7 +116,7 @@ function DashboardPage() {
                       <div>
                         <p>{item.friend.name}</p>
                         <p className="dashboard-subheader-text-orange">
-                          -${+item.bill}.00
+                          {formatMoney(item.bill)}
                         </p>
                       </div>
                     </NavLink>
@@ -83,7 +128,9 @@ function DashboardPage() {
             )}
           </div>
           <div className="dashboard-owed-wrapper dashboard-owed-wrapper-right">
-            <h4 className="dashboard-owed-title dashboard-owed-title-right ">YOU ARE OWED</h4>
+            <h4 className="dashboard-owed-title dashboard-owed-title-right ">
+              YOU ARE OWED
+            </h4>
             {youAreOwed.length ? (
               <ul className="dashboard-owed-list">
                 {youAreOwed.map((item) => (
@@ -93,14 +140,16 @@ function DashboardPage() {
                       <div>
                         <p>{item.friend.name}</p>
                         <p className="dashboard-subheader-text-green">
-                           owes you ${Math.abs(item.bill)}.00
+                          owes you {formatMoney(item.bill)}
                         </p>
                       </div>
                     </NavLink>
                   </li>
                 ))}
               </ul>
-            ):(  <p className="dashboard-no-owe">You are not owed anything</p>)}
+            ) : (
+              <p className="dashboard-no-owe">You are not owed anything</p>
+            )}
           </div>
         </section>
       </main>

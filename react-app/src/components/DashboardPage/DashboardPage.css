@@ -91,6 +91,10 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
     color: #5bc5a7;
 }
 
+.dashboard-subheader-text-grey {
+    color: rgb(153, 153, 153); 
+}
+
 .dashboard-owed-section {
     display: flex;
     gap: 20px;
