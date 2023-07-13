@@ -84,6 +84,7 @@
 .signup-button {
     background-color: rgb(82, 197, 167);
     color: #ffffff;
+    margin-top: 20px;
     padding: 15px 60px;
     border-radius: 5px;
     animation: swap-color 12s ease-in infinite;

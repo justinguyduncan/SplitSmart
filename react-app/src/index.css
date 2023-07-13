@@ -46,7 +46,7 @@ button:hover {
 button.normal {
     background-color: #ffffff;
     color: rgb(82, 197, 167);
-    border-color: #ffffff;
+    border: none;
 }
 
 button.accent {
