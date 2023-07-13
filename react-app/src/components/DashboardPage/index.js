@@ -26,51 +26,51 @@ function DashboardPage() {
     <>
       <LeftNavigationBar />
       <TopNavigationBar />
-      {/* <MainHeader /> */}
-      <main className="main">
-        <section className="subheader">
-          <ul className="subheader-list">
+      <MainHeader />
+      <main className="dashboard-main">
+        <section className="dashboard-subheader">
+          <ul className="dashboard-subheader-list">
             <li>
-              <p className="subheader-list-text">total balance: </p>
+              <p className="dashboard-subheader-list-text">total balance: </p>
               {summary["you owe"] < summary["you are owed"] ? (
-                <p className={`subheader-text subheader-text-orange`}>
+                <p className={`dashboard-subheader-text dashboard-subheader-text-orange`}>
                   -${+summary.balance.slice(1)}.00
                 </p>
               ) : (
-                <p className={`subheader-text subheader-text-green`}>
+                <p className={`dashboard-subheader-text dashboard-subheader-text-green`}>
                   + ${+summary.balance}.00
                 </p>
               )}
             </li>
-            <li className="subheader-item">
-              <p className="subheader-list-text">you owe: </p>
+            <li className="dashboard-subheader-item">
+              <p className="dashboard-subheader-list-text">you owe: </p>
 
-              <p className={`subheader-text subheader-text-orange`}>
+              <p className={`dashboard-subheader-text dashboard-subheader-text-orange`}>
                 ${+summary["you owe"]}.00
               </p>
             </li>
             <li>
-              <p className="subheader-list-text">you are owed: </p>
+              <p className="dashboard-subheader-list-text">you are owed: </p>
 
-              <p className={`subheader-text subheader-text-green`}>
+              <p className={`dashboard-subheader-text dashboard-subheader-text-green`}>
                 ${+summary["you are owed"]}.00
               </p>
             </li>
           </ul>
         </section>
 
-        <section className="owed-section">
-          <div className="owed-wrapper">
-            <h4 className="owed-title">YOU OWE</h4>
+        <section className="dashboard-owed-section">
+          <div className="dashboard-owed-wrapper">
+            <h4 className="dashboard-owed-title">YOU OWE</h4>
             {youOwe.length ? (
-              <ul className="owed-list">
+              <ul className="dashboard-owed-list">
                 {youOwe.map((item) => (
-                  <li className="owed-item" key={item.id}>
+                  <li className="dashboard-owed-item" key={item.id}>
                     <NavLink to={`/friends/${item.friend_id}`}>
                       <img src={item.friend.image_url} alt={item.friend.name} />
                       <div>
                         <p>{item.friend.name}</p>
-                        <p className="subheader-text-orange">
+                        <p className="dashboard-subheader-text-orange">
                           -${+item.bill}.00
                         </p>
                       </div>
@@ -79,20 +79,20 @@ function DashboardPage() {
                 ))}
               </ul>
             ) : (
-              <p className="no-owe">You don't owe anything</p>
+              <p className="dashboard-no-owe">You don't owe anything</p>
             )}
           </div>
-          <div className="owed-wrapper owed-wrapper-right">
-            <h4 className="owed-title owed-title-right ">YOU ARE OWED</h4>
+          <div className="dashboard-owed-wrapper dashboard-owed-wrapper-right">
+            <h4 className="dashboard-owed-title dashboard-owed-title-right ">YOU ARE OWED</h4>
             {youAreOwed.length ? (
-              <ul className="owed-list">
+              <ul className="dashboard-owed-list">
                 {youAreOwed.map((item) => (
-                  <li className="owed-item" key={item.id}>
+                  <li className="dashboard-owed-item" key={item.id}>
                     <NavLink to={`/friends/${item.friend_id}`}>
                       <img src={item.friend.image_url} alt={item.friend.name} />
                       <div>
                         <p>{item.friend.name}</p>
-                        <p className="subheader-text-green">
+                        <p className="dashboard-subheader-text-green">
                           ${+item.bill}.00
                         </p>
                       </div>
@@ -100,7 +100,7 @@ function DashboardPage() {
                   </li>
                 ))}
               </ul>
-            ):(  <p className="no-owe">You are not owed anything</p>)}
+            ):(  <p className="dashboard-no-owe">You are not owed anything</p>)}
           </div>
         </section>
       </main>
