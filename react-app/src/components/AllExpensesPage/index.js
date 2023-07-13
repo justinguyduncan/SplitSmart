@@ -5,11 +5,11 @@ import * as expenseActions from '../../store/expense';
 import * as paymentActions from '../../store/payment';
 import LeftNavigationBar from "../LeftNavigationBar";
 import PaymentDetailsSection from "../PaymentDetailsSection"
-import "./AllExpensesPage.css"
-import receipt from "./receipt.jpeg";
-import dollar from "./dollar.jpeg";
-import TopNavigationBar from '../TopNavigationBar';
-import MainHeader from '../MainHeader';
+import "./AllExpenses.css"
+import receipt from "./receipt.jpeg"
+import dollar from "./dollar.jpeg"
+import TopNavigationBar from "../TopNavigationBar"
+import MainHeader from "../MainHeader"
 
 
 function AllExpensesPage() {
@@ -106,7 +106,7 @@ function AllExpensesPage() {
         <>
            
             <LeftNavigationBar />
-            <PaymentDetailsSection paymentId={2} />
+           
 
            
           
@@ -212,6 +212,7 @@ function AllExpensesPage() {
                 })}
                 </div>
             </div>
+            <PaymentDetailsSection paymentId={2} />
         </>
     );
 }

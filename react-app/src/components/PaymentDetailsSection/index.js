@@ -46,6 +46,18 @@ function PaymentDetailsSection({ paymentId }) {
       dispatch(fetchFriendshipById(payment?.friendship_id));
     }
   }, [dispatch, payment?.friendship_id]);
+
+  const formatMoney = (amount) => {
+    return (
+      "$" +
+      String(
+        Number(amount)
+          .toFixed(2)
+          .replace(/\d(?=(\d{3})+\.)/g, "$&,")
+      )
+    );
+  };
+
   return (
     <div className="payment-payments-wrapper">
       <section className="payment-subheader">
@@ -57,7 +69,7 @@ function PaymentDetailsSection({ paymentId }) {
         </div>
         <div className="payment-subheader-text-wrapper">
           <p className="payment-subheader-description">Payment</p>
-          <p className="payment-subheader-amount">${+payment?.amount}.00</p>
+          <p className="payment-subheader-amount">{formatMoney(payment?.amount)}</p>
           <p className="payment-subheader-date">
             Added by {selectedFriendship?.user?.short_name} on {createdDate}
           </p>
@@ -77,14 +89,16 @@ function PaymentDetailsSection({ paymentId }) {
             <div className="payment-main-content-wrapper">
               <img src={friend?.image_url} alt={friend?.short_name} />
               <p>
-                <span>{friend?.short_name}</span> paid <span> ${+payment?.amount}.00 </span>
+                <span>{friend?.short_name}</span> paid{" "}
+                <span> {formatMoney(payment?.amount)} </span>
               </p>
             </div>
 
             <div className="payment-main-content-wrapper">
               <img src={user?.image_url} alt={user?.short_name} />
               <p>
-                <span> {user?.short_name} </span> recieved <span> ${+payment?.amount}.00</span>
+                <span> {user?.short_name} </span> recieved{" "}
+                <span> {formatMoney(payment?.amount)}</span>
               </p>
             </div>
           </div>
