@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./TopNavigation.css";
+import logo from './splitsmart-logo.png';
 
 function TopNavigationBar() {
   const sessionUser = useSelector((state) => state.session.user);
@@ -10,8 +11,6 @@ function TopNavigationBar() {
   const titleLogin = sessionUser ? "title-login" : "";
   return (
     <header className={`header ${headerLogin}`}>
-      <div className="container">
-        <nav>
           <ul className="navigation">
             <li>
               <NavLink
@@ -19,11 +18,12 @@ function TopNavigationBar() {
                 exact
                 to={sessionUser ? "/dashboard" : "/"}
               >
-                <img
+                {/* <img
                   id="logo"
                   alt="split-smart icon"
                   src="https://res.cloudinary.com/dr1ekjmf4/image/upload/v1687712495/images_lhirzh.png"
-                />
+                /> */}
+                <img src={logo} alt="splitsmart-logo" />
                 <h1 className={`title ${titleLogin}`}>SplitSmart</h1>
               </NavLink>
             </li>
@@ -31,8 +31,6 @@ function TopNavigationBar() {
                 <ProfileButton user={sessionUser} />
               </li>
           </ul>
-        </nav>
-      </div>
     </header>
   );
 }
