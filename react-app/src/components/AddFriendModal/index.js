@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import logo from './splitsmart-logo.png';
-import { createFriendship } from '../../store/friend';
+import * as friendActions from '../../store/friend';
 import './AddFriend.css'
 
 function AddFriendModal() {
@@ -13,9 +13,10 @@ function AddFriendModal() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = await dispatch(createFriendship(email));
+        const data = await dispatch(friendActions.createFriendship(email));
         if (data && data.message) {
             setErrors([`email : ${data.message}`]);
+            dispatch(friendActions.fetchFriendships());
         } else if (data) {
             setErrors(data);
         } else {
