@@ -121,7 +121,7 @@ function AllExpensesPage() {
                                         <p className="expense-header-month">{dateMonth}</p>
                                         <p className="expense-header-day">{dateDay}</p>
                                     </div>
-                                    <img className="expense-header-logo" src={receipt} alt="receipt-logo"></img>
+                                    <img className="expense-header-logo" src={receipt} alt="receipt-logo" />
                                     <div className="expense-header-description">
                                         {obj.description}
                                     </div>
@@ -146,7 +146,7 @@ function AllExpensesPage() {
                                         <p className="expense-header-month">{dateMonth}</p>
                                         <p className="expense-header-day">{dateDay}</p>
                                     </div>
-                                    <img className="expense-header-logo" src={receipt} alt="receipt-logo"></img>
+                                    <img className="expense-header-logo" src={receipt} alt="receipt-logo" />
                                     <div className="expense-header-description">
                                         {obj.expense.description}
                                     </div>
@@ -166,7 +166,7 @@ function AllExpensesPage() {
                         case 'sent':
                             return (
                                 <div className="payment-header">
-                                    <img className="payment-header-logo" src={dollar} alt="dollar-logo"></img>
+                                    <img className="payment-header-logo" src={dollar} alt="dollar-logo" />
                                     <div className="payment-header-description">
                                         {sessionUser.short_name} paid {obj.friendship.friend.short_name} {formatMoney(obj.amount)}
                                     </div>
@@ -184,7 +184,7 @@ function AllExpensesPage() {
                         case 'received':
                             return (
                                 <div className="payment-header">
-                                    <img className="payment-header-logo" src={dollar} alt="dollar-logo"></img>
+                                    <img className="payment-header-logo" src={dollar} alt="dollar-logo" />
                                     <div className="payment-header-description">
                                         {obj.friendship.user.short_name} paid {sessionUser.short_name} {formatMoney(obj.amount)}
                                     </div>

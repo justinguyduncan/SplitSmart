@@ -26,7 +26,7 @@ function AddFriendModal() {
     return (
         <>
             <form className="add-friend-form" onSubmit={handleSubmit}>
-                <h2><img className="add-friend-logo" src={logo} alt="add-friend-logo"></img>Invite friends</h2>
+                <h2><img className="add-friend-logo" src={logo} alt="add-friend-logo" />Invite friends</h2>
                 {errors.length > 0 && <ul>
                     {errors.map((error, idx) => (
                         <li key={idx}>{error}</li>

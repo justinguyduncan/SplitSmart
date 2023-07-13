@@ -37,7 +37,7 @@ function SignupFormPage() {
 
   return (
     <div className="signup-form-container">
-      <NavLink to="/" className="signup-form-image"><img src={logo} alt="splitsmart-logo"></img></NavLink>
+      <NavLink to="/" className="signup-form-image"><img src={logo} alt="splitsmart-logo" /></NavLink>
       <form className="signup-form" onSubmit={handleSubmit}>
         {errors.length > 0 && <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}

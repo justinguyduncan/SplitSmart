@@ -174,7 +174,7 @@ function FriendPage() {
                 <div id="show-container">
                     {unsettledItems.length === 0 &&
                         <>
-                            <img id="settled-up-logo" src={checkmark} alt="checkmark-logo"></img>
+                            <img id="settled-up-logo" src={checkmark} alt="checkmark-logo" />
                             <div id="show-button-description">You and {friendship.friend.name} are all settled up.</div>
                         </>
                     }

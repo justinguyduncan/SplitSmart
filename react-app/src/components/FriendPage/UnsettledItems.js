@@ -21,7 +21,7 @@ function UnsettledItems({ items, friendship, deleteExpense }) {
                                     <p className="expense-header-month">{dateMonth}</p>
                                     <p className="expense-header-day">{dateDay}</p>
                                 </div>
-                                <img className="expense-header-logo" src={receipt} alt="receipt-logo"></img>
+                                <img className="expense-header-logo" src={receipt} alt="receipt-logo" />
                                 <div className="expense-header-description">
                                     {obj.description}
                                 </div>
@@ -45,7 +45,7 @@ function UnsettledItems({ items, friendship, deleteExpense }) {
                                     <p className="expense-header-month">{dateMonth}</p>
                                     <p className="expense-header-day">{dateDay}</p>
                                 </div>
-                                <img className="expense-header-logo" src={receipt} alt="receipt-logo"></img>
+                                <img className="expense-header-logo" src={receipt} alt="receipt-logo" />
                                 <div className="expense-header-description">
                                     {obj.expense.description}
                                 </div>
