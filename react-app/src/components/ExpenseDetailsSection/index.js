@@ -70,6 +70,18 @@ function ExpenseDetailsSection({ expenseId }) {
     }
   };
 
+
+  const formatMoney = (amount) => {
+    return (
+      "$" +
+      String(
+        Number(amount)
+          .toFixed(2)
+          .replace(/\d(?=(\d{3})+\.)/g, "$&,")
+      )
+    );
+  };
+
   return (
     <div className="expense-comments-wrapper">
       <section className="expense-subheader">
@@ -83,7 +95,7 @@ function ExpenseDetailsSection({ expenseId }) {
           <p className="expense-subheader-description">
             {expense?.description}
           </p>
-          <p className="expense-subheader-amount">${+expense?.amount}.00</p>
+          <p className="expense-subheader-amount">{formatMoney(expense?.amount)}</p>
           <p className="expense-subheader-date">
             Added by {expense?.user?.short_name} on {createdDate}
           </p>
@@ -107,21 +119,21 @@ function ExpenseDetailsSection({ expenseId }) {
             />
             <p>
               {expense?.user?.short_name} paid{" "}
-              <span> ${+expense?.amount}.00</span> and owes $
-              {+expense?.amount / (participants.length + 1)}.00
+              <span> {formatMoney(expense?.amount)}</span> and owes {" "}
+              {formatMoney(expense?.amount/( expense?.participants?.length + 1)) }
             </p>
           </div>
           <div className="expense-main-content-wrapper">
             <ul className="expense-main-list">
-              {participants.map((participant) => (
+              {expense?.participants?.map((participant) => (
                 <li key={participant?.id}>
                   <img
                     src={participant?.friendship?.friend?.image_url}
                     alt={participant?.friendship?.friend?.short_name}
                   />
                   <p>
-                    {participant?.friendship?.friend?.short_name} owes $
-                    {+participant?.amount_due}.00
+                    {participant?.friendship?.friend?.short_name} owes {" "}
+                    {formatMoney(participant?.amount_due)}
                   </p>
                 </li>
               ))}
