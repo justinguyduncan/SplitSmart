@@ -8,6 +8,7 @@ import * as paymentActions from '../../store/payment';
 import LeftNavigationBar from "../LeftNavigationBar";
 import TopNavigationBar from '../TopNavigationBar';
 import MainHeader from '../MainHeader';
+import RightSummaryBar from '../RightSummaryBar';
 import UnsettledItems from "./UnsettledItems";
 import SettledItems from "./SettledItems";
 import checkmark from "./checkmark.png";
@@ -167,6 +168,7 @@ function FriendPage() {
             <LeftNavigationBar />
             <TopNavigationBar />
             <MainHeader />
+            <RightSummaryBar />
             <div id="friend-items">
                 <UnsettledItems items={unsettledItems} friendship={friendship} deleteExpense={deleteExpense} />
                 <div id="show-container">
