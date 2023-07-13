@@ -3,23 +3,23 @@ p, ul, div, li, a, img, h1, h2, h3, h4, section {
     margin: 0;
 }
 
-.subheader {
+.payment-subheader {
     display: flex;
     gap: 10px;
     padding: 5px;
 }
 
-.main-content {
+.payment-main-content {
     margin-top: 30px;
 }
 
-.main-content-wrapper img {
+.payment-main-content-wrapper img {
     height: 40px;
     width: 40px;
     border-radius: 50%;
 }
 
-.btn {
+.payment-btn {
     background-color: rgb(208, 106, 71);
     color: rgb(220, 218, 215);
     text-shadow: rgb(140, 82, 61) 0px -1px 0px;
@@ -30,56 +30,56 @@ p, ul, div, li, a, img, h1, h2, h3, h4, section {
     box-shadow: rgba(220, 218, 215, 0.2) 0px 1px 0px inset, rgba(24, 26, 27, 0.05) 0px 1px 2px;
 }
 
-.edit-btn {
+.payment-edit-btn {
     max-width: 86px;
 }
 
-.image-wrapper {
+.payment-image-wrapper {
     width: 84px;
     height: 84px;
     border: 1px #ddd solid;
 }
 
-.image-wrapper img {
+.payment-image-wrapper img {
     height: 84px;
     width: 84px;
 }
 
-.main {
+.payment-main {
     display: flex;
     gap: 20px;
     max-width: 550px;
 }
 
-.main-content {
+.payment-main-content {
     width: 48%;
     padding: 5px;
 }
 
-.main-content-wrapper {
+.payment-main-content-wrapper {
     display: flex;
     gap: 10px;
     align-items: center;
 }
 
-.main-content-wrapper p {
+.payment-main-content-wrapper p {
     color: rgb(60, 65, 68);
     font-size: 13px;
 }   
 
-.main-content-wrapper span {
+.payment-main-content-wrapper span {
     font-weight: 700;
     color: rgb(0, 0, 0);
     font-size: 13px;
 }    
 
-.content-wrapper {
+.payment-content-wrapper {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.payments-wrapper {
+.payment-payments-wrapper {
     max-width: 580px;
     padding: 5px;
     background-color: rgb(215, 213, 209);
@@ -88,18 +88,18 @@ p, ul, div, li, a, img, h1, h2, h3, h4, section {
     margin-left: 300px;
 }
 
-.subheader-description {
+.payment-subheader-description {
     font-size: 16px;
     color: rgb(60, 65, 68);
 }
 
-.subheader-amount{
+.payment-subheader-amount{
     font-size: 20px;
     font-weight: bold;
     color: rgb(60, 65, 68);
 }
 
-.subheader-date {
+.payment-subheader-date {
     font-size: 12px;
     color: #999;
 }

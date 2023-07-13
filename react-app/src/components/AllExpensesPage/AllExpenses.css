@@ -1,3 +1,8 @@
+#all-expenses {
+    margin-left: 200px;
+    /* margin-top: 35px; */
+}
+
 .expense-header {
     display: grid;
     grid-template-columns: 5% 5% auto 15% 15% 5%;

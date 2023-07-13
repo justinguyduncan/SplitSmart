@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import AboutPage from "./components/AboutPage";
@@ -11,10 +11,13 @@ import FriendPage from "./components/FriendPage";
 import { authenticate } from "./store/session";
 import TopNavigationBar from "./components/TopNavigationBar";
 import PaymentDetailsSection from "./components/PaymentDetailsSection";
+// import MainHeader from "./components/MainHeader"; // Import the MainHeader component
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const location = useLocation();
+
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
@@ -26,12 +29,13 @@ function App() {
    
 
 
+      {/* {location.pathname !== "/" && <MainHeader />} */}
       {isLoaded && (
         <Switch>
           <Route exact path="/">
             <AboutPage />
           </Route>
-          <Route path="/login" >
+          <Route path="/login">
             <LoginFormPage />
           </Route>
           <Route path="/signup">

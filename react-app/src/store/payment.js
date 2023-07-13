@@ -78,7 +78,6 @@ export const fetchSentPayments = () => async (dispatch) => {
 // Async action: Create a payment
 export const createPayment = (amount, friendshipId) => async (dispatch) => {
     try {
-      console.log('INSIDE ACTION', amount, friendshipId);
       const response = await fetch('/api/payments/', {
         method: 'POST',
         headers: {

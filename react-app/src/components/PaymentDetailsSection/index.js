@@ -47,23 +47,23 @@ function PaymentDetailsSection({ paymentId }) {
     }
   }, [dispatch, payment?.friendship_id]);
   return (
-    <div className="payments-wrapper">
-      <section className="subheader">
-        <div className="image-wrapper">
+    <div className="payment-payments-wrapper">
+      <section className="payment-subheader">
+        <div className="payment-image-wrapper">
           <img
             src="https://assets.splitwise.com/assets/api/payment_icon/square/large/offline.png"
             alt="dollar sign"
           />
         </div>
-        <div className="subheader-text-wrapper">
-          <p className="subheader-description">Payment</p>
-          <p className="subheader-amount">${+payment?.amount}.00</p>
-          <p className="subheader-date">
+        <div className="payment-subheader-text-wrapper">
+          <p className="payment-subheader-description">Payment</p>
+          <p className="payment-subheader-amount">${+payment?.amount}.00</p>
+          <p className="payment-subheader-date">
             Added by {selectedFriendship?.user?.short_name} on {createdDate}
           </p>
 
           <button
-            className="btn edit-btn"
+            className="payment-btn payment-edit-btn"
             onClick={() => alert("feature coming soon")}
           >
             Edit payment
@@ -71,17 +71,17 @@ function PaymentDetailsSection({ paymentId }) {
         </div>
       </section>
       <hr />
-      <main className="main">
-        <section className="main-content">
-          <div className="content-wrapper">
-            <div className="main-content-wrapper">
+      <main className="payment-main">
+        <section className="payment-main-content">
+          <div className="payment-content-wrapper">
+            <div className="payment-main-content-wrapper">
               <img src={friend?.image_url} alt={friend?.short_name} />
               <p>
                 <span>{friend?.short_name}</span> paid <span> ${+payment?.amount}.00 </span>
               </p>
             </div>
 
-            <div className="main-content-wrapper">
+            <div className="payment-main-content-wrapper">
               <img src={user?.image_url} alt={user?.short_name} />
               <p>
                 <span> {user?.short_name} </span> recieved <span> ${+payment?.amount}.00</span>
