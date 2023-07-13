@@ -34,11 +34,11 @@ function DashboardPage() {
               <p className="dashboard-subheader-list-text">total balance: </p>
               {summary["you owe"] < summary["you are owed"] ? (
                 <p className={`dashboard-subheader-text dashboard-subheader-text-orange`}>
-                  -${+summary.balance.slice(1)}.00
+                  -${Math.abs(summary.balance)}.00
                 </p>
               ) : (
                 <p className={`dashboard-subheader-text dashboard-subheader-text-green`}>
-                  + ${+summary.balance}.00
+                  + ${Math.abs(summary.balance)}.00
                 </p>
               )}
             </li>
@@ -66,7 +66,7 @@ function DashboardPage() {
               <ul className="dashboard-owed-list">
                 {youOwe.map((item) => (
                   <li className="dashboard-owed-item" key={item.id}>
-                    <NavLink to={`/friends/${item.friend_id}`}>
+                    <NavLink to={`/friends/${item.id}`}>
                       <img src={item.friend.image_url} alt={item.friend.name} />
                       <div>
                         <p>{item.friend.name}</p>
@@ -88,12 +88,12 @@ function DashboardPage() {
               <ul className="dashboard-owed-list">
                 {youAreOwed.map((item) => (
                   <li className="dashboard-owed-item" key={item.id}>
-                    <NavLink to={`/friends/${item.friend_id}`}>
+                    <NavLink to={`/friends/${item.id}`}>
                       <img src={item.friend.image_url} alt={item.friend.name} />
                       <div>
                         <p>{item.friend.name}</p>
                         <p className="dashboard-subheader-text-green">
-                          ${+item.bill}.00
+                           owes you ${Math.abs(item.bill)}.00
                         </p>
                       </div>
                     </NavLink>
