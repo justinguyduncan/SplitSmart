@@ -9,6 +9,7 @@ import './MainHeader.css';
 const MainHeader = () => {
   const location = useLocation();
   const friendships = useSelector((state) => Object.values(state.friend.friendships));
+  let friendship;
 
   const currentPage = useSelector((state) => {
     const path = location.pathname;
@@ -20,7 +21,7 @@ const MainHeader = () => {
       default:
         if (path.startsWith('/friends/')) {
           const friendshipId = Number(path.split('/')[2]);
-          const friendship = friendships.find(
+          friendship = friendships.find(
             (friendship) => friendship.id === friendshipId
           );
           return friendship?.friend?.name || '';
@@ -31,7 +32,10 @@ const MainHeader = () => {
 
   return (
     <div className="main-header">
-      <div className="main-header-title">{currentPage}</div>
+      <div className="main-header-title">
+        {friendship && true && <img className="main-header-img" src={friendship?.friend?.image_url} alt={friendship?.friend?.name} />}
+        <div>{currentPage}</div>
+      </div>
       <div className="main-header-buttons">
         <OpenModalButton modalComponent={<AddEditExpenseModal />} buttonText={'Add expenses'} />
         <OpenModalButton modalComponent={<SettleUpModal />} buttonText={"Settle Up"} />
