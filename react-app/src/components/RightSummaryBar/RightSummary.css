@@ -10,6 +10,11 @@
     padding: 10px 0px;
 }
 
+.right-summ-balance {
+    align-self: flex-start;
+    padding-left: 10px;
+}
+
 .right-summ-balance * {
     font-size: 12pt;
     padding: 5px;
@@ -17,7 +22,7 @@
 
 .remove-friend-button {
     font-size: 12pt;
-    width: 90%;
+    width: 85%;
 }
 
 .orange-amount {
