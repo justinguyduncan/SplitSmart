@@ -1,9 +1,113 @@
-function PaymentDetailsSection() {
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchReceivedPayments, fetchSentPayments } from "../../store/payment";
+import { fetchFriendshipById } from "../../store/friend";
+import "./PaymentDetailsSection.css";
+
+const month = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+function PaymentDetailsSection({ paymentId }) {
+  const dispatch = useDispatch();
+  const payments = useSelector((state) => state.payment);
+  const allPayments = {
+    ...payments?.receivedPayments,
+    ...payments?.sentPayments,
+  };
+  const payment = allPayments[paymentId];
+  const date = new Date(payment?.created_at);
+  const createdDate = `${
+    month[date.getMonth()]
+  } ${date.getDate()}, ${date.getFullYear()} `;
+  const selectedFriendship = useSelector(
+    (state) => state.friend?.selectedFriendship
+  );
+  const user = selectedFriendship?.user;
+  const friend = selectedFriendship?.friend;
+console.log(friend, 222222)
+console.log(user, 3333333)
+console.log(paymentId)
+  useEffect(() => {
+    dispatch(fetchReceivedPayments());
+    dispatch(fetchSentPayments());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (payment?.friendship_id) {
+      dispatch(fetchFriendshipById(payment?.friendship_id));
+    }
+  }, [dispatch, payment?.friendship_id]);
+
+  const formatMoney = (amount) => {
     return (
-        <>
-            <h1>PaymentDetails Section</h1>
-        </>
+      "$" +
+      String(
+        Number(amount)
+          .toFixed(2)
+          .replace(/\d(?=(\d{3})+\.)/g, "$&,")
+      )
     );
+  };
+
+  return (
+    <div id={`payment-details-${paymentId}`} className="payment-payments-wrapper hidden">
+      <section className="payment-subheader">
+        <div className="payment-image-wrapper">
+          <img
+            src="https://assets.splitwise.com/assets/api/payment_icon/square/large/offline.png"
+            alt="dollar sign"
+          />
+        </div>
+        <div className="payment-subheader-text-wrapper">
+          <p className="payment-subheader-description">Payment</p>
+          <p className="payment-subheader-amount">{formatMoney(payment?.amount)}</p>
+          <p className="payment-subheader-date">
+            Added by {selectedFriendship?.user?.short_name} on {createdDate}
+          </p>
+
+          {/* <button
+            className="payment-btn payment-edit-btn"
+            onClick={() => alert("feature coming soon")}
+          >
+            Edit payment
+          </button> */}
+        </div>
+      </section>
+      <hr />
+      <main className="payment-main">
+        <section className="payment-main-content">
+          <div className="payment-content-wrapper">
+            <div className="payment-main-content-wrapper">
+              <img src={friend?.image_url} alt={friend?.short_name} />
+              <p>
+                <span>{friend?.short_name}</span> paid{" "}
+                <span> {formatMoney(payment?.amount)} </span>
+              </p>
+            </div>
+
+            <div className="payment-main-content-wrapper">
+              <img src={user?.image_url} alt={user?.short_name} />
+              <p>
+                <span> {user?.short_name} </span> recieved{" "}
+                <span> {formatMoney(payment?.amount)}</span>
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
 }
 
 export default PaymentDetailsSection;
