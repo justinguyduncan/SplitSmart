@@ -5,9 +5,9 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 
 .dashboard-subheader-list {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     text-align: center;
-    padding: 0 10px;
+    padding: 0;
 }
 
 .dashboard-subheader-list li {
@@ -29,14 +29,14 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 }
 
 .dashboard-owed-item img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     object-fit: cover;
 }
 
 .dashboard-owed-item {
-    padding: 5px;
+    padding: 10px;
 }
 
 .dashboard-owed-item:hover {
@@ -87,7 +87,7 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 
 .dashboard-owed-section {
     display: flex;
-    gap: 20px;
+    /* gap: 20px; */
 }
 
 .dashboard-owed-wrapper {
@@ -113,7 +113,7 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 
 .dashboard-owed-title {
     font-size: 14px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     color: rgb(153, 153, 153);
     padding: 10px;
 }
@@ -134,7 +134,12 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
     color: #5bc5a7;
 }
 
+.dashboard-owed-item .dashboard-subheader-text-orange,
+.dashboard-owed-item .dashboard-subheader-text-grey,
+.dashboard-owed-item .dashboard-subheader-text-green {
+    font-size: 10pt;
+}
+
 .dashboard-settled-img {
     width: 100%
-
 }
