@@ -1,4 +1,6 @@
 import * as expenseActions from './expense';
+import * as friendActions from './friend';
+
 
 // Action types
 const SET_RECEIVED_PAYMENTS = 'payment/SET_RECEIVED_PAYMENTS';
@@ -99,6 +101,7 @@ export const createPayment = (amount, friendshipId) => async (dispatch) => {
       dispatch(expenseActions.getSettledExpenses());
       dispatch(expenseActions.getUnsettledExpenses());
       dispatch(expenseActions.getSummary());
+      dispatch(friendActions.fetchFriendships());
     } catch (error) {
       console.error('Error creating payment:', error.message);
     }
