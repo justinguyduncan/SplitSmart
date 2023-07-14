@@ -235,7 +235,6 @@ function AllExpensesPage() {
                     })}
                 </div>
             </div>
-            <PaymentDetailsSection paymentId={2} />
         </>
     );
 }

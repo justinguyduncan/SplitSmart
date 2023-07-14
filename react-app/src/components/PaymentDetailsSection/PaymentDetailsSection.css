@@ -95,6 +95,7 @@ p, ul, div, li, a, img, h1, h2, h3, h4, section {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    row-gap: 3px;
 }
 
 .payment-subheader-description {

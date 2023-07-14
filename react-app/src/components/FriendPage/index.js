@@ -242,7 +242,6 @@ function FriendPage() {
                 </div>
                 {isVisible && <SettledItems items={settledItems} user={sessionUser} friendship={friendship} deleteExpense={deleteExpense} deletePayment={deletePayment} />}
             </div>
-            <PaymentDetailsSection paymentId={2} />
         </>
     );
 }
