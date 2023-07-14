@@ -39,11 +39,11 @@ function AddEditExpenseModal({ expenseId }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!description || !amount || selectedFriends.length === 0) {
-      // Add validation for required fields
-      console.log('Please fill in all required fields.');
-      return;
-    }
+    // if (!description || !amount || selectedFriends.length === 0) {
+    //   // Add validation for required fields
+    //   console.log('Please fill in all required fields.');
+    //   return;
+    // }
 
     const friendsIds = selectedFriends.map((friendId) => parseInt(friendId));
 
@@ -106,6 +106,7 @@ function AddEditExpenseModal({ expenseId }) {
           id="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          required
         />
       </div>
 
@@ -116,13 +117,14 @@ function AddEditExpenseModal({ expenseId }) {
           id="amount"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
+          required
         />
       </div>
 
       <div className="expense-info">
         <div className="expense-info-row">
           <label>Paid by you and split equally:</label>
-          <div>{(amount / (selectedFriends.length + 1)).toFixed(2)}/person</div>
+          <div>{'$' + (amount / (selectedFriends.length + 1)).toFixed(2)}/person</div>
         </div>
       </div>
 

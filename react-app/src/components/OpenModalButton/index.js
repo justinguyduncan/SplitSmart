@@ -17,7 +17,7 @@ function OpenModalButton({
   };
 
   return (
-    <button onClick={onClick}disabled={disabled}>{buttonText}</button>
+    <button onClick={onClick} disabled={disabled}>{buttonText}</button>
   );
 }
 

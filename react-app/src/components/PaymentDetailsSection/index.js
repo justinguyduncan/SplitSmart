@@ -22,7 +22,6 @@ function PaymentDetailsSection({ paymentId }) {
   const dispatch = useDispatch();
   const allPayments = useSelector((state) => [...Object.values(state.payment.sentPayments), ...Object.values(state.payment.receivedPayments)]);
   const payment = allPayments.filter(payment => payment.id === paymentId)[0];
-  console.log(payment);
   const date = new Date(payment?.created_at);
   const createdDate = `${month[date.getMonth()]
     } ${date.getDate()}, ${date.getFullYear()} `;

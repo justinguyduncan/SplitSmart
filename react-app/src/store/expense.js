@@ -1,3 +1,5 @@
+import * as friendActions from './friend';
+
 // constants
 const LOAD_SUMMARY = 'expense/loadSummary';
 const LOAD_CREATED_EXPENSES = 'expense/loadCreatedExpenses';
@@ -102,6 +104,11 @@ export const createExpense = (description, amount, friends) => async dispatch =>
     });
     const data = await response.json();
     dispatch(addExpense(data));
+    dispatch(getCreatedExpenses());
+    dispatch(getSettledExpenses());
+    dispatch(getUnsettledExpenses());
+    dispatch(getSummary());
+    dispatch(friendActions.fetchFriendships());
     return response;
 };
 export const updateExpense = (id, description, amount, friends) => async dispatch => {
@@ -118,6 +125,11 @@ export const updateExpense = (id, description, amount, friends) => async dispatc
     });
     const data = await response.json();
     dispatch(editExpense(data));
+    dispatch(getCreatedExpenses());
+    dispatch(getSettledExpenses());
+    dispatch(getUnsettledExpenses());
+    dispatch(getSummary());
+    dispatch(friendActions.fetchFriendships());
     return response;
 };
 export const deleteExpense = (id) => async dispatch => {
