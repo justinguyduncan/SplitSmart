@@ -211,3 +211,8 @@ font-size: 14px;
     color: rgb(143, 61, 61);
 }
 
+.expense-button-wrapper {
+    display: flex;
+    gap: 10px;
+}
+

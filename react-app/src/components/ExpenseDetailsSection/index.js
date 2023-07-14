@@ -6,6 +6,7 @@ import {
   addComment,
   deleteComment,
   getCommentsByExpenseId,
+  updateComment,
 } from "../../store/comment";
 
 const month = [
@@ -23,20 +24,22 @@ const month = [
   "December",
 ];
 function ExpenseDetailsSection({ expenseId }) {
-  const [comment, setComment] = useState("");
-  const [error, setError] = useState({});
+  //dispatch
   const dispatch = useDispatch();
 
+  //states
+  const [comment, setComment] = useState("");
+  const [commentEdit, setCommentEdit] = useState("");
+  const [errorEdit, setErrorEdit] = useState({});
+  const [error, setError] = useState({});
+  const [isEdit, setEdit] = useState(false);
+  const [commentId, setCommentId] = useState(null);
   const expense = useSelector((state) => state.expense?.currentExpense);
   const comments = useSelector((state) =>
     Object.values(state.comment?.comments)
   );
 
-  const date = new Date(expense?.created_at);
-  const createdDate = `${
-    month[date.getMonth()]
-  } ${date.getDate()}, ${date.getFullYear()} `;
-  const participants = expense?.particpants || [];
+  //useEffects
   useEffect(() => {
     const fetchData = async () => {
       dispatch(getCurrentExpense(expenseId));
@@ -47,14 +50,28 @@ function ExpenseDetailsSection({ expenseId }) {
   useEffect(() => {
     const error = {};
     if (comment.length < 1) {
-      error.message = "comment to short";
+      error.message = "comment has to be at least 1 character";
     }
     if (comment.length > 255) {
-      error.message = "comment to long";
+      error.message = "comment has to be less than 255 characters";
     }
 
     setError(error);
   }, [comment]);
+
+  useEffect(() => {
+    const error = {};
+    if (commentEdit.length < 1) {
+      error.message = "comment has to be at least 1 character";
+    }
+    if (commentEdit.length > 255) {
+      error.message = "comment has to be less than 255 characters";
+    }
+
+    setErrorEdit(error);
+  }, [commentEdit]);
+
+  //handlers
   const handleCommentCreate = (e) => {
     e.preventDefault();
     dispatch(addComment(comment, expenseId));
@@ -70,7 +87,31 @@ function ExpenseDetailsSection({ expenseId }) {
     }
   };
 
+  const handleCommentEdit = (commentId, commentText) => {
+    setEdit(true);
+    setCommentId(commentId);
+    setCommentEdit(commentText);
+  };
 
+  const handleEditCancel = () => {
+    setEdit(false);
+    setCommentId(null);
+    setCommentEdit("")
+  };
+
+  const handleEditComment = (e)=>{
+    e.preventDefault();
+    dispatch(updateComment(commentEdit, commentId));
+    setCommentEdit("");
+    setCommentId(null)
+    setEdit(false)
+  }
+
+  //utils
+  const date = new Date(expense?.created_at);
+  const createdDate = `${
+    month[date.getMonth()]
+  } ${date.getDate()}, ${date.getFullYear()} `;
   const formatMoney = (amount) => {
     return (
       "$" +
@@ -95,7 +136,9 @@ function ExpenseDetailsSection({ expenseId }) {
           <p className="expense-subheader-description">
             {expense?.description}
           </p>
-          <p className="expense-subheader-amount">{formatMoney(expense?.amount)}</p>
+          <p className="expense-subheader-amount">
+            {formatMoney(expense?.amount)}
+          </p>
           <p className="expense-subheader-date">
             Added by {expense?.user?.short_name} on {createdDate}
           </p>
@@ -119,8 +162,10 @@ function ExpenseDetailsSection({ expenseId }) {
             />
             <p>
               {expense?.user?.short_name} paid{" "}
-              <span> {formatMoney(expense?.amount)}</span> and owes {" "}
-              {formatMoney(expense?.amount/( expense?.participants?.length + 1)) }
+              <span> {formatMoney(expense?.amount)}</span> and owes{" "}
+              {formatMoney(
+                expense?.amount / (expense?.participants?.length + 1)
+              )}
             </p>
           </div>
           <div className="expense-main-content-wrapper">
@@ -132,7 +177,7 @@ function ExpenseDetailsSection({ expenseId }) {
                     alt={participant?.friendship?.friend?.short_name}
                   />
                   <p>
-                    {participant?.friendship?.friend?.short_name} owes {" "}
+                    {participant?.friendship?.friend?.short_name} owes{" "}
                     {formatMoney(participant?.amount_due)}
                   </p>
                 </li>
@@ -153,36 +198,82 @@ function ExpenseDetailsSection({ expenseId }) {
           <ul className="expense-comment">
             {comments.map((comment) => (
               <li key={comment.id} className="expense-comment-item">
-                <p className="expense-comment-title">
-                  {comment?.user?.short_name}
-                  {new Date().getMonth() ===
-                    new Date(comment?.created_at).getMonth() &&
-                  new Date().getDate() ===
-                    new Date(comment?.created_at).getDate() ? (
-                    <span className="expense-comment-span">Today</span>
-                  ) : (
-                    <span className="expense-comment-span">
-                      {" "}
-                      {month[new Date(comment?.created_at).getMonth()]}{" "}
-                      {new Date(comment?.created_at).getDate()}
-                    </span>
-                  )}
-                </p>
-                <div className="expense-icon-wrapper">
-                  <span onClick={() => alert("feature coming soon")}>
-                    <img
-                      src="https://res.cloudinary.com/dr1ekjmf4/image/upload/v1688651618/icons8-pencil-50_1_cg3jui.png"
-                      alt="edit icon"
-                    />
-                  </span>
-                  <span
-                    className="expense-close"
-                    onClick={() => handleDelete(comment.id)}
-                  >
-                    X
-                  </span>
-                </div>
-                <p className="expense-comment-text">{comment?.comment}</p>
+                {isEdit && commentId === comment.id ? (
+                  <>
+                    {" "}
+                    <form
+                      className="expense-comment-form"
+                      onSubmit={handleEditComment}
+                    >
+                      <label>
+                        <textarea
+                          onChange={(e) => setCommentEdit(e.target.value)}
+                          placeholder="Add comment"
+                          value={commentEdit}
+                        ></textarea>
+                        {errorEdit.message && (
+                          <span className="expense-error">{errorEdit.message}</span>
+                        )}
+                      </label>
+                      <div className="expense-button-wrapper">
+                        <button
+                          disabled={!!errorEdit.message}
+                          className="expense-btn expense-post-btn"
+                          type="submit"
+                        >
+                          Edit
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            handleEditCancel();
+                          }}
+                          className="expense-btn expense-edit-btn"
+                          type="reset"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
+                  </>
+                ) : (
+                  <>
+                    <p className="expense-comment-title">
+                      {comment?.user?.short_name}
+                      {new Date().getMonth() ===
+                        new Date(comment?.created_at).getMonth() &&
+                      new Date().getDate() ===
+                        new Date(comment?.created_at).getDate() ? (
+                        <span className="expense-comment-span">Today</span>
+                      ) : (
+                        <span className="expense-comment-span">
+                          {" "}
+                          {month[new Date(comment?.created_at).getMonth()]}{" "}
+                          {new Date(comment?.created_at).getDate()}
+                        </span>
+                      )}
+                    </p>
+                    <div className="expense-icon-wrapper">
+                      <span
+                        onClick={() =>
+                          handleCommentEdit(comment.id, comment.comment)
+                        }
+                      >
+                        <img
+                          src="https://res.cloudinary.com/dr1ekjmf4/image/upload/v1688651618/icons8-pencil-50_1_cg3jui.png"
+                          alt="edit icon"
+                        />
+                      </span>
+                      <span
+                        className="expense-close"
+                        onClick={() => handleDelete(comment.id)}
+                      >
+                        X
+                      </span>
+                    </div>
+                    <p className="expense-comment-text">{comment?.comment}</p>
+                  </>
+                )}
               </li>
             ))}
           </ul>
