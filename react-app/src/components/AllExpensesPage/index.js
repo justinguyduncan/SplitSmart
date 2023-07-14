@@ -239,7 +239,6 @@ function AllExpensesPage() {
                       &#x2715;
                     </button>
                   </div>
-                  {console.log(obj.id, 55555555)}
                   <PaymentDetailsSection paymentId={obj.id} />
                 </>
               );

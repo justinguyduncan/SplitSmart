@@ -30,7 +30,17 @@ class ExpenseParticipant(db.Model):
             'expense': {
                 'id': self.expense.id,
                 'description': self.expense.description,
-                'amount': self.expense.amount
+                'amount': self.expense.amount,
+                'creator_id': self.expense.creator_id,
+                'user': self.expense.user.to_dict(),
+                'comments': [comment.to_dict() for comment in self.expense.comments],
+                'participants': [{
+                    'id': participant.id,
+                    'friendship': participant.friendship.to_dict(),
+                    'amount_due': participant.amount_due
+                } for participant in self.expense.participants],
+                'created_at': self.expense.created_at,
+                'updated_at': self.expense.updated_at
             },
             'created_at': self.created_at,
             'updated_at': self.updated_at

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./ExpenseDetailsSection.css";
-import { getCurrentExpense } from "../../store/expense";
+import  * as expenseActions from "../../store/expense";
 import {
   addComment,
   deleteComment,
@@ -34,19 +34,32 @@ function ExpenseDetailsSection({ expenseId }) {
   const [error, setError] = useState({});
   const [isEdit, setEdit] = useState(false);
   const [commentId, setCommentId] = useState(null);
-  const expense = useSelector((state) => state.expense?.currentExpense);
-  const comments = useSelector((state) =>
-    Object.values(state.comment?.comments)
-  );
+  // const expense = useSelector((state) => state.expense?.currentExpense);
+  const createdExpenses = useSelector((state) => Object.values(state.expense.createdExpenses));
+  const unsettledExpenses = useSelector((state) => {
+    return Object.values(state.expense.unsettledExpenses).map(participant => participant.expense);
+  });
+  const settledExpenses = useSelector((state) => {
+    return Object.values(state.expense.settledExpenses).map(participant => participant.expense);
+  });
+  // const comments = useSelector((state) => Object.values(state.comment?.comments));
+
+
+  const allExpenses = [...createdExpenses, ...unsettledExpenses, ...settledExpenses];
+  const expense = allExpenses.filter(expense => expense.id === expenseId)[0];
+  const comments = expense.comments;
+
 
   //useEffects
   useEffect(() => {
     const fetchData = async () => {
-      dispatch(getCurrentExpense(expenseId));
-      dispatch(getCommentsByExpenseId(expenseId));
+      dispatch(expenseActions.getCreatedExpenses());
+      dispatch(expenseActions.getSettledExpenses());
+      dispatch(expenseActions.getUnsettledExpenses());
     };
     fetchData();
-  }, [dispatch, expenseId]);
+  }, [dispatch]);
+
   useEffect(() => {
     const error = {};
     if (comment.length < 1) {
