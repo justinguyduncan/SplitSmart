@@ -1,5 +1,6 @@
 import receipt from "./receipt.jpeg";
 import dollar from "./dollar.jpeg";
+import PaymentDetailsSection from "../PaymentDetailsSection";
 
 
 function SettledItems({ items, user, friendship, deleteExpense, deletePayment }) {
@@ -65,39 +66,49 @@ function SettledItems({ items, user, friendship, deleteExpense, deletePayment })
                         );
                     case 'sent':
                         return (
-                            <div className="payment-header">
-                                <img className="payment-header-logo" src={dollar} alt="dollar-logo" />
-                                <div className="payment-header-description">
-                                    {user.short_name} paid {friendship.friend.short_name} {formatMoney(obj.amount)}
-                                </div>
-                                <div className="payment-header-A">
-                                    you paid
-                                </div>
-                                <div className="payment-header-B teal-amount">
-                                    {formatMoney(obj.amount)}
-                                </div>
-                                {/* <button className="delete-payment" onClick={() => deletePayment(obj.id)}>
+                            <>
+                                <div className="payment-header"
+                                    onClick={() => document.getElementById(`payment-details-${obj.id}`).classList.toggle('hidden')}
+                                >
+                                    <img className="payment-header-logo" src={dollar} alt="dollar-logo" />
+                                    <div className="payment-header-description">
+                                        {user.short_name} paid {friendship.friend.short_name} {formatMoney(obj.amount)}
+                                    </div>
+                                    <div className="payment-header-A">
+                                        you paid
+                                    </div>
+                                    <div className="payment-header-B teal-amount">
+                                        {formatMoney(obj.amount)}
+                                    </div>
+                                    {/* <button className="delete-payment" onClick={() => deletePayment(obj.id)}>
                                     &#x2715;
                                 </button> */}
-                            </div>
+                                </div>
+                                <PaymentDetailsSection paymentId={obj.id} />
+                            </>
                         );
                     case 'received':
                         return (
-                            <div className="payment-header">
-                                <img className="payment-header-logo" src={dollar} alt="dollar-logo" />
-                                <div className="payment-header-description">
-                                    {friendship.friend.short_name} paid {user.short_name} {formatMoney(obj.amount)}
-                                </div>
-                                <div className="payment-header-A">
-                                    you received
-                                </div>
-                                <div className="payment-header-B orange-amount">
-                                    {formatMoney(obj.amount)}
-                                </div>
-                                {/* <button className="delete-payment" onClick={() => deletePayment(obj.id)}>
+                            <>
+                                <div className="payment-header"
+                                    onClick={() => document.getElementById(`payment-details-${obj.id}`).classList.toggle('hidden')}
+                                >
+                                    <img className="payment-header-logo" src={dollar} alt="dollar-logo" />
+                                    <div className="payment-header-description">
+                                        {friendship.friend.short_name} paid {user.short_name} {formatMoney(obj.amount)}
+                                    </div>
+                                    <div className="payment-header-A">
+                                        you received
+                                    </div>
+                                    <div className="payment-header-B orange-amount">
+                                        {formatMoney(obj.amount)}
+                                    </div>
+                                    {/* <button className="delete-payment" onClick={() => deletePayment(obj.id)}>
                                     &#x2715;
                                 </button> */}
-                            </div>
+                                </div>
+                                <PaymentDetailsSection paymentId={obj.id} />
+                            </>
                         );
                     default:
                         return <></>;

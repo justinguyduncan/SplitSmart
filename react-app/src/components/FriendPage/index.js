@@ -7,7 +7,6 @@ import * as expenseActions from "../../store/expense";
 import * as paymentActions from "../../store/payment";
 import LeftNavigationBar from "../LeftNavigationBar";
 import TopNavigationBar from "../TopNavigationBar";
-import PaymentDetailsSection from "../PaymentDetailsSection";
 import MainHeader from "../MainHeader";
 import RightSummaryBar from '../RightSummaryBar';
 import UnsettledItems from "./UnsettledItems";
@@ -242,7 +241,6 @@ function FriendPage() {
                 </div>
                 {isVisible && <SettledItems items={settledItems} user={sessionUser} friendship={friendship} deleteExpense={deleteExpense} deletePayment={deletePayment} />}
             </div>
-            <PaymentDetailsSection paymentId={2} />
         </>
     );
 }

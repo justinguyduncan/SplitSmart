@@ -7,8 +7,8 @@
 #friend-items .expense-header {
     display: grid;
     grid-template-columns: 5% 5% auto 20% 20%;
-    grid-template-rows: min-content;
-    border: gray 1px solid;
+    grid-template-rows: 60px;
+    border: rgb(184, 180, 174) 1px solid;
 }
 
 .expense-header-date {
@@ -67,8 +67,8 @@
 #friend-items .payment-header {
     display: grid;
     grid-template-columns: 5% auto 20% 20%;
-    grid-template-rows: min-content;
-    border: gray 1px solid;
+    grid-template-rows: 40px;
+    border: rgb(184, 180, 174) 1px solid;
 }
 
 .payment-header-logo {

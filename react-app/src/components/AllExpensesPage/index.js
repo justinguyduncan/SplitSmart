@@ -273,8 +273,6 @@ function AllExpensesPage() {
                     })}
                 </div>
             </div>
-            <ExpenseDetailsSection expenseId={2}/>
-          
         </>
     );
 }

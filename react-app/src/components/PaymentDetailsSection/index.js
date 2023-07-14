@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchReceivedPayments, fetchSentPayments } from "../../store/payment";
-import { fetchFriendshipById } from "../../store/friend";
+// import { fetchFriendshipById } from "../../store/friend";
 import "./PaymentDetailsSection.css";
 
 const month = [
@@ -20,34 +20,28 @@ const month = [
 ];
 function PaymentDetailsSection({ paymentId }) {
   const dispatch = useDispatch();
-  const payments = useSelector((state) => state.payment);
-  const allPayments = {
-    ...payments?.receivedPayments,
-    ...payments?.sentPayments,
-  };
-  const payment = allPayments[paymentId];
+  const allPayments = useSelector((state) => [...Object.values(state.payment.sentPayments), ...Object.values(state.payment.receivedPayments)]);
+  const payment = allPayments.filter(payment => payment.id === paymentId)[0];
+  console.log(payment);
   const date = new Date(payment?.created_at);
-  const createdDate = `${
-    month[date.getMonth()]
-  } ${date.getDate()}, ${date.getFullYear()} `;
-  const selectedFriendship = useSelector(
-    (state) => state.friend?.selectedFriendship
-  );
-  const user = selectedFriendship?.user;
-  const friend = selectedFriendship?.friend;
-console.log(friend, 222222)
-console.log(user, 3333333)
-console.log(paymentId)
+  const createdDate = `${month[date.getMonth()]
+    } ${date.getDate()}, ${date.getFullYear()} `;
+  // const selectedFriendship = useSelector(
+  //   (state) => state.friend?.selectedFriendship
+  // );
+  const user = payment.friendship.user;
+  const friend = payment.friendship.friend;
+
   useEffect(() => {
     dispatch(fetchReceivedPayments());
     dispatch(fetchSentPayments());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (payment?.friendship_id) {
-      dispatch(fetchFriendshipById(payment?.friendship_id));
-    }
-  }, [dispatch, payment?.friendship_id]);
+  // useEffect(() => {
+  //   if (payment?.friendship_id) {
+  //     dispatch(fetchFriendshipById(payment?.friendship_id));
+  //   }
+  // }, [dispatch, payment?.friendship_id]);
 
   const formatMoney = (amount) => {
     return (
@@ -73,7 +67,7 @@ console.log(paymentId)
           <p className="payment-subheader-description">Payment</p>
           <p className="payment-subheader-amount">{formatMoney(payment?.amount)}</p>
           <p className="payment-subheader-date">
-            Added by {selectedFriendship?.user?.short_name} on {createdDate}
+            Added by {user.short_name} on {createdDate}
           </p>
 
           {/* <button
@@ -84,22 +78,22 @@ console.log(paymentId)
           </button> */}
         </div>
       </section>
-      <hr />
+      <hr style={{width:"95%"}} />
       <main className="payment-main">
         <section className="payment-main-content">
           <div className="payment-content-wrapper">
             <div className="payment-main-content-wrapper">
-              <img src={friend?.image_url} alt={friend?.short_name} />
+              <img src={user?.image_url} alt={friend?.short_name} />
               <p>
-                <span>{friend?.short_name}</span> paid{" "}
+                <span>{user?.short_name}</span> paid{" "}
                 <span> {formatMoney(payment?.amount)} </span>
               </p>
             </div>
 
             <div className="payment-main-content-wrapper">
-              <img src={user?.image_url} alt={user?.short_name} />
+              <img src={friend?.image_url} alt={user?.short_name} />
               <p>
-                <span> {user?.short_name} </span> recieved{" "}
+                <span> {friend?.short_name} </span> recieved{" "}
                 <span> {formatMoney(payment?.amount)}</span>
               </p>
             </div>
