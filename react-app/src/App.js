@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch, useLocation } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import AboutPage from "./components/AboutPage";
@@ -9,12 +9,10 @@ import AllExpensesPage from "./components/AllExpensesPage";
 import EditFriendPage from "./components/EditFriendPage";
 import FriendPage from "./components/FriendPage";
 import { authenticate } from "./store/session";
-// import MainHeader from "./components/MainHeader"; // Import the MainHeader component
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
@@ -22,7 +20,6 @@ function App() {
 
   return (
     <>
-      {/* {location.pathname !== "/" && <MainHeader />} */}
       {isLoaded && (
 
 

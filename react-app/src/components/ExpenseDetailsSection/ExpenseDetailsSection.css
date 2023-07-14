@@ -143,6 +143,7 @@ font-size: 14px;
 
 .expense-comments-wrapper {
     margin-left: 200px;
+    margin-right: 200px;
     /* max-width: 580px; */
     padding: 5px;
     background-color: rgb(215, 213, 209);

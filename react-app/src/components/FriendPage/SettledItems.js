@@ -22,7 +22,7 @@ function SettledItems({ items, user, friendship, deleteExpense, deletePayment })
                                     <p className="expense-header-month">{dateMonth}</p>
                                     <p className="expense-header-day">{dateDay}</p>
                                 </div>
-                                <img className="expense-header-logo" src={receipt} alt="receipt-logo"></img>
+                                <img className="expense-header-logo" src={receipt} alt="receipt-logo" />
                                 <div className="expense-header-description">
                                     {obj.description}
                                 </div>
@@ -46,7 +46,7 @@ function SettledItems({ items, user, friendship, deleteExpense, deletePayment })
                                     <p className="expense-header-month">{dateMonth}</p>
                                     <p className="expense-header-day">{dateDay}</p>
                                 </div>
-                                <img className="expense-header-logo" src={receipt} alt="receipt-logo"></img>
+                                <img className="expense-header-logo" src={receipt} alt="receipt-logo" />
                                 <div className="expense-header-description">
                                     {obj.expense.description}
                                 </div>
@@ -66,7 +66,7 @@ function SettledItems({ items, user, friendship, deleteExpense, deletePayment })
                     case 'sent':
                         return (
                             <div className="payment-header">
-                                <img className="payment-header-logo" src={dollar} alt="dollar-logo"></img>
+                                <img className="payment-header-logo" src={dollar} alt="dollar-logo" />
                                 <div className="payment-header-description">
                                     {user.short_name} paid {friendship.friend.short_name} {formatMoney(obj.amount)}
                                 </div>
@@ -84,7 +84,7 @@ function SettledItems({ items, user, friendship, deleteExpense, deletePayment })
                     case 'received':
                         return (
                             <div className="payment-header">
-                                <img className="payment-header-logo" src={dollar} alt="dollar-logo"></img>
+                                <img className="payment-header-logo" src={dollar} alt="dollar-logo" />
                                 <div className="payment-header-description">
                                     {friendship.friend.short_name} paid {user.short_name} {formatMoney(obj.amount)}
                                 </div>
