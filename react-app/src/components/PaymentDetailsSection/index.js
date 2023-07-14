@@ -59,7 +59,7 @@ function PaymentDetailsSection({ paymentId }) {
   };
 
   return (
-    <div className="payment-payments-wrapper">
+    <div id={`payment-details-${paymentId}`} className="payment-payments-wrapper hidden">
       <section className="payment-subheader">
         <div className="payment-image-wrapper">
           <img
@@ -74,12 +74,12 @@ function PaymentDetailsSection({ paymentId }) {
             Added by {selectedFriendship?.user?.short_name} on {createdDate}
           </p>
 
-          <button
+          {/* <button
             className="payment-btn payment-edit-btn"
             onClick={() => alert("feature coming soon")}
           >
             Edit payment
-          </button>
+          </button> */}
         </div>
       </section>
       <hr />
