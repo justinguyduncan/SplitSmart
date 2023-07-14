@@ -3,13 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as expenseActions from '../../store/expense';
 import * as paymentActions from '../../store/payment';
-import LeftNavigationBar from "../LeftNavigationBar";
 import PaymentDetailsSection from "../PaymentDetailsSection"
 import "./AllExpenses.css"
 import receipt from "./receipt.jpeg"
 import dollar from "./dollar.jpeg"
+import LeftNavigationBar from "../LeftNavigationBar";
 import TopNavigationBar from "../TopNavigationBar"
 import MainHeader from "../MainHeader"
+import RightSummaryBar from '../RightSummaryBar';
 
 
 function AllExpensesPage() {
@@ -104,17 +105,18 @@ function AllExpensesPage() {
 
     return (
         <>
-           
-            <LeftNavigationBar />
-           
 
-           
-          
-           
+            <LeftNavigationBar />
+
+
+
+
+
 
             <div id="all-items">
             <TopNavigationBar />
             <MainHeader />
+            <RightSummaryBar />
             <div id="all-expenses">
                 {items.map(obj => {
                     const dateStr = new Date(obj.created_at).toDateString();
@@ -123,12 +125,15 @@ function AllExpensesPage() {
                     switch (obj.type) {
                         case 'created':
                             return (
-                                <div className="expense-header">
+                                <div className="expense-header"
+                                    onMouseEnter={() => document.getElementById(`expense-${obj.id}`).classList.remove('hidden')}
+                                    onMouseLeave={() => document.getElementById(`expense-${obj.id}`).classList.add('hidden')}
+                                >
                                     <div className="expense-header-date">
                                         <p className="expense-header-month">{dateMonth}</p>
                                         <p className="expense-header-day">{dateDay}</p>
                                     </div>
-                                    <img className="expense-header-logo" src={receipt} alt="receipt-logo"></img>
+                                    <img className="expense-header-logo" src={receipt} alt="receipt-logo" />
                                     <div className="expense-header-description">
                                         {obj.description}
                                     </div>
@@ -141,19 +146,22 @@ function AllExpensesPage() {
                                         {obj.participants.length === 1 && <p>you lent {obj.participants[0].friendship.friend.short_name}</p>}
                                         <p>{formatMoney(obj.amount - obj.participants[0].amount_due)}</p>
                                     </div>
-                                    <button className="delete-expense" onClick={() => deleteExpense(obj.id, obj.type)}>
+                                    <button id={`expense-${obj.id}`} className="delete-expense hidden" onClick={() => deleteExpense(obj.id, obj.type)}>
                                         &#x2715;
                                     </button>
                                 </div>
                             );
                         case 'charged':
                             return (
-                                <div className="expense-header">
+                                <div className="expense-header"
+                                    onMouseEnter={() => document.getElementById(`expense-${obj.expense.id}`).classList.remove('hidden')}
+                                    onMouseLeave={() => document.getElementById(`expense-${obj.expense.id}`).classList.add('hidden')}
+                                >
                                     <div className="expense-header-date">
                                         <p className="expense-header-month">{dateMonth}</p>
                                         <p className="expense-header-day">{dateDay}</p>
                                     </div>
-                                    <img className="expense-header-logo" src={receipt} alt="receipt-logo"></img>
+                                    <img className="expense-header-logo" src={receipt} alt="receipt-logo" />
                                     <div className="expense-header-description">
                                         {obj.expense.description}
                                     </div>
@@ -165,15 +173,18 @@ function AllExpensesPage() {
                                         <p>{obj.friendship.user.short_name} lent you</p>
                                         <p>{formatMoney(obj.amount_due)}</p>
                                     </div>
-                                    <button className="delete-expense" onClick={() => deleteExpense(obj.expense.id, obj.type)}>
+                                    <button id={`expense-${obj.expense.id}`} className="delete-expense hidden" onClick={() => deleteExpense(obj.expense.id, obj.type)}>
                                         &#x2715;
                                     </button>
                                 </div>
                             );
                         case 'sent':
                             return (
-                                <div className="payment-header">
-                                    <img className="payment-header-logo" src={dollar} alt="dollar-logo"></img>
+                                <div className="payment-header"
+                                    onMouseEnter={() => document.getElementById(`payment-${obj.id}`).classList.remove('hidden')}
+                                    onMouseLeave={() => document.getElementById(`payment-${obj.id}`).classList.add('hidden')}
+                                >
+                                    <img className="payment-header-logo" src={dollar} alt="dollar-logo" />
                                     <div className="payment-header-description">
                                         {sessionUser.short_name} paid {obj.friendship.friend.short_name} {formatMoney(obj.amount)}
                                     </div>
@@ -183,15 +194,18 @@ function AllExpensesPage() {
                                     <div className="payment-header-B teal-amount">
                                         {formatMoney(obj.amount)}
                                     </div>
-                                    <button className="delete-payment" onClick={() => deletePayment(obj.id)}>
+                                    <button id={`payment-${obj.id}`} className="delete-payment hidden" onClick={() => deletePayment(obj.id)}>
                                         &#x2715;
                                     </button>
                                 </div>
                             );
                         case 'received':
                             return (
-                                <div className="payment-header">
-                                    <img className="payment-header-logo" src={dollar} alt="dollar-logo"></img>
+                                <div className="payment-header"
+                                    onMouseEnter={() => document.getElementById(`payment-${obj.id}`).classList.remove('hidden')}
+                                    onMouseLeave={() => document.getElementById(`payment-${obj.id}`).classList.add('hidden')}
+                                >
+                                    <img className="payment-header-logo" src={dollar} alt="dollar-logo" />
                                     <div className="payment-header-description">
                                         {obj.friendship.user.short_name} paid {sessionUser.short_name} {formatMoney(obj.amount)}
                                     </div>
@@ -201,7 +215,7 @@ function AllExpensesPage() {
                                     <div className="payment-header-B orange-amount">
                                         {formatMoney(obj.amount)}
                                     </div>
-                                    <button className="delete-payment" onClick={() => deletePayment(obj.id)}>
+                                    <button id={`payment-${obj.id}`} className="delete-payment hidden" onClick={() => deletePayment(obj.id)}>
                                         &#x2715;
                                     </button>
                                 </div>

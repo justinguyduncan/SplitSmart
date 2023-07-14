@@ -19,7 +19,7 @@ function LeftNavigationBar() {
 
     return (
         <div className="left-nav-bar">
-            <NavLink to="/dashboard"><img className="dashboard-logo" src={logo} alt="dashboard-logo"></img>Dashboard</NavLink>
+            <NavLink to="/dashboard"><img className="dashboard-logo" src={logo} alt="dashboard-logo" />Dashboard</NavLink>
             <NavLink to="/all"><i className="fas fa-solid fa-list" />All Expenses</NavLink>
             <div className="friends-list-header">FRIENDS
                 <OpenModalButton
