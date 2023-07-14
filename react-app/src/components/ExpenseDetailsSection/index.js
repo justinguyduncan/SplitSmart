@@ -5,9 +5,11 @@ import  * as expenseActions from "../../store/expense";
 import {
   addComment,
   deleteComment,
-  getCommentsByExpenseId,
+  // getCommentsByExpenseId,
   updateComment,
 } from "../../store/comment";
+import OpenModalButton from '../OpenModalButton';
+import AddEditExpenseModal from '../AddEditExpenseModal';
 
 const month = [
   "January",
@@ -156,12 +158,13 @@ function ExpenseDetailsSection({ expenseId }) {
             Added by {expense?.user?.short_name} on {createdDate}
           </p>
 
-          <button
+          {/* <button
             className="expense-btn expense-edit-btn"
             onClick={() => alert("feature coming soon")}
           >
             Edit expense
-          </button>
+          </button> */}
+          <OpenModalButton modalComponent={<AddEditExpenseModal />} buttonText={'Edit expense'} />
         </div>
       </section>
       <hr />
@@ -175,7 +178,7 @@ function ExpenseDetailsSection({ expenseId }) {
             />
             <p>
               {expense?.user?.short_name} paid{" "}
-              <span> {formatMoney(expense?.amount)}</span> and owes{" "}
+              {formatMoney(expense?.amount)} and owes{" "}
               {formatMoney(
                 expense?.amount / (expense?.participants?.length + 1)
               )}

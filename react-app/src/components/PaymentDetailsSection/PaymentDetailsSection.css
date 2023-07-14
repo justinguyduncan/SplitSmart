@@ -38,6 +38,7 @@ p, ul, div, li, a, img, h1, h2, h3, h4, section {
     width: 84px;
     height: 84px;
     border: 1px #ddd solid;
+    align-self: center;
 }
 
 .payment-image-wrapper img {
