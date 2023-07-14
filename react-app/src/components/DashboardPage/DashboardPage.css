@@ -83,18 +83,6 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
     margin: 0;
 }
 
-.dashboard-subheader-text-orange {
-    color: #ff652f;
-}
-
-.dashboard-subheader-text-green {
-    color: #5bc5a7;
-}
-
-.dashboard-subheader-text-grey {
-    color: rgb(153, 153, 153); 
-}
-
 .dashboard-owed-section {
     display: flex;
     gap: 20px;
@@ -114,6 +102,11 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
     color: rgb(153, 153, 153);
     font-size: 16px;
     padding:0 10px;
+    text-align: left;
+}
+
+.dashboard-no-owe-right {
+    text-align: right;
 }
 
 .dashboard-owed-title {
@@ -125,4 +118,21 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 
 .dashboard-owed-title-right {
     text-align: right;
+}
+
+.dashboard-subheader-text-orange {
+    color: #ff652f;
+}
+
+.dashboard-subheader-text-grey {
+    color: rgb(153, 153, 153);
+}
+
+.dashboard-subheader-text-green {
+    color: #5bc5a7;
+}
+
+.dashboard-settled-img {
+    width: 100%
+
 }
