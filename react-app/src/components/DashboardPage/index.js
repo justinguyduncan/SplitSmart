@@ -94,6 +94,8 @@ function DashboardPage() {
 
                 )}
               </li>
+              <div className="border-box">
+              </div>
               <li className="dashboard-subheader-item">
                 <p className="dashboard-subheader-list-text">you owe </p>
 
@@ -106,6 +108,8 @@ function DashboardPage() {
                   {formatMoney(summary["you owe"])}
                 </p>
               </li>
+              <div className="border-box">
+              </div>
               <li>
                 <p className="dashboard-subheader-list-text">you are owed </p>
 

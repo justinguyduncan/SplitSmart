@@ -23,10 +23,10 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
     text-align: center;
 }
 
-.dashboard-subheader-item {
+/* .dashboard-subheader-item {
     border-left: 1px solid rgb(184, 180, 174); ;
     border-right: 1px solid rgb(184, 180, 174);;
-}
+} */
 
 .dashboard-owed-item img {
     width: 40px;
@@ -142,4 +142,10 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 
 .dashboard-settled-img {
     width: 100%
+}
+
+.border-box {
+    width: 3px;
+    background-color: rgb(184, 180, 174);
+    margin: 4px;
 }

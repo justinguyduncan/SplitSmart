@@ -78,7 +78,7 @@ function PaymentDetailsSection({ paymentId }) {
           </button> */}
         </div>
       </section>
-      <hr />
+      <hr style={{width:"95%"}} />
       <main className="payment-main">
         <section className="payment-main-content">
           <div className="payment-content-wrapper">
