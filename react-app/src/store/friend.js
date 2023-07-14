@@ -32,68 +32,91 @@ const editFriendship = (friendship) => ({
 
 // Fetch all friendships
 export const fetchFriendships = () => async (dispatch) => {
-    try {
-      const response = await fetch('/api/friendships/');
-      if (response.ok) {
-        const data = await response.json();
-        dispatch(setFriendships(data.friendships));
-      } else {
-        throw new Error('Failed to fetch friendships');
-      }
-    } catch (error) {
-      console.error(error);
-
+  try {
+    const response = await fetch('/api/friendships/');
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(setFriendships(data.friendships));
+    } else {
+      throw new Error('Failed to fetch friendships');
     }
-  };
+  } catch (error) {
+    console.error(error);
 
-  export const fetchFriendshipById = (friendshipId) => async (dispatch) => {
-    try {
-      const response = await fetch(`/api/friendships/${friendshipId}`);
-      if (response.ok) {
-        const data = await response.json();
-        dispatch(setSelectedFriendship(data));
-      } else {
-        throw new Error(`Failed to fetch friendship with id ${friendshipId}`);
-      }
-    } catch (error) {
-      console.error(error);
+  }
+};
 
+export const fetchFriendshipById = (friendshipId) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/friendships/${friendshipId}`);
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(setSelectedFriendship(data));
+    } else {
+      throw new Error(`Failed to fetch friendship with id ${friendshipId}`);
     }
-  };
+  } catch (error) {
+    console.error(error);
 
-  export const createFriendship = (email) => async (dispatch) => {
-    try {
-      const response = await fetch('/api/friendships/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        dispatch(addFriendship(data));
-      } else {
-        throw new Error('Failed to create friendship');
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  }
+};
 
-  export const updateFriendship = (id) => async dispatch => {
-    try {
-      const response = await fetch(`/api/friendships/${id}`, {
-        method: 'PUT'
-      });
-      if (response.ok) {
-        const data = await response.json();
-        dispatch(editFriendship(data));
-      } else {
-        throw new Error('Failed to update friendship');
-      }
-    } catch (error) {
-      console.error(error);
+export const createFriendship = (email) => async (dispatch) => {
+  // try {
+  //   const response = await fetch('/api/friendships/', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({ email }),
+  //   });
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     dispatch(addFriendship(data));
+  //   } else {
+  //     throw new Error('Failed to create friendship');
+  //   }
+  // } catch (error) {
+  //   console.error(error);
+  // }
+
+  const response = await fetch('/api/friendships/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email }),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    if (data && data.message) {
+      return { message: data.message };
     }
-  };
+    dispatch(addFriendship(data));
+    return null;
+  }
+  else if (response.status < 500) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
+  } else {
+    return ["An error occurred. Please try again."];
+  }
+};
+
+export const updateFriendship = (id) => async dispatch => {
+  try {
+    const response = await fetch(`/api/friendships/${id}`, {
+      method: 'PUT'
+    });
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(editFriendship(data));
+    } else {
+      throw new Error('Failed to update friendship');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 // Initial State
 const initialState = {

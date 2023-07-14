@@ -3,7 +3,7 @@
     flex-direction: column;
     row-gap: 10px;
     position: fixed;
-    top: 35px;
+    top: 50px;
     left: 0;
     width: 200px;
     padding: 10px 0px;
@@ -27,6 +27,7 @@
     justify-content: space-between;
     align-items: center;
     background-color: lightgray;
+    padding-left: 5px;
 }
 
 .friends-list-header > button {

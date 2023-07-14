@@ -1,11 +1,12 @@
-import LeftNavigationBar from "../LeftNavigationBar";
 import { NavLink, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getSummary } from "../../store/expense";
 import { fetchFriendships } from "../../store/friend";
+import LeftNavigationBar from "../LeftNavigationBar";
 import TopNavigationBar from "../TopNavigationBar";
 import MainHeader from "../MainHeader";
+import RightSummaryBar from "../RightSummaryBar";
 import settled from './all-settled-up.png';
 import "./DashboardPage.css";
 
@@ -55,6 +56,7 @@ function DashboardPage() {
         <LeftNavigationBar />
         <TopNavigationBar />
         <MainHeader />
+        <RightSummaryBar />
         <div className="dashboard-main">
           <img src={settled} className="dashboard-settled-img" alt="all-settled-up" />
         </div>
@@ -66,7 +68,8 @@ function DashboardPage() {
         <LeftNavigationBar />
         <TopNavigationBar />
         <MainHeader />
-        <main className="dashboard-main">
+        <RightSummaryBar />
+      <main className="dashboard-main">
           <section className="dashboard-subheader">
             <ul className="dashboard-subheader-list">
               <li>

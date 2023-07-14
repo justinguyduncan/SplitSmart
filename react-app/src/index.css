@@ -11,7 +11,7 @@ body,
 
 * {
     font-family: 'Montserrat', sans-serif;
-    font-size: 14pt;
+    font-size: 12pt;
     font-style: normal;
 }
 
@@ -30,10 +30,13 @@ h2 {
 }
 
 button {
-    font-size: 14pt;
+    font-size: 12pt;
     font-style: normal;
     width: auto;
     margin: 5px 0px;
+    border-radius: 5px;
+    border-width: 1px;
+    padding: 8px;
 }
 
 button:hover {
@@ -43,7 +46,7 @@ button:hover {
 button.normal {
     background-color: #ffffff;
     color: rgb(82, 197, 167);
-    border-color: #ffffff;
+    border: none;
 }
 
 button.accent {
