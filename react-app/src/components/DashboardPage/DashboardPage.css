@@ -12,8 +12,11 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 
 .dashboard-subheader-list li {
     margin: 0;
-    padding: 0;
+    padding: 5px 0px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .dashboard-subheader {
@@ -81,7 +84,7 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 
 .dashboard-subheader-text {
     font-size: 13px;
-    padding: 5px 0;
+    padding-top: 5px;
     margin: 0;
 }
 
@@ -138,6 +141,7 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 .dashboard-owed-item .dashboard-subheader-text-grey,
 .dashboard-owed-item .dashboard-subheader-text-green {
     font-size: 10pt;
+    padding-top: 2px;
 }
 
 .dashboard-settled-img {
