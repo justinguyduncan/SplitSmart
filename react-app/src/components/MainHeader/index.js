@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { useModal } from '../../context/Modal';
 import SettleUpModal from '../SettleUpModal';
 import OpenModalButton from '../OpenModalButton';
 import AddEditExpenseModal from '../AddEditExpenseModal';
@@ -9,10 +8,8 @@ import './MainHeader.css';
 
 const MainHeader = () => {
   const location = useLocation();
-  const { openModal } = useModal();
-  const friendshipId = Number(location.pathname.split('/')[2]);
   const friendships = useSelector((state) => Object.values(state.friend.friendships));
-  const friendship = friendships.find(friendship => friendship.id === friendshipId);
+  let friendship;
 
   const totalBillAmount = (friendship?.bill )
   const currentPage = useSelector((state) => {
@@ -24,7 +21,8 @@ const MainHeader = () => {
         return 'All expenses';
       default:
         if (path.startsWith('/friends/')) {
-          const friendship = friendships.find(
+          const friendshipId = Number(path.split('/')[2]);
+          friendship = friendships.find(
             (friendship) => friendship.id === friendshipId
           );
           return friendship?.friend?.name || '';
@@ -35,7 +33,10 @@ const MainHeader = () => {
 
   return (
     <div className="main-header">
-      <div className="main-header-title">{currentPage}</div>
+      <div className="main-header-title">
+        {friendship && true && <img className="main-header-img" src={friendship?.friend?.image_url} alt={friendship?.friend?.name} />}
+        <div>{currentPage}</div>
+      </div>
       <div className="main-header-buttons">
         <OpenModalButton modalComponent={<AddEditExpenseModal />} buttonText={'Add expenses'} />
         <OpenModalButton modalComponent={<SettleUpModal />} buttonText={"Settle Up"} disabled={totalBillAmount <= 0} />

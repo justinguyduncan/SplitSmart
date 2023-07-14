@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
-import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
@@ -41,16 +42,14 @@ function ProfileButton({ user }) {
             <ul className={ulClassName}>
               <li> Hello, </li>
               <li>{user.name}!</li>
-              <li className="logout-wrapper">
-                <button className="log-out" onClick={handleLogout}>
-                  Log Out
-                </button>
-              </li>
+              <button className="log-out" onClick={handleLogout}>
+                Log Out
+              </button>
             </ul>
           </>
         ) : (
           <>
-            <li>
+            {/* <li>
               <NavLink to="/login" className="navigation-link nav-login">
                 Log in
               </NavLink>
@@ -59,7 +58,13 @@ function ProfileButton({ user }) {
               <NavLink to="/signup" className="navigation-link nav-signup">
                 Sign up
               </NavLink>
-            </li>
+            </li> */}
+            <button className='normal' onClick={() => history.push('/login')}>
+              Log in
+            </button>
+            <button className='primary' onClick={() => history.push('/signup')}>
+              Sign up
+            </button>
           </>
         )}
       </ul>
