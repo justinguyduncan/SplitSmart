@@ -8,7 +8,7 @@
     display: grid;
     grid-template-columns: 5% 5% auto 20% 20%;
     grid-template-rows: 60px;
-    border: gray 1px solid;
+    border: rgb(184, 180, 174) 1px solid;
 }
 
 .expense-header-date {
@@ -68,7 +68,7 @@
     display: grid;
     grid-template-columns: 5% auto 20% 20%;
     grid-template-rows: 40px;
-    border: gray 1px solid;
+    border: rgb(184, 180, 174) 1px solid;
 }
 
 .payment-header-logo {
