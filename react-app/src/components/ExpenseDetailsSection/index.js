@@ -42,6 +42,7 @@ function ExpenseDetailsSection({ expenseId }) {
   const unsettledExpenses = useSelector((state) => {
     return Object.values(state.expense.unsettledExpenses).map(participant => participant.expense);
   });
+  const userId = useSelector(state=>state.session?.user?.id)
   const settledExpenses = useSelector((state) => {
     return Object.values(state.expense.settledExpenses).map(participant => participant.expense);
   });
@@ -51,6 +52,7 @@ function ExpenseDetailsSection({ expenseId }) {
   const allExpenses = [...createdExpenses, ...unsettledExpenses, ...settledExpenses];
   const expense = allExpenses.filter(expense => expense.id === expenseId)[0];
   const comments = expense.comments;
+  
 
 
   //useEffects
@@ -65,9 +67,7 @@ function ExpenseDetailsSection({ expenseId }) {
 
   useEffect(() => {
     const error = {};
-    if (comment.length < 1) {
-      error.message = "comment has to be at least 1 character";
-    }
+  
     if (comment.length > 255) {
       error.message = "comment has to be less than 255 characters";
     }
@@ -77,9 +77,7 @@ function ExpenseDetailsSection({ expenseId }) {
 
   useEffect(() => {
     const error = {};
-    if (commentEdit.length < 1) {
-      error.message = "comment has to be at least 1 character";
-    }
+   
     if (commentEdit.length > 255) {
       error.message = "comment has to be less than 255 characters";
     }
@@ -224,6 +222,7 @@ function ExpenseDetailsSection({ expenseId }) {
                     >
                       <label>
                         <textarea
+                          required
                           onChange={(e) => setCommentEdit(e.target.value)}
                           placeholder="Add comment"
                           value={commentEdit}
@@ -270,7 +269,7 @@ function ExpenseDetailsSection({ expenseId }) {
                         </span>
                       )}
                     </p>
-                    <div className="expense-icon-wrapper">
+                        { (userId===comment.user.id) && <div className="expense-icon-wrapper">
                       <span
                         onClick={() =>
                           handleCommentEdit(comment.id, comment.comment)
@@ -287,7 +286,7 @@ function ExpenseDetailsSection({ expenseId }) {
                       >
                         X
                       </span>
-                    </div>
+                    </div>}
                     <p className="expense-comment-text">{comment?.comment}</p>
                   </>
                 )}
@@ -297,6 +296,7 @@ function ExpenseDetailsSection({ expenseId }) {
           <form className="expense-comment-form" onSubmit={handleCommentCreate}>
             <label>
               <textarea
+              required
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="Add comment"
                 value={comment}
