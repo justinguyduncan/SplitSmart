@@ -15,8 +15,10 @@ function RightSummaryBar() {
     const dispatch = useDispatch();
     const location = useLocation();
     const history = useHistory();
-    const friendship = useSelector(state => state.friend.selectedFriendship);
+    const friendships = useSelector(state => Object.values(state.friend.friendships));
     const balance = useSelector(state => state.expense.summary.balance);
+
+    const friendship = friendships.filter(friendship => friendship.id == id)[0];
 
     useEffect(() => {
         dispatch(expenseActions.getSummary());

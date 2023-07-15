@@ -1,4 +1,6 @@
-// src/reducers/payment.js
+import * as expenseActions from './expense';
+import * as friendActions from './friend';
+
 
 // Action types
 const SET_RECEIVED_PAYMENTS = 'payment/SET_RECEIVED_PAYMENTS';
@@ -93,6 +95,13 @@ export const createPayment = (amount, friendshipId) => async (dispatch) => {
       }
       const data = await response.json();
       dispatch(addPayment(data));
+      dispatch(fetchReceivedPayments());
+      dispatch(fetchSentPayments());
+      dispatch(expenseActions.getCreatedExpenses());
+      dispatch(expenseActions.getSettledExpenses());
+      dispatch(expenseActions.getUnsettledExpenses());
+      dispatch(expenseActions.getSummary());
+      dispatch(friendActions.fetchFriendships());
     } catch (error) {
       console.error('Error creating payment:', error.message);
     }

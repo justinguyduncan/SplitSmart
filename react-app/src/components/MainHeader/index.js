@@ -11,7 +11,7 @@ const MainHeader = () => {
   const friendships = useSelector((state) => Object.values(state.friend.friendships));
   let friendship;
 
-  const currentPage = useSelector((state) => {
+  const currentPage = (function () {
     const path = location.pathname;
     switch (path) {
       case '/dashboard':
@@ -28,7 +28,7 @@ const MainHeader = () => {
         }
         return '';
     }
-  });
+  })();
 
   return (
     <div className="main-header">
@@ -38,7 +38,7 @@ const MainHeader = () => {
       </div>
       <div className="main-header-buttons">
         <OpenModalButton modalComponent={<AddEditExpenseModal />} buttonText={'Add expenses'} />
-        <OpenModalButton modalComponent={<SettleUpModal />} buttonText={"Settle Up"} />
+        <OpenModalButton modalComponent={<SettleUpModal />} buttonText={"Settle Up"} disabled={friendship?.bill <= 0} />
       </div>
     </div>
   );
