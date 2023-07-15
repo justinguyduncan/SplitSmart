@@ -37,6 +37,7 @@ function ExpenseDetailsSection({ expenseId }) {
   const [isEdit, setEdit] = useState(false);
   const [commentId, setCommentId] = useState(null);
   // const expense = useSelector((state) => state.expense?.currentExpense);
+  const sessionUser = useSelector((state) => state.session.user);
   const createdExpenses = useSelector((state) => Object.values(state.expense.createdExpenses));
   const unsettledExpenses = useSelector((state) => {
     return Object.values(state.expense.unsettledExpenses).map(participant => participant.expense);
@@ -164,7 +165,7 @@ function ExpenseDetailsSection({ expenseId }) {
           >
             Edit expense
           </button> */}
-          <OpenModalButton modalComponent={<AddEditExpenseModal />} buttonText={'Edit expense'} />
+          {expense.creator_id == sessionUser.id && <OpenModalButton modalComponent={<AddEditExpenseModal />} buttonText={'Edit expense'} />}
         </div>
       </section>
       <hr style={{width:"95%"}} />
