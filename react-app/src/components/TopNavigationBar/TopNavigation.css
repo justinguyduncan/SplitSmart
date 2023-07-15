@@ -4,36 +4,42 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 }
 
 .profile-dropdown {
-    position: absolute;
+    position: fixed;
     background-color: #fff;
-    top: 100%;
-    right: 0;
+    top: 50px;
+    right: 5px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    border: 1px solid #000;
-    box-shadow: 5px 5px 5px #000;
+    gap: 5px;
+    border: 1px solid lightgray;
+    box-shadow: 1px 1px 5px 1px darkgray;
     align-items: start;
-    justify-content: start;
+    justify-content: center;
     padding: 0;
-    width: 133px;
+    width: 150px;
+    background-color: white;
 }
 
 .hidden {
     display: none;
 }
 
-.header-login {
-    background-color:rgb(66, 202, 164);
-}
-
 .header {
-    height: 35px;
+    height: 50px;
     width: 100%;
     box-sizing: border-box;
     position: fixed;
     top: 0;
     padding: 0;
+    background-color: white;
+    z-index: 99;
+}
+
+
+
+.header-login {
+    height: 50px;
+    background-color:rgb(66, 202, 164);
 }
 
 .header img {
@@ -54,7 +60,7 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 
 .title {
     font-size: 16px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     font-weight: 700;
     margin-left: 15px;
     color: #000;
@@ -68,7 +74,7 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0;
+    margin: 8px;
     height: 33px;
 }
 
@@ -119,34 +125,36 @@ ul {
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 10px;
+    width: 95%;
+    margin: 15px auto;
+    text-align: center;
 }
 
 a {
     text-decoration: none;
 }
 
-.profile-dropdown li {
-    font-size: 14px;
-    padding: 3px 15px;
+.profile-dropdown > * {
+    font-size: 12pt;
+    padding: 5px 10px;
 }
 
 .log-out {
-    padding: 10px 0;
+    margin: 0;
     border: none;
-    width: 103px;
+    background: none;
+    width: 100%;
     text-align: left;
     display: inline-block;
+    border-radius: 0;
 }
 
-.logout-wrapper:hover .log-out {
+.log-out:hover .log-out {
     background-color: #1CC29F;
     color: #fff;
 }
 
-.logout-wrapper:hover {
+.log-out:hover {
     background-color: #1CC29F;
     color: #fff;
 }
