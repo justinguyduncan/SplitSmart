@@ -167,7 +167,7 @@ function ExpenseDetailsSection({ expenseId }) {
           <OpenModalButton modalComponent={<AddEditExpenseModal />} buttonText={'Edit expense'} />
         </div>
       </section>
-      <hr />
+      <hr style={{width:"95%"}} />
 
       <main className="expense-main">
         <section className="expense-main-content">
