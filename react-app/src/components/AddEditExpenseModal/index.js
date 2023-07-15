@@ -39,12 +39,12 @@ function AddEditExpenseModal({ expenseId }) {
 
           // Find corresponding friendships for the selected friend IDs
           const selectedFriendships = friendships.filter((friendship) =>
-            selectedFriendIds.includes(friendship.friend.id)
+            selectedFriendIds.includes(friendship.friend_id)
           );
           console.log('Selected friendships:', selectedFriendships);
 
           // Set the selected friends in the state
-          setSelectedFriends(selectedFriendships.map((friendship) => friendship.friend.id));
+          setSelectedFriends(selectedFriendships.map((friendship) => friendship.friend_id));
         }
       } catch (error) {
         console.error('Error fetching expense:', error.message);
@@ -85,6 +85,7 @@ function AddEditExpenseModal({ expenseId }) {
 
 
     const friendsIds = selectedFriends.map((friendId) => parseInt(friendId));
+    console.log(friendsIds)
 
     if (expenseId) {
       dispatch(updateExpense(expenseId, description, amount, friendsIds));
@@ -93,6 +94,8 @@ function AddEditExpenseModal({ expenseId }) {
     }
     closeModal();
   };
+
+
 
   const filteredFriends = friendships.filter((friendship) =>
     friendship.friend.name.toLowerCase().includes(searchText.toLowerCase())
@@ -112,7 +115,7 @@ return (
     <div className="friend-selection">
       <div className="selected-friends">
         {selectedFriends.map((friendId) => {
-          const selectedFriendship = friendships.find((friendship) => friendship.id === friendId);
+          const selectedFriendship = friendships.find((friendship) => friendship.friend_id === friendId);
           return (
             <div key={friendId} className="selected-friend">
               {selectedFriendship && selectedFriendship.friend.name}
