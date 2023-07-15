@@ -38,8 +38,11 @@ const MainHeader = () => {
       </div>
       <div className="main-header-buttons">
         <OpenModalButton modalComponent={<AddEditExpenseModal />} buttonText={'Add expenses'} />
-        <OpenModalButton modalComponent={<SettleUpModal />} buttonText={"Settle Up"} disabled={friendship?.bill <= 0} />
-      </div>
+        <OpenModalButton
+          modalComponent={<SettleUpModal />}
+          buttonText="Settle Up"
+          disabled={friendship?.bill <= 0 || currentPage === 'Dashboard' || currentPage === 'All expenses'}/>
+        </div>
     </div>
   );
 };

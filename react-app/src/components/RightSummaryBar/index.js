@@ -42,9 +42,9 @@ function RightSummaryBar() {
                 <button className="remove-friend-button" onClick={() => history.push(`/friends/${id}/edit`)}>Remove this friend</button>
                 <div className="right-summ-balance">
                     <div>YOUR BALANCE</div>
-                    {friendship.bill > 0 && <div className="orange-amount">You owe {friendship.friend.name.split(" ")[0]} {formatBalance(friendship.bill)}</div>}
-                    {friendship.bill < 0 && <div className="teal-amount">{friendship.friend.name.split(" ")[0]} owes you {formatBalance(friendship.bill)}</div>}
-                    {friendship.bill == 0 && <div>You are all settled up</div>}
+                    {friendship?.bill > 0 && <div className="orange-amount">You owe {friendship?.friend.name.split(" ")[0]} {formatBalance(friendship?.bill)}</div>}
+                    {friendship?.bill < 0 && <div className="teal-amount">{friendship?.friend.name.split(" ")[0]} owes you {formatBalance(friendship?.bill)}</div>}
+                    {friendship?.bill == 0 && <div>You are all settled up</div>}
                 </div>
             </div>
         );

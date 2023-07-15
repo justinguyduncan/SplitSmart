@@ -37,6 +37,7 @@ function ExpenseDetailsSection({ expenseId }) {
   const [isEdit, setEdit] = useState(false);
   const [commentId, setCommentId] = useState(null);
   // const expense = useSelector((state) => state.expense?.currentExpense);
+  const sessionUser = useSelector((state) => state.session.user);
   const createdExpenses = useSelector((state) => Object.values(state.expense.createdExpenses));
   const unsettledExpenses = useSelector((state) => {
     return Object.values(state.expense.unsettledExpenses).map(participant => participant.expense);
@@ -52,6 +53,7 @@ function ExpenseDetailsSection({ expenseId }) {
   const comments = expense.comments;
 
 
+
   //useEffects
   useEffect(() => {
     const fetchData = async () => {
@@ -64,9 +66,7 @@ function ExpenseDetailsSection({ expenseId }) {
 
   useEffect(() => {
     const error = {};
-    if (comment.length < 1) {
-      error.message = "comment has to be at least 1 character";
-    }
+
     if (comment.length > 255) {
       error.message = "comment has to be less than 255 characters";
     }
@@ -76,9 +76,7 @@ function ExpenseDetailsSection({ expenseId }) {
 
   useEffect(() => {
     const error = {};
-    if (commentEdit.length < 1) {
-      error.message = "comment has to be at least 1 character";
-    }
+
     if (commentEdit.length > 255) {
       error.message = "comment has to be less than 255 characters";
     }
@@ -139,7 +137,7 @@ function ExpenseDetailsSection({ expenseId }) {
   };
 
   return (
-    <div id={`expense-details-${expenseId}`} className="expense-comments-wrapper hidden">
+    <div id={`expense-details-${expenseId}`} className="expense-details expense-comments-wrapper hidden">
       <section className="expense-subheader">
         <div className="expense-image-wrapper">
           <img
@@ -164,7 +162,7 @@ function ExpenseDetailsSection({ expenseId }) {
           >
             Edit expense
           </button> */}
-          <OpenModalButton modalComponent={<AddEditExpenseModal />} buttonText={'Edit expense'} />
+          {expense.creator_id == sessionUser.id && <OpenModalButton modalComponent={<AddEditExpenseModal expenseId={expense.id} />} buttonText={'Edit expense'} />}
         </div>
       </section>
       <hr style={{width:"95%"}} />
@@ -223,6 +221,7 @@ function ExpenseDetailsSection({ expenseId }) {
                     >
                       <label>
                         <textarea
+                          required
                           onChange={(e) => setCommentEdit(e.target.value)}
                           placeholder="Add comment"
                           value={commentEdit}
@@ -269,7 +268,7 @@ function ExpenseDetailsSection({ expenseId }) {
                         </span>
                       )}
                     </p>
-                    <div className="expense-icon-wrapper">
+                        { (sessionUser.id === comment.user.id) && <div className="expense-icon-wrapper">
                       <span
                         onClick={() =>
                           handleCommentEdit(comment.id, comment.comment)
@@ -286,7 +285,7 @@ function ExpenseDetailsSection({ expenseId }) {
                       >
                         X
                       </span>
-                    </div>
+                    </div>}
                     <p className="expense-comment-text">{comment?.comment}</p>
                   </>
                 )}
@@ -296,6 +295,7 @@ function ExpenseDetailsSection({ expenseId }) {
           <form className="expense-comment-form" onSubmit={handleCommentCreate}>
             <label>
               <textarea
+              required
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="Add comment"
                 value={comment}

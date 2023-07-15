@@ -110,6 +110,8 @@ function FriendPage() {
     fetchData();
 
     return () => {
+      Object.values(document.getElementsByClassName("expense-details")).forEach(el => el.classList.add("hidden"));
+      Object.values(document.getElementsByClassName("payment-details")).forEach(el => el.classList.add("hidden"));
       document.getElementById("show-container")?.classList.remove("hidden");
       setIsVisible(false);
     };

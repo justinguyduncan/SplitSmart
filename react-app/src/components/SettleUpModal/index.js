@@ -17,8 +17,6 @@ function SettleUpModal({ billAmount }) {
     const friendName = friend?.name || '';
     const totalBillAmount = (friendship?.bill )
 
-    console.log(totalBillAmount)
-    console.log('Friend object:', friend);
 
     useEffect(() => {
         setAmount(parseFloat(totalBillAmount));
@@ -26,11 +24,11 @@ function SettleUpModal({ billAmount }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!amount) {
-          // Add validation for required fields
-          console.log('Please enter the amount.');
-          return;
-        }
+        // if (!amount) {
+        //   // Add validation for required fields
+        //   console.log('Please enter the amount.');
+        //   return;
+        // }
         dispatch(createPayment(amount, friendshipId));
         closeModal();
       };

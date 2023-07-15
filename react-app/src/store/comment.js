@@ -1,4 +1,4 @@
-// constants
+import * as expenseActions from './expense';
 
 const SET_COMMENT = "comments/SET_COMMENT"
 const REMOVE_COMMENT= "comments/REMOVE_COMMENT"
@@ -47,6 +47,9 @@ export const addComment=(comment, expenseId)=>async ( dispatch)=>{
     if (response.ok){
         const data = await response.json()
         dispatch(setComment(data))
+        dispatch(expenseActions.getCreatedExpenses());
+        dispatch(expenseActions.getSettledExpenses());
+        dispatch(expenseActions.getUnsettledExpenses());
         return null
     }
 
@@ -72,6 +75,9 @@ export const updateComment = (comment, commentId)=>async(dispatch)=>{
     if(response.ok){
         const data = await response.json()
         dispatch(setComment(data))
+        dispatch(expenseActions.getCreatedExpenses());
+        dispatch(expenseActions.getSettledExpenses());
+        dispatch(expenseActions.getUnsettledExpenses());
         return null
     }
 
@@ -95,6 +101,9 @@ export const deleteComment=(commentId)=>async(dispatch)=>{
 
     if(response.ok){
         dispatch(removeComment(commentId))
+        dispatch(expenseActions.getCreatedExpenses());
+        dispatch(expenseActions.getSettledExpenses());
+        dispatch(expenseActions.getUnsettledExpenses());
     }
 
     if(response.status<500){

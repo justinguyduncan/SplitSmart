@@ -54,7 +54,7 @@ function PaymentDetailsSection({ paymentId }) {
   };
 
   return (
-    <div id={`payment-details-${paymentId}`} className="payment-payments-wrapper hidden">
+    <div id={`payment-details-${paymentId}`} className="payment-details payment-payments-wrapper hidden">
       <section className="payment-subheader">
         <div className="payment-image-wrapper">
           <img
