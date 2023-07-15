@@ -140,7 +140,7 @@ function ExpenseDetailsSection({ expenseId }) {
   };
 
   return (
-    <div id={`expense-details-${expenseId}`} className="expense-comments-wrapper hidden">
+    <div id={`expense-details-${expenseId}`} className="expense-details expense-comments-wrapper hidden">
       <section className="expense-subheader">
         <div className="expense-image-wrapper">
           <img
