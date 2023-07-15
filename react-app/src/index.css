@@ -88,3 +88,7 @@ a {
 a:hover {
     cursor: pointer;
 }
+
+.button:disabled{
+    color:grey
+}
