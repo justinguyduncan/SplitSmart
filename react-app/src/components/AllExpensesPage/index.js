@@ -41,7 +41,7 @@ function AllExpensesPage() {
   const [isSentPaymentsLoaded, setIsSentPaymentsLoaded] = useState(false);
   const [isReceivedPaymentsLoaded, setIsReceivedPaymentsLoaded] =
     useState(false);
-  const [items, setItems] = useState([]);
+  // const [items, setItems] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -64,29 +64,30 @@ function AllExpensesPage() {
     fetchData();
   }, [dispatch]);
 
+  let items = [];
 
-  useEffect(() => {
-    if (isInitialRender && isCreatedExpensesLoaded && isSettledExpensesLoaded && isUnsettledExpensesLoaded && isSentPaymentsLoaded && isReceivedPaymentsLoaded) {
-      const userExpenses = createdExpenses.map(expenseObj => {
-        return { ...expenseObj, type: 'created' };
-      });
-      const friendExpenses = [...unsettledExpenses, ...settledExpenses].map(expenseObj => {
-        return { ...expenseObj, type: 'charged' };
-      });
-      const userSentPayments = sentPayments.map(paymentObj => {
-        return { ...paymentObj, type: 'sent' };
-      });
-      const userReceivedPayments = receivedPayments.map(paymentObj => {
-        return { ...paymentObj, type: 'received' };
-      });
+  // useEffect(() => {
+  if (isCreatedExpensesLoaded && isSettledExpensesLoaded && isUnsettledExpensesLoaded && isSentPaymentsLoaded && isReceivedPaymentsLoaded) {
+    const userExpenses = createdExpenses.map(expenseObj => {
+      return { ...expenseObj, type: 'created' };
+    });
+    const friendExpenses = [...unsettledExpenses, ...settledExpenses].map(expenseObj => {
+      return { ...expenseObj, type: 'charged' };
+    });
+    const userSentPayments = sentPayments.map(paymentObj => {
+      return { ...paymentObj, type: 'sent' };
+    });
+    const userReceivedPayments = receivedPayments.map(paymentObj => {
+      return { ...paymentObj, type: 'received' };
+    });
 
-      setItems([...userExpenses, ...friendExpenses, ...userSentPayments, ...userReceivedPayments].sort((e1, e2) => {
-        return new Date(e2.created_at).getTime() - new Date(e1.created_at).getTime()
-      }));
+    items = [...userExpenses, ...friendExpenses, ...userSentPayments, ...userReceivedPayments].sort((e1, e2) => {
+      return new Date(e2.created_at).getTime() - new Date(e1.created_at).getTime()
+    });
 
-      setIsInitialRender(false);
-    }
-  }, [isInitialRender, isCreatedExpensesLoaded, isSettledExpensesLoaded, isUnsettledExpensesLoaded, isSentPaymentsLoaded, isReceivedPaymentsLoaded, createdExpenses, receivedPayments, sentPayments, settledExpenses, unsettledExpenses]);
+    // setIsInitialRender(false);
+  }
+  // }, [isInitialRender, isCreatedExpensesLoaded, isSettledExpensesLoaded, isUnsettledExpensesLoaded, isSentPaymentsLoaded, isReceivedPaymentsLoaded, createdExpenses, receivedPayments, sentPayments, settledExpenses, unsettledExpenses]);
 
   function formatMoney(amount) {
     return (
@@ -106,17 +107,15 @@ function AllExpensesPage() {
     if (answer) {
       dispatch(expenseActions.deleteExpense(expenseId));
       if (type === "created") {
-        setItems(
+        items =
           items.filter((obj) => {
             return !(!obj.expense && obj.id == expenseId);
-          })
-        );
+          });
       } else if (type === "charged") {
-        setItems(
+        items =
           items.filter((obj) => {
             return !(obj.expense_id == expenseId);
-          })
-        );
+          });
       }
     }
   }
@@ -127,14 +126,13 @@ function AllExpensesPage() {
     );
     if (answer) {
       dispatch(paymentActions.fetchDeletePayment(paymentId));
-      setItems(
+      items =
         items.filter((obj) => {
           return !(
             (obj.type === "sent" || obj.type === "received") &&
             obj.id == paymentId
           );
-        })
-      );
+        });
     }
   }
 

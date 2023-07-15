@@ -47,7 +47,7 @@
     border-color: rgb(75, 177, 151);
 }
 
-.main-header-buttons :disabled {
+.main-header-buttons:disabled {
     background-color: grey;
     opacity: 0.5;
 }

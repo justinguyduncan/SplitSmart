@@ -27,7 +27,6 @@ function AddEditExpenseModal({ expenseId }) {
           throw new Error('Failed to fetch expense');
         }
         const data = await response.json();
-        console.log('Fetched expense:', data);
 
         if (data.participants && Array.isArray(data.participants)) {
           setDescription(data.description);
@@ -35,13 +34,11 @@ function AddEditExpenseModal({ expenseId }) {
 
           // Extract selected friend IDs from the fetched data
           const selectedFriendIds = data.participants.map((participant) => participant.friendship.friend_id);
-          console.log('Selected friend IDs:', selectedFriendIds);
 
           // Find corresponding friendships for the selected friend IDs
           const selectedFriendships = friendships.filter((friendship) =>
             selectedFriendIds.includes(friendship.friend_id)
           );
-          console.log('Selected friendships:', selectedFriendships);
 
           // Set the selected friends in the state
           setSelectedFriends(selectedFriendships.map((friendship) => friendship.friend_id));
@@ -79,13 +76,11 @@ function AddEditExpenseModal({ expenseId }) {
         amount: !amount ? 'Amount is required.' : '',
         selectedFriends: selectedFriends.length === 0 ? 'At least one friend must be selected.' : ''
       });
-      console.log('Please fill in all required fields.');
       return;
     }
 
 
     const friendsIds = selectedFriends.map((friendId) => parseInt(friendId));
-    console.log(friendsIds)
 
     if (expenseId) {
       dispatch(updateExpense(expenseId, description, amount, friendsIds));
