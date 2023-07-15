@@ -9,6 +9,10 @@
     background-color: rgb(220, 218, 215);
 }
 
+.button:disabled{
+    color: grey;
+}
+
 .main-header-title {
     display: flex;
     align-items: center;
@@ -41,4 +45,9 @@
     background-color: rgb(82, 197, 167);
     color: #ffffff;
     border-color: rgb(75, 177, 151);
+}
+
+.main-header-buttons :disabled {
+    background-color: grey;
+    opacity: 0.5;
 }
