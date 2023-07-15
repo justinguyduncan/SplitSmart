@@ -30,7 +30,7 @@ function AddEditExpenseModal({ expenseId }) {
 
         if (data.participants && Array.isArray(data.participants)) {
           setDescription(data.description);
-          setAmount(data.amount);
+          setAmount(Number(data.amount).toFixed(2));
 
           // Extract selected friend IDs from the fetched data
           const selectedFriendIds = data.participants.map((participant) => participant.friendship.friend_id);
@@ -110,7 +110,12 @@ return (
     <div className="friend-selection">
       <div className="selected-friends">
         {selectedFriends.map((friendId) => {
-          const selectedFriendship = friendships.find((friendship) => friendship.friend_id === friendId);
+          let selectedFriendship;
+          if (expenseId) { //editing
+            selectedFriendship = friendships.find((friendship) => friendship.friend_id === friendId);
+          } else { //creating
+            selectedFriendship = friendships.find((friendship) => friendship.id === friendId);
+          }
           return (
             <div key={friendId} className="selected-friend">
               {selectedFriendship && selectedFriendship.friend.name}
