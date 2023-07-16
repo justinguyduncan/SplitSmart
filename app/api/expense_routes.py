@@ -76,7 +76,7 @@ def get_expense(id):
     participants = ExpenseParticipant.query.filter(ExpenseParticipant.expense_id == expense.id).all()
     participant_ids = [participant.friendship.friend_id for participant in participants]
     # checks if current user is a part of the expense
-    if current_user.id != expense.creator_id and current_user.id not in participant_ids:
+    if current_user.id not in [*participant_ids, expense.creator_id]:
         return {'errors': f"User is not a participant of expense {expense.id}."}, 401
     return expense.to_dict()
 
@@ -171,7 +171,7 @@ def delete_expense(id):
     participants = ExpenseParticipant.query.filter(ExpenseParticipant.expense_id == expense.id).all()
     participant_ids = [participant.friendship.friend_id for participant in participants]
     # checks if current user is a part of the expense
-    if current_user.id != expense.creator_id and current_user.id not in participant_ids:
+    if current_user.id not in [*participant_ids, expense.creator_id]:
         return {'errors': f"User is not a participant of expense {expense.id}."}, 401
     # update both friendships' bill amounts to reflect deleted expense
     old_bill = expense.amount/(len(expense.participants)+1)

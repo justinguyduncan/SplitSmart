@@ -80,7 +80,7 @@ def delete_payment(id):
     if not payment:
         return {'errors': f"Payment {id} does not exist."}, 400
     # checks if current user is a part of the payment
-    if payment.friendship.user_id != current_user.id and payment.friendship.friend_id != current_user.id:
+    if current_user.id not in [payment.friendship.user_id, payment.friendship.friend_id]:
         return {'errors': f"User is not a participant of payment {id}."}, 401
     # update both friendships' bill amounts to reflect deleted payment
     amount = payment.amount
