@@ -119,9 +119,9 @@ return (
           return (
             <div key={friendId} className="selected-friend">
               {selectedFriendship && selectedFriendship.friend.name}
-              <button className="remove-button" onClick={() => handleFriendToggle(friendId)}>
+              {!expenseId && <button className="remove-button" onClick={() => handleFriendToggle(friendId)}>
                 Remove
-              </button>
+              </button>}
             </div>
           );
         })}
