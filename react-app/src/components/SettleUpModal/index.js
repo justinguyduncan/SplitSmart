@@ -15,11 +15,11 @@ function SettleUpModal({ billAmount }) {
     const friendship = friendships.find(friendship => friendship.id === friendshipId);
     const friend = friendship?.friend;
     const friendName = friend?.name || '';
-    const totalBillAmount = (friendship?.bill )
+    const totalBillAmount = friendship?.bill
 
 
     useEffect(() => {
-        setAmount(parseFloat(totalBillAmount));
+        setAmount(Number(totalBillAmount).toFixed(2));
       }, [totalBillAmount]);
     const handleSubmit = (e) => {
         e.preventDefault();

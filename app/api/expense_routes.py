@@ -3,6 +3,7 @@ from flask_login import current_user, login_required
 from app.models import db, Expense, ExpenseParticipant, Friendship
 from app.forms import ExpenseForm
 from app.api.auth_routes import validation_errors_to_error_messages
+from decimal import Decimal
 
 expense_routes = Blueprint('expenses', __name__)
 
@@ -100,7 +101,7 @@ def create_expense():
         db.session.add(expense)
         db.session.commit()
         # split expense amount equally by all participants, including current user
-        bill_delta = expense.amount/(len(form.data['friends'])+1)
+        bill_delta = Decimal("%.2f" % (expense.amount/(len(form.data['friends'])+1)))
         for id in form.data['friends']:
             # create an expense participant row for every friend indicated in expense
             expense_participant = ExpenseParticipant(
@@ -132,14 +133,14 @@ def update_expense(id):
     # checks if current user is a creator of the expense
     if expense.creator_id != current_user.id:
         return {'errors': f"User is not the creator of expense {id}."}, 401
-    old_bill = expense.amount/(len(expense.participants)+1)
+    old_bill = Decimal("%.2f" % (expense.amount/(len(expense.participants)+1)))
     form = ExpenseForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     form.friends.choices = [(friendship.id, friendship.friend.to_dict()['name']) for friendship in Friendship.query.filter(Friendship.user_id == current_user.id, Friendship.is_active == True).all()]
     if form.validate_on_submit():
         form.populate_obj(expense)
         db.session.commit()
-        new_bill = expense.amount/(len(expense.participants)+1)
+        new_bill = Decimal("%.2f" % (expense.amount/(len(expense.participants)+1)))
         bill_delta = new_bill - old_bill
         # update every expense participant row for every friend indicated in expense
         participants = ExpenseParticipant.query.filter(ExpenseParticipant.expense_id == expense.id).all()
@@ -174,7 +175,7 @@ def delete_expense(id):
     if current_user.id not in [*participant_ids, expense.creator_id]:
         return {'errors': f"User is not a participant of expense {expense.id}."}, 401
     # update both friendships' bill amounts to reflect deleted expense
-    old_bill = expense.amount/(len(expense.participants)+1)
+    old_bill = Decimal("%.2f" % (expense.amount/(len(expense.participants)+1)))
     participants = ExpenseParticipant.query.filter(ExpenseParticipant.expense_id == expense.id).all()
     for participant in participants:
         user_to_friend = Friendship.query.get(participant.friendship_id)
