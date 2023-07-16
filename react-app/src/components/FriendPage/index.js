@@ -231,15 +231,15 @@ function FriendPage() {
                             <div id="show-button-description">You and {friendship.friend.name} are all settled up.</div>
                         </>
                     }
-                    {unsettledItems.length > 0 &&
+                    {(unsettledItems.length > 0 && settledItems.length > 0) &&
                         <div id="show-button-description">All expenses before this date have been settled up.</div>
                     }
-                    <button id="show-button" onClick={() => {
+                    {settledItems.length > 0 && <button id="show-button" onClick={() => {
                         document.getElementById("show-container").classList.add("hidden");
                         setIsVisible(true);
                     }}>
                         Show settled expenses
-                    </button>
+                    </button>}
                 </div>
                 {isVisible && <SettledItems items={settledItems} user={sessionUser} friendship={friendship} deleteExpense={deleteExpense} deletePayment={deletePayment} />}
             </div>
