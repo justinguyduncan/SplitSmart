@@ -33,6 +33,7 @@ function RightSummaryBar() {
                     <div>YOUR TOTAL BALANCE</div>
                     {balance < 0 && <div className="teal-amount">you are owed {formatBalance(balance)}</div>}
                     {balance > 0 && <div className="orange-amount">you owe {formatBalance(balance)}</div>}
+                    {balance == 0 && <div>You are all settled up</div>}
                 </div>
             </div>
         );

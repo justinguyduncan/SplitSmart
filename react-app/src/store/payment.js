@@ -117,6 +117,13 @@ export const fetchDeletePayment = (paymentId) => async (dispatch) => {
         throw new Error('Failed to delete payment');
       }
       dispatch(deletePayment(paymentId));
+      dispatch(fetchReceivedPayments());
+      dispatch(fetchSentPayments());
+      dispatch(expenseActions.getCreatedExpenses());
+      dispatch(expenseActions.getSettledExpenses());
+      dispatch(expenseActions.getUnsettledExpenses());
+      dispatch(expenseActions.getSummary());
+      dispatch(friendActions.fetchFriendships());
     } catch (error) {
       console.error('Error deleting payment:', error.message);
     }

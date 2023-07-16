@@ -137,6 +137,11 @@ export const deleteExpense = (id) => async dispatch => {
         method: 'DELETE'
     });
     dispatch(removeExpense(id));
+    dispatch(getCreatedExpenses());
+    dispatch(getSettledExpenses());
+    dispatch(getUnsettledExpenses());
+    dispatch(getSummary());
+    dispatch(friendActions.fetchFriendships());
     return response;
 };
 
