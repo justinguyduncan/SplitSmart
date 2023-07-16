@@ -10,7 +10,7 @@ def user_exists(form, field):
     email = field.data
     user = User.query.filter(User.email == email).first()
     if not user:
-        raise ValidationError('Email provided not found.')
+        raise ValidationError('Email provided is not a SplitSmart user.')
 
 def not_self(form, field):
     email = field.data

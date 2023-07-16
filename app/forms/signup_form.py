@@ -24,6 +24,6 @@ class SignUpForm(FlaskForm):
     first_name = StringField('first_name', validators=[DataRequired(message='First name is required.')])
     last_name = StringField('last_name', validators=[DataRequired(message='Last name is required.')])
     email = StringField('email', validators=[DataRequired(message='Email is required.'), Email(message='Not a valid email address.'), user_exists])
-    phone_number = StringField('phone_number', validators=[Optional(), Regexp('^[0-9]{10}$', message='Not a valid phone number.'), phone_number_exists])
-    image_url = StringField('image_url', validators=[Optional(), Regexp('[^\\s]+(.*?)\\.(jpg|jpeg|png|gif|JPG|JPEG|PNG|GIF)$', message='Not a valid image url.')])
+    phone_number = StringField('phone_number', validators=[Optional(), Regexp('^[0-9]{10}$', message='Please enter phone number in ########## format.'), phone_number_exists])
+    image_url = StringField('image_url', validators=[Optional(), Regexp('[^\\s]+(.*?)\\.(jpg|jpeg|png)$', message='Image URL must end in .png, .jpg, or .jpeg')])
     password = StringField('password', validators=[DataRequired(message='Password is required.')])
