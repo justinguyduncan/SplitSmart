@@ -69,11 +69,11 @@ function AddEditExpenseModal({ expenseId }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!description || !amount || selectedFriends.length === 0) {
+    if (!description || !amount || amount < 1 || selectedFriends.length === 0) {
       // Add validation for required fields
       setErrors({
         description: !description ? 'Description is required.' : '',
-        amount: !amount ? 'Amount is required.' : '',
+        amount: amount < 1 ? 'Amount must be at least $1.' : '',
         selectedFriends: selectedFriends.length === 0 ? 'At least one friend must be selected.' : ''
       });
       return;
