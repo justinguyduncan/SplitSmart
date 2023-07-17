@@ -178,7 +178,8 @@ function ExpenseDetailsSection({ expenseId }) {
               {expense?.user?.short_name} paid{" "}
               {formatMoney(expense?.amount)} and owes{" "}
               {formatMoney(
-                expense?.amount / (expense?.participants?.length + 1)
+                // expense?.amount / (expense?.participants?.length + 1)
+                expense?.amount - (expense?.participants?.reduce((accum, curr) => accum + Number(curr.amount_due), 0))
               )}
             </p>
           </div>
