@@ -165,7 +165,7 @@ function AddEditExpenseModal({ expenseId }) {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
-          disabled={expenseId} // Disable the input field if expenseId is present
+          // disabled={expenseId} // Disable the input field if expenseId is present
         />
       </div>
 
