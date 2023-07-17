@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { createPayment } from '../../store/payment';
+import './SettleUp.css';
+
 
 function SettleUpModal({ billAmount }) {
     const { closeModal } = useModal();
@@ -40,7 +42,7 @@ function SettleUpModal({ billAmount }) {
         <label>You paid {friendName}</label>
       </div>
       <div className="form-group">
-        <label>Amount</label>
+        {/* <label>Amount</label> */}
         <input
           type="number"
           value={amount}
@@ -53,7 +55,7 @@ function SettleUpModal({ billAmount }) {
         <button type="button" onClick={closeModal}>
           Cancel
         </button>
-        <button type="submit">Save</button>
+        <button className="primary" type="submit">Save</button>
       </div>
     </form>
   );

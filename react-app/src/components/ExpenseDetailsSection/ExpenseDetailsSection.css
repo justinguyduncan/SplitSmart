@@ -7,7 +7,7 @@ li {
     list-style: none;
 }
 
-.expense-icon {
+.comment-icon {
     height: 15px;
     width: 15px;
     margin-right: 3px;
@@ -59,7 +59,7 @@ li {
 
 .expense-main-content {
     width: 90%;
-    padding: 0px 5px 8px;
+    padding: 0px 10px 8px;
 }
 
 .expense-main-content-wrapper img,
@@ -139,17 +139,20 @@ font-size: 14px;
 .expense-comment {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    /* gap: 10px; */
 }
 
 .expense-comment-text {
     font-size: 13px;
-    line-height: 18px;
+    font-weight: bold;
+    /* line-height: 18px; */
     color: rgb(60, 65, 68);
+    margin: 5px 0px;
 }
 
 .expense-comment-item {
-    width: 90%;
+    box-sizing: border-box;
+    width: 100%;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 6px 8px;
@@ -212,17 +215,17 @@ font-size: 14px;
 .expense-comment-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    /* gap: 10px; */
 }
 
 .expense-comment-form textarea {
     border-color: rgb(184, 180, 174);
 }
 
-.expense-comment-form label {
+/* .expense-comment-form label {
     position: relative;
     margin-bottom: 10px;
-}
+} */
 
 .expense-comment-form .expense-error {
     position: absolute;
@@ -238,6 +241,6 @@ font-size: 14px;
 }
 
 textarea {
-    /* box-sizing: border-box; */
-    width: 94%;
+    box-sizing: border-box;
+    width: 100%;
 }

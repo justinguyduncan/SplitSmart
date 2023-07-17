@@ -164,6 +164,7 @@ function AddEditExpenseModal({ expenseId }) {
           id="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          placeholder='Enter a description'
           required
           // disabled={expenseId} // Disable the input field if expenseId is present
         />
@@ -176,6 +177,7 @@ function AddEditExpenseModal({ expenseId }) {
           id="amount"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
+          placeholder='0.00'
           required
         />
       </div>

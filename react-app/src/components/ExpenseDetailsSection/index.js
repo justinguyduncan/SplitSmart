@@ -204,11 +204,11 @@ function ExpenseDetailsSection({ expenseId }) {
         <section className="expense-main-content expense-comment">
           <p className="expense-comment-text">
             <img
-              className="expense-icon"
+              className="comment-icon"
               src="https://res.cloudinary.com/dr1ekjmf4/image/upload/v1688652280/icons8-comment-50_eh2i18.png"
               alt="comment icon"
             />
-            Notes and Comments
+            COMMENTS
           </p>
           <ul className="expense-comment">
             {comments.map((comment) => (
@@ -308,7 +308,7 @@ function ExpenseDetailsSection({ expenseId }) {
 
             <button
               disabled={!!error.message}
-              className="expense-btn expense-post-btn"
+              className="expense-btn expense-post-btn accent"
               type="submit"
             >
               Post

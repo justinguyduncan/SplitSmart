@@ -1,0 +1,48 @@
+.settle-up-form {
+    /* background-color: #f8f8f8; */
+    padding: 20px;
+    /* border-radius: 4px; */
+}
+
+.settle-up-form h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.form-group {
+    margin: 10px 0px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0px;
+    gap: 10px;
+}
+
+.cancel-button,
+.save-button {
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* .cancel-button {
+      margin-right: 10px;
+      background-color: #ccc;
+      border: none;
+      color: #fff;
+    } */
