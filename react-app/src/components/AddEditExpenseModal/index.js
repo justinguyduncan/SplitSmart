@@ -116,7 +116,7 @@ function AddEditExpenseModal({ expenseId }) {
       </div>
 
       <div className="friend-selection">
-        <div className="selected-friends">
+        {/* <div className="selected-friends">
           {selectedFriends.map((friendId) => {
             let selectedFriendship;
             if (expenseId) { //editing
@@ -128,12 +128,12 @@ function AddEditExpenseModal({ expenseId }) {
               <div key={friendId} className="selected-friend">
                 {selectedFriendship && selectedFriendship.friend.name}
                 {!expenseId && <button className="remove-button" onClick={() => handleFriendToggle(friendId)}>
-                  Remove
+                  &#x2715;
                 </button>}
               </div>
             );
           })}
-        </div>
+        </div> */}
 
         {!expenseId && (
           <div className="dropdown">
@@ -191,7 +191,7 @@ function AddEditExpenseModal({ expenseId }) {
         <button type="button" className="cancel-button" onClick={closeModal}>
           Cancel
         </button>
-        <button type="submit" className="save-button">Save</button>
+        <button type="submit" className="save-button primary">Save</button>
       </div>
     </form>
   );
