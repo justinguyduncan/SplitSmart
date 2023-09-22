@@ -40,16 +40,16 @@ function ExpenseDetailsSection({ expenseId }) {
   const sessionUser = useSelector((state) => state.session.user);
   const createdExpenses = useSelector((state) => Object.values(state.expense.createdExpenses));
   const unsettledExpenses = useSelector((state) => {
-    return Object.values(state.expense.unsettledExpenses).map(participant => participant.expense);
+    return Object.values(state.expense.unsettledExpenses).map((participant) => participant.expense);
   });
   const settledExpenses = useSelector((state) => {
-    return Object.values(state.expense.settledExpenses).map(participant => participant.expense);
+    return Object.values(state.expense.settledExpenses).map((participant) => participant.expense);
   });
   // const comments = useSelector((state) => Object.values(state.comment?.comments));
 
 
   const allExpenses = [...createdExpenses, ...unsettledExpenses, ...settledExpenses];
-  const expense = allExpenses.filter(expense => expense.id === expenseId)[0];
+  const expense = allExpenses.filter((expense) => expense.id === expenseId)[0];
   const comments = expense.comments;
 
 

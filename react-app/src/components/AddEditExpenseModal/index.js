@@ -83,13 +83,11 @@ function AddEditExpenseModal({ expenseId }) {
     if (expenseId) { //editing
       friendsIds = (friendships.filter((friendship) =>
         selectedFriends.map((friendId) => parseInt(friendId)).includes(friendship.friend_id)
-      )).map(friendship => friendship.id);
+      )).map((friendship) => friendship.id);
     } else { //creating
       friendsIds = selectedFriends.map((friendId) => parseInt(friendId));
     }
 
-    // console.log(friendsIds);
-    // console.log(selectedFriends);
     if (expenseId) {
       dispatch(updateExpense(expenseId, description, amount, friendsIds));
     } else {

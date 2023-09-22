@@ -4,13 +4,13 @@ import ExpenseDetailsSection from "../ExpenseDetailsSection";
 
 function UnsettledItems({ items, friendship, deleteExpense }) {
 
-    function formatMoney(amount) {
+    const formatMoney = (amount) => {
         return "$" + String(Number(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
     };
 
     return (
         <div id="unsettled-items">
-            {items.map(obj => {
+            {items.map((obj) => {
                 const dateStr = new Date(obj.created_at).toDateString();
                 const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;
                 const dateDay = `${dateStr.split(" ")[2]}`;

@@ -44,7 +44,7 @@ function AllExpensesPage() {
   // const [items, setItems] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       await dispatch(expenseActions.getCreatedExpenses()).then(() =>
         setIsCreatedExpensesLoaded(true)
       );
@@ -60,7 +60,7 @@ function AllExpensesPage() {
       await dispatch(paymentActions.fetchReceivedPayments()).then(() =>
         setIsReceivedPaymentsLoaded(true)
       );
-    }
+    };
     fetchData();
   }, [dispatch]);
 
@@ -68,16 +68,16 @@ function AllExpensesPage() {
 
   // useEffect(() => {
   if (isCreatedExpensesLoaded && isSettledExpensesLoaded && isUnsettledExpensesLoaded && isSentPaymentsLoaded && isReceivedPaymentsLoaded) {
-    const userExpenses = createdExpenses.map(expenseObj => {
+    const userExpenses = createdExpenses.map((expenseObj) => {
       return { ...expenseObj, type: 'created' };
     });
-    const friendExpenses = [...unsettledExpenses, ...settledExpenses].map(expenseObj => {
+    const friendExpenses = [...unsettledExpenses, ...settledExpenses].map((expenseObj) => {
       return { ...expenseObj, type: 'charged' };
     });
-    const userSentPayments = sentPayments.map(paymentObj => {
+    const userSentPayments = sentPayments.map((paymentObj) => {
       return { ...paymentObj, type: 'sent' };
     });
-    const userReceivedPayments = receivedPayments.map(paymentObj => {
+    const userReceivedPayments = receivedPayments.map((paymentObj) => {
       return { ...paymentObj, type: 'received' };
     });
 
@@ -89,7 +89,7 @@ function AllExpensesPage() {
   }
   // }, [isInitialRender, isCreatedExpensesLoaded, isSettledExpensesLoaded, isUnsettledExpensesLoaded, isSentPaymentsLoaded, isReceivedPaymentsLoaded, createdExpenses, receivedPayments, sentPayments, settledExpenses, unsettledExpenses]);
 
-  function formatMoney(amount) {
+  const formatMoney = (amount) => {
     return (
       "$" +
       String(
@@ -98,9 +98,9 @@ function AllExpensesPage() {
           .replace(/\d(?=(\d{3})+\.)/g, "$&,")
       )
     );
-  }
+  };
 
-  function deleteExpense(expenseId, type) {
+  const deleteExpense = (expenseId, type) => {
     let answer = window.confirm(
       "Are you sure you want to delete this expense? This will completely remove this expense for ALL people involved, not just you."
     );
@@ -118,7 +118,7 @@ function AllExpensesPage() {
           });
       }
     }
-  }
+  };
 
   function deletePayment(paymentId) {
     let answer = window.confirm(
@@ -145,7 +145,7 @@ function AllExpensesPage() {
       <MainHeader />
       <RightSummaryBar />
       <div id="all-expenses">
-        {items.map(obj => {
+        {items.map((obj) => {
           const dateStr = new Date(obj.created_at).toDateString();
           const dateMonth = `${dateStr.split(" ")[1].toUpperCase()}`;
           const dateDay = `${dateStr.split(" ")[2]}`;

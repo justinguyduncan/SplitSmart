@@ -9,7 +9,7 @@ import logo from './splitsmart-logo.png';
 
 function LeftNavigationBar() {
     const dispatch = useDispatch();
-    const activeFriends = useSelector(state => Object.values(state.friend.friendships));
+    const activeFriends = useSelector((state) => Object.values(state.friend.friendships));
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
@@ -27,7 +27,7 @@ function LeftNavigationBar() {
                     buttonText="+ add"
                 />
             </div>
-            {isLoaded && activeFriends?.map(friendObj => (
+            {isLoaded && activeFriends?.map((friendObj) => (
                 <NavLink key={friendObj.id} to={`/friends/${friendObj.id}`}><i className="fas fa-solid fa-user" />{friendObj.friend.name}</NavLink>
             ))}
         </div>
