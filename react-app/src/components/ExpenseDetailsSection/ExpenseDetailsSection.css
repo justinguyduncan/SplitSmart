@@ -180,19 +180,27 @@ font-size: 14px;
     display: flex;
     gap: 7px;
     align-items: center;
+    padding: 3px 0;
 }
 
-.expense-icon-wrapper img {
-    width: 8px;
-    height: 8px;
-}
-
-.expense-icon-wrapper span {
+.expense-icon-wrapper > * {
     cursor: pointer;
 }
 
-.expense-close {
+.expense-icon-wrapper > div:first-child {
+    display: flex;
+    align-items: center;
+}
+
+.expense-edit {
+    width: 10px;
+    height: 10px;
     font-size: 10px;
+    vertical-align: auto;
+}
+
+.expense-delete {
+    font-size: 12px;
     color: rgb(143, 61, 61);
 }
 
