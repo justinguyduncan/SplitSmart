@@ -228,10 +228,10 @@ font-size: 14px;
 } */
 
 .expense-comment-form .expense-error {
-    position: absolute;
-    bottom: -15px;
+    /* position: absolute; */
+    /* bottom: -15px; */
     font-size: 11px;
-    left: 0;
+    /* left: 0; */
     color: rgb(143, 61, 61);
 }
 

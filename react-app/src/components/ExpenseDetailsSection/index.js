@@ -67,8 +67,8 @@ function ExpenseDetailsSection({ expenseId }) {
   useEffect(() => {
     const error = {};
 
-    if (comment.length > 255) {
-      error.message = "comment has to be less than 255 characters";
+    if (comment.length > 100) {
+      error.message = "Comment cannot be longer than 100 characters.";
     }
 
     setError(error);
