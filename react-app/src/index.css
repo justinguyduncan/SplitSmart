@@ -44,20 +44,20 @@ button:hover {
 }
 
 button.normal {
-    background-color: #ffffff;
+    background-color: rgb(255, 255, 255);
     color: rgb(82, 197, 167);
     border: none;
 }
 
 button.accent {
     background-color: rgb(255, 102, 56);
-    color: #ffffff;
+    color: rgb(255, 255, 255);
     border-color: rgb(233, 92, 50);
 }
 
 button.primary {
     background-color: rgb(82, 197, 167);
-    color: #ffffff;
+    color: rgb(255, 255, 255);
     border-color: rgb(75, 177, 151);
 }
 
