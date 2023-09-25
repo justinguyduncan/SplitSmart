@@ -7,7 +7,7 @@
     left: 0;
     width: 200px;
     padding: 10px 0px;
-}
+}1
 
 .left-nav-bar * {
     font-size: 12pt;
@@ -36,5 +36,9 @@
 }
 
 .friends-list-header > button:hover {
+    color: rgb(82, 197, 167);
+}
+
+.active-nav-link {
     color: rgb(82, 197, 167);
 }
