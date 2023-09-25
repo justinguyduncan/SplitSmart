@@ -211,7 +211,7 @@ function ExpenseDetailsSection({ expenseId }) {
             COMMENTS
           </p>
           <ul className="expense-comment">
-            {comments.map((comment) => (
+            {(comments.sort((e1, e2) => new Date(e1.created_at).getTime() - new Date(e2.created_at).getTime())).map((comment) => (
               <li key={comment.id} className="expense-comment-item">
                 {isEdit && commentId === comment.id ? (
                   <>
