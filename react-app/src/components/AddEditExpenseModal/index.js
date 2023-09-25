@@ -135,7 +135,10 @@ function AddEditExpenseModal({ expenseId }) {
 
         {!expenseId && (
           <div className="dropdown">
-            <button className="dropdown-button" onClick={() => setShowFriendList(!showFriendList)}>
+            <button className="dropdown-button" onClick={(e) => {
+              e.preventDefault();
+              setShowFriendList(!showFriendList)
+            }}>
               {showFriendList ? 'Hide Friends' : 'Select Friends'}
             </button>
             {showFriendList && (
