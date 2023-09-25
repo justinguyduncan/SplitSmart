@@ -106,6 +106,7 @@ function AllExpensesPage() {
     );
     if (answer) {
       dispatch(expenseActions.deleteExpense(expenseId));
+      document.getElementById(`expense-details-${expenseId}`).classList.add('hidden');
       if (type === "created") {
         items =
           items.filter((obj) => {
@@ -126,6 +127,8 @@ function AllExpensesPage() {
     );
     if (answer) {
       dispatch(paymentActions.fetchDeletePayment(paymentId));
+      document.getElementById(`payment-details-${paymentId}`).classList.add('hidden');
+
       items =
         items.filter((obj) => {
           return !(
@@ -175,7 +178,10 @@ function AllExpensesPage() {
                       {obj.participants.length === 1 && <p>you lent {obj.participants[0].friendship.friend.short_name}</p>}
                       <p>{formatMoney(obj.amount - obj.participants[0].amount_due)}</p>
                     </div>
-                    <button id={`expense-${obj.id}`} className="delete-expense hidden" onClick={() => deleteExpense(obj.id, obj.type)}>
+                    <button id={`expense-${obj.id}`} className="delete-expense hidden" onClick={(e) => {
+                      deleteExpense(obj.id, obj.type);
+                      e.stopPropagation();
+                    }}>
                       &#x2715;
                     </button>
                   </div>
@@ -207,7 +213,10 @@ function AllExpensesPage() {
                       <p>{obj.friendship.user.short_name} lent you</p>
                       <p>{formatMoney(obj.amount_due)}</p>
                     </div>
-                    <button id={`expense-${obj.expense.id}`} className="delete-expense hidden" onClick={() => deleteExpense(obj.expense.id, obj.type)}>
+                    <button id={`expense-${obj.expense.id}`} className="delete-expense hidden" onClick={(e) => {
+                      deleteExpense(obj.expense.id, obj.type);
+                      e.stopPropagation();
+                    }}>
                       &#x2715;
                     </button>
                   </div>
@@ -233,7 +242,10 @@ function AllExpensesPage() {
                     <div className="payment-header-B teal-amount">
                       {formatMoney(obj.amount)}
                     </div>
-                    <button id={`payment-${obj.id}`} className="delete-payment hidden" onClick={() => deletePayment(obj.id)}>
+                    <button id={`payment-${obj.id}`} className="delete-payment hidden" onClick={(e) => {
+                      deletePayment(obj.id);
+                      e.stopPropagation();
+                    }}>
                       &#x2715;
                     </button>
                   </div>
@@ -258,7 +270,10 @@ function AllExpensesPage() {
                     <div className="payment-header-B orange-amount">
                       {formatMoney(obj.amount)}
                     </div>
-                    <button id={`payment-${obj.id}`} className="delete-payment hidden" onClick={() => deletePayment(obj.id)}>
+                    <button id={`payment-${obj.id}`} className="delete-payment hidden" onClick={(e) => {
+                      deletePayment(obj.id);
+                      e.stopPropagation();
+                    }}>
                       &#x2715;
                     </button>
                   </div>
