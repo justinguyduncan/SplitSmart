@@ -10,7 +10,7 @@
 }
 
 .button:disabled{
-    color: grey;
+    color: rgb(128, 128, 128);
 }
 
 .main-header-title {
@@ -48,6 +48,6 @@
 }
 
 .main-header-buttons:disabled {
-    background-color: grey;
+    background-color: rgb(128, 128, 128);
     opacity: 0.5;
 }
