@@ -62,12 +62,12 @@ function SignupFormPage() {
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
-        <label>Here's my profile picture:</label>
+        {/* <label>Here's my profile picture:</label>
           <input
             type="text"
             value={imgURL}
             onChange={(e) => setImgURL(e.target.value)}
-          />
+          /> */}
         <label>And here's my password:</label>
           <input
             type="password"

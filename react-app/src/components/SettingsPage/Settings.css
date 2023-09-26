@@ -15,10 +15,6 @@
     padding: 20px 0;
 }
 
-#settings-form input {
-    margin: 4px 0;
-}
-
 #settings-image {
     width: 250px;
     display: flex;
@@ -34,7 +30,7 @@
 
 #settings-inputs {
     display: flex;
-    width: min-content;
+    width: 200px;
     flex-direction: column;
     row-gap: 10px;
 }
