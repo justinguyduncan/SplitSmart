@@ -16,7 +16,7 @@ function ProfileButton({ user }) {
   useEffect(() => {
     if (!showMenu) return;
     const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
+      if (!ulRef.current?.contains(e.target)) {
         setShowMenu(false);
       }
     };
@@ -42,6 +42,9 @@ function ProfileButton({ user }) {
             <ul className={ulClassName}>
               <li> Hello, </li>
               <li>{user.name}!</li>
+              <button className="settings" onClick={() => history.push('/settings')}>
+                Settings
+              </button>
               <button className="log-out" onClick={handleLogout}>
                 Log Out
               </button>

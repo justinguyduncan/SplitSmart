@@ -139,7 +139,8 @@ a {
     padding: 5px 10px;
 }
 
-.log-out {
+.log-out,
+.settings {
     margin: 0;
     border: none;
     background: none;
@@ -149,12 +150,8 @@ a {
     border-radius: 0;
 }
 
-.log-out:hover .log-out {
-    background-color: rgb(82, 197, 167);
-    color: rgb(255, 255, 255);
-}
-
-.log-out:hover {
+.log-out:hover,
+.settings:hover {
     background-color: rgb(82, 197, 167);
     color: rgb(255, 255, 255);
 }
