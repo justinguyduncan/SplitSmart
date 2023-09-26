@@ -1,7 +1,5 @@
 .add-edit-expense-form {
-  /* background-color: #f8f8f8; */
   padding: 20px;
-  /* border-radius: 4px; */
 }
 
 .add-edit-expense-form h2 {
@@ -66,15 +64,6 @@
   background-color: rgb(238, 238, 238);
 }
 
-/* .dropdown-button {
-  background-color: #f8f8f8;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 8px 15px;
-  font-size: 14px;
-  cursor: pointer;
-} */
-
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -89,10 +78,3 @@
   border-radius: 4px;
   cursor: pointer;
 }
-
-/* .cancel-button {
-    margin-right: 10px;
-    background-color: #ccc;
-    border: none;
-    color: #fff;
-  } */

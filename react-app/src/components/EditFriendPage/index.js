@@ -43,7 +43,7 @@ function EditFriendPage() {
                 <h1>Edit friend info</h1>
                 {errors.length > 0 && <ul>
                     {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
+                        <li key={idx} className="error-msg">{error}</li>
                     ))}
                 </ul>}
                 <div>{friendship.friend.email}</div>

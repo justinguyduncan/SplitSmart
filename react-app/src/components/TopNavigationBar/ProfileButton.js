@@ -52,16 +52,6 @@ function ProfileButton({ user }) {
           </>
         ) : (
           <>
-            {/* <li>
-              <NavLink to="/login" className="navigation-link nav-login">
-                Log in
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/signup" className="navigation-link nav-signup">
-                Sign up
-              </NavLink>
-            </li> */}
             <button className='normal' onClick={() => history.push('/login')}>
               Log in
             </button>

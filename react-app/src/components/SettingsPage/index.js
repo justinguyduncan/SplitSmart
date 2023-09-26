@@ -5,7 +5,6 @@ import * as sessionActions from '../../store/session';
 import TopNavigationBar from '../TopNavigationBar';
 import "./Settings.css";
 
-
 function SettingsPage() {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
@@ -91,7 +90,7 @@ function SettingsPage() {
                     <div id="settings-inputs">
                         {errors.length > 0 && <ul className="error-message-container">
                             {errors.map((error, idx) => (
-                                <li className="error-message" key={idx}>{error}</li>
+                                <li key={idx} className="error-msg">{error}</li>
                             ))}
                         </ul>}
                         <label>Your name</label>

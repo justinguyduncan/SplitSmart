@@ -66,7 +66,6 @@ function AllExpensesPage() {
 
   let items = [];
 
-  // useEffect(() => {
   if (isCreatedExpensesLoaded && isSettledExpensesLoaded && isUnsettledExpensesLoaded && isSentPaymentsLoaded && isReceivedPaymentsLoaded) {
     const userExpenses = createdExpenses.map((expenseObj) => {
       return { ...expenseObj, type: 'created' };
@@ -84,10 +83,7 @@ function AllExpensesPage() {
     items = [...userExpenses, ...friendExpenses, ...userSentPayments, ...userReceivedPayments].sort((e1, e2) => {
       return new Date(e2.created_at).getTime() - new Date(e1.created_at).getTime()
     });
-
-    // setIsInitialRender(false);
   }
-  // }, [isInitialRender, isCreatedExpensesLoaded, isSettledExpensesLoaded, isUnsettledExpensesLoaded, isSentPaymentsLoaded, isReceivedPaymentsLoaded, createdExpenses, receivedPayments, sentPayments, settledExpenses, unsettledExpenses]);
 
   const formatMoney = (amount) => {
     return (

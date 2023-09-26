@@ -27,15 +27,16 @@ def get_user(id):
     user = User.query.get(id)
     return user.to_dict()
 
-@user_routes.route('/<int:user_id>', methods=["PUT"])
+
+@user_routes.route('/<int:id>', methods=["PUT"])
 @login_required
-def update_user(user_id):
+def update_user(id):
     """
     Updates a user
     """
-    user = User.query.get(user_id)
+    user = User.query.get(id)
     if not user:
-        return {'errors': f"User {user_id} does not exist."}, 400
+        return {'errors': f"User {id} does not exist."}, 400
     if user.id != current_user.id:
         return {'errors': f"User can only edit their own profile."}, 401
     form = ProfileForm()

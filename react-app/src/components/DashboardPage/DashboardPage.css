@@ -1,129 +1,138 @@
-p, ul, div, li, a, img h1, h2, h3, h4, section {
+p,
+ul,
+div,
+li,
+a,
+img h1,
+h2,
+h3,
+h4,
+section {
     padding: 0;
     margin: 0;
 }
 
 
-    .subheader-list {
-        display: flex;
-        justify-content: space-between;
-        text-align: center;
-        padding: 0 10px;
-    }
+.subheader-list {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    padding: 0 10px;
+}
 
-    .subheader-list li {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-    }
+.subheader-list li {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
 
-    .subheader {
-        background-color: rgb(238, 238, 238);
-        border-top: 1px solid rgb(184, 180, 174);
-        border-bottom: 1px solid rgb(184, 180, 174);
-        text-align: center;
-    }
+.subheader {
+    background-color: rgb(238, 238, 238);
+    border-top: 1px solid rgb(184, 180, 174);
+    border-bottom: 1px solid rgb(184, 180, 174);
+    text-align: center;
+}
 
-    .subheader-item {
-        border-left: 1px solid rgb(184, 180, 174);
-        border-right: 1px solid rgb(184, 180, 174);
-    }
+.subheader-item {
+    border-left: 1px solid rgb(184, 180, 174);
+    border-right: 1px solid rgb(184, 180, 174);
+}
 
-    .owed-item img {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-    }
+.owed-item img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
 
-    .owed-item {
-        padding: 5px;
-    }
+.owed-item {
+    padding: 5px;
+}
 
-    .owed-item:hover {
-        background-color: rgb(238, 238, 238);
-    }
+.owed-item:hover {
+    background-color: rgb(238, 238, 238);
+}
 
-    .owed-item a {
-        text-decoration: none;
-        color: rgb(0, 0, 0);
-        display: flex;
-        gap: 10px;
-    }
+.owed-item a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    display: flex;
+    gap: 10px;
+}
 
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
-    .main-dashboard {
-        margin-left: 200px;
-        margin-top: 35px;
-        max-width: 550px;
-        width: 100%;
-        border-left-color: rgb(184, 180, 174);
-        border-right-color: rgb(184, 180, 174);
-        height: 100vh;
-        box-shadow: rgba(24, 26, 27, 0.2) 0px 0px 12px;
-    }
+.main-dashboard {
+    margin-left: 200px;
+    margin-top: 35px;
+    max-width: 550px;
+    width: 100%;
+    border-left-color: rgb(184, 180, 174);
+    border-right-color: rgb(184, 180, 174);
+    height: 100vh;
+    box-shadow: rgba(24, 26, 27, 0.2) 0px 0px 12px;
+}
 
-    .main-wrapper {
-        display: flex;
-        gap: 20px;
-    }
+.main-wrapper {
+    display: flex;
+    gap: 20px;
+}
 
-    .subheader-list-text {
-        color: rgb(153, 153, 153);
-        font-size: 14px;
-        margin: 0;
-        padding: 0;
-    }
+.subheader-list-text {
+    color: rgb(153, 153, 153);
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
 
-    .subheader-text {
-        font-size: 13px;
-        padding: 5px 0;
-        margin: 0;
-    }
+.subheader-text {
+    font-size: 13px;
+    padding: 5px 0;
+    margin: 0;
+}
 
-    .subheader-text-orange {
-        color: rgb(255, 102, 56);
-    }
+.subheader-text-orange {
+    color: rgb(255, 102, 56);
+}
 
-    .subheader-text-green {
-        color: rgb(82, 197, 167);
-    }
+.subheader-text-green {
+    color: rgb(82, 197, 167);
+}
 
-    .owed-section {
-        display: flex;
-        gap: 20px;
-    }
+.owed-section {
+    display: flex;
+    gap: 20px;
+}
 
-    .owed-wrapper {
-        width: 50%;
-        box-sizing: border-box;
-        margin: 10px 0;
-    }
+.owed-wrapper {
+    width: 50%;
+    box-sizing: border-box;
+    margin: 10px 0;
+}
 
-    .owed-wrapper-right {
-        border-left:  rgb(153, 153, 153) 1px solid;
-    }
+.owed-wrapper-right {
+    border-left: rgb(153, 153, 153) 1px solid;
+}
 
-    .no-owe {
-        color: rgb(153, 153, 153);
-        font-size: 16px;
-        margin-top: 6px;
-        padding: 10px;
-    }
+.no-owe {
+    color: rgb(153, 153, 153);
+    font-size: 16px;
+    margin-top: 6px;
+    padding: 10px;
+}
 
-    .owed-title {
-        font-size: 14px;
-        text-transform: uppercase;
-        color: rgb(153, 153, 153);
-        padding: 10px;
-    }
+.owed-title {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: rgb(153, 153, 153);
+    padding: 10px;
+}
 
-    .owed-title-right {
-        text-align: right;
-    }
+.owed-title-right {
+    text-align: right;
+}
 
 
 .dashboard-subheader-list {
@@ -149,11 +158,6 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
     text-align: center;
 }
 
-/* .dashboard-subheader-item {
-    border-left: 1px solid rgb(184, 180, 174); ;
-    border-right: 1px solid rgb(184, 180, 174);;
-} */
-
 .dashboard-owed-item img {
     width: 40px;
     height: 40px;
@@ -166,7 +170,7 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 }
 
 .dashboard-owed-item:hover {
-    background-color:  rgb(238, 238, 238);
+    background-color: rgb(238, 238, 238);
 }
 
 .dashboard-owed-item a {
@@ -177,20 +181,15 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 }
 
 .dashboard-container {
-    /* max-width: 1200px; */
     margin: 0 auto;
 }
 
 .dashboard-main {
     margin-left: 200px;
     margin-right: 200px;
-    /* margin-top: 35px; */
-    /* max-width: 550px; */
-    /* width: 100%; */
     border-left-color: rgb(184, 180, 174);
     border-right-color: rgb(184, 180, 174);
     height: 100vh;
-    /* box-shadow: rgba(24, 26, 27, 0.2) 0px 0px 12px; */
 }
 
 .dashboard-main-wrapper {
@@ -213,7 +212,6 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 
 .dashboard-owed-section {
     display: flex;
-    /* gap: 20px; */
 }
 
 .dashboard-owed-wrapper {
@@ -223,13 +221,13 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 }
 
 .dashboard-owed-wrapper-right {
-    border-left:  rgb(153, 153, 153) 1px solid;
+    border-left: rgb(153, 153, 153) 1px solid;
 }
 
 .dashboard-no-owe {
     color: rgb(153, 153, 153);
     font-size: 16px;
-    padding:0 10px;
+    padding: 0 10px;
     text-align: left;
 }
 
@@ -239,7 +237,6 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 
 .dashboard-owed-title {
     font-size: 14px;
-    /* text-transform: uppercase; */
     color: rgb(153, 153, 153);
     padding: 10px;
 }

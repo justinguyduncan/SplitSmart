@@ -35,8 +35,6 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
     z-index: 99;
 }
 
-
-
 .header-login {
     height: 50px;
     background-color:rgb(66, 202, 164);
@@ -60,7 +58,6 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 
 .title {
     font-size: 16px;
-    /* text-transform: uppercase; */
     font-weight: 700;
     margin-left: 15px;
     color: rgb(0, 0, 0);
