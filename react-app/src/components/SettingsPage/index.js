@@ -74,7 +74,7 @@ function SettingsPage() {
         <>
             <TopNavigationBar />
             <div id="settings-container">
-                <h2>Your Account</h2>
+                <h1>Your Account</h1>
                 <form id="settings-form" onSubmit={handleEdit}>
                     <div id="settings-image">
                         <div>
@@ -90,6 +90,7 @@ function SettingsPage() {
                             >&#x2715;</button>
                         </div>
                         <div>
+                        <label>Your avatar</label>
                             <input
                                 id="settings-upload"
                                 type="file"

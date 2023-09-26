@@ -13,13 +13,10 @@ function ProfileButton({ user }) {
     setShowMenu(!showMenu);
   };
 
+  const closeMenu = () => setShowMenu(false);
+
   useEffect(() => {
     if (!showMenu) return;
-    const closeMenu = (e) => {
-      if (!ulRef.current?.contains(e.target)) {
-        setShowMenu(false);
-      }
-    };
     document.addEventListener("click", closeMenu);
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
@@ -27,7 +24,10 @@ function ProfileButton({ user }) {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
+    closeMenu();
+    history.push('/');
   };
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
