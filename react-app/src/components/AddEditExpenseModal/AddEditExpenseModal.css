@@ -21,7 +21,7 @@
 .form-group input[type="number"] {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid rgb(204, 204, 204);
   border-radius: 4px;
 }
 
@@ -38,7 +38,7 @@
 .selected-friend {
   display: flex;
   align-items: center;
-  background-color: #e2e2e2;
+  background-color: rgb(226, 226, 226);
   padding: 5px 10px;
   border-radius: 4px;
   margin-right: 10px;
@@ -49,7 +49,7 @@
   margin-left: 5px;
   background-color: transparent;
   border: none;
-  color: #888;
+  color: rgb(136, 136, 136);
   cursor: pointer;
 }
 
@@ -63,7 +63,7 @@
 }
 
 .friend.selected {
-  background-color: #e2e2e2;
+  background-color: rgb(238, 238, 238);
 }
 
 /* .dropdown-button {

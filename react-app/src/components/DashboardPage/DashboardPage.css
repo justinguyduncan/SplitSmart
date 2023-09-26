@@ -2,7 +2,7 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
     padding: 0;
     margin: 0;
 }
- 
+
 
     .subheader-list {
         display: flex;
@@ -10,51 +10,51 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
         text-align: center;
         padding: 0 10px;
     }
-    
+
     .subheader-list li {
         margin: 0;
         padding: 0;
         width: 100%;
     }
-    
+
     .subheader {
-        background-color: rgb(220, 218, 215);
+        background-color: rgb(238, 238, 238);
         border-top: 1px solid rgb(184, 180, 174);
         border-bottom: 1px solid rgb(184, 180, 174);
         text-align: center;
     }
-    
+
     .subheader-item {
-        border-left: 1px solid rgb(184, 180, 174); ;
-        border-right: 1px solid rgb(184, 180, 174);;
+        border-left: 1px solid rgb(184, 180, 174);
+        border-right: 1px solid rgb(184, 180, 174);
     }
-    
+
     .owed-item img {
         width: 30px;
         height: 30px;
         border-radius: 50%;
     }
-    
+
     .owed-item {
         padding: 5px;
     }
-    
+
     .owed-item:hover {
-        background-color:  rgb(215, 213, 209);
+        background-color: rgb(238, 238, 238);
     }
-    
+
     .owed-item a {
         text-decoration: none;
-        color: rgb(24, 26, 27);
+        color: rgb(0, 0, 0);
         display: flex;
         gap: 10px;
     }
-    
+
     .container {
         max-width: 1200px;
         margin: 0 auto;
     }
-    
+
     .main-dashboard {
         margin-left: 200px;
         margin-top: 35px;
@@ -65,66 +65,66 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
         height: 100vh;
         box-shadow: rgba(24, 26, 27, 0.2) 0px 0px 12px;
     }
-    
+
     .main-wrapper {
         display: flex;
         gap: 20px;
     }
-    
+
     .subheader-list-text {
-        color: rgb(148, 142, 133);
+        color: rgb(153, 153, 153);
         font-size: 14px;
         margin: 0;
         padding: 0;
     }
-    
+
     .subheader-text {
         font-size: 13px;
         padding: 5px 0;
         margin: 0;
     }
-    
+
     .subheader-text-orange {
-        color: #ff652f;
+        color: rgb(255, 102, 56);
     }
-    
+
     .subheader-text-green {
-        color: #5bc5a7;
+        color: rgb(82, 197, 167);
     }
-    
+
     .owed-section {
         display: flex;
         gap: 20px;
     }
-    
+
     .owed-wrapper {
         width: 50%;
         box-sizing: border-box;
         margin: 10px 0;
     }
-    
+
     .owed-wrapper-right {
         border-left:  rgb(153, 153, 153) 1px solid;
     }
-    
+
     .no-owe {
         color: rgb(153, 153, 153);
         font-size: 16px;
         margin-top: 6px;
         padding: 10px;
     }
-    
+
     .owed-title {
         font-size: 14px;
         text-transform: uppercase;
         color: rgb(153, 153, 153);
         padding: 10px;
     }
-    
+
     .owed-title-right {
         text-align: right;
     }
-    
+
 
 .dashboard-subheader-list {
     display: flex;
@@ -143,7 +143,7 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 }
 
 .dashboard-subheader {
-    background-color: rgb(220, 218, 215);
+    background-color: rgb(238, 238, 238);
     border-top: 1px solid rgb(184, 180, 174);
     border-bottom: 1px solid rgb(184, 180, 174);
     text-align: center;
@@ -166,12 +166,12 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 }
 
 .dashboard-owed-item:hover {
-    background-color:  rgb(215, 213, 209);
+    background-color:  rgb(238, 238, 238);
 }
 
 .dashboard-owed-item a {
     text-decoration: none;
-    color: rgb(24, 26, 27);
+    color: rgb(0, 0, 0);
     display: flex;
     gap: 10px;
 }
@@ -249,7 +249,7 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 }
 
 .dashboard-subheader-text-orange {
-    color: #ff652f;
+    color: rgb(255, 102, 56);
 }
 
 .dashboard-subheader-text-grey {
@@ -257,7 +257,7 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
 }
 
 .dashboard-subheader-text-green {
-    color: #5bc5a7;
+    color: rgb(82, 197, 167);
 }
 
 .dashboard-owed-item .dashboard-subheader-text-orange,

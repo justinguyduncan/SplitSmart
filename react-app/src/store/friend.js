@@ -102,7 +102,7 @@ export const createFriendship = (email) => async (dispatch) => {
   }
 };
 
-export const updateFriendship = (id) => async dispatch => {
+export const updateFriendship = (id) => async (dispatch) => {
   try {
     const response = await fetch(`/api/friendships/${id}`, {
       method: 'PUT'

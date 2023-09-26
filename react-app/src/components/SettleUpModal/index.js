@@ -13,8 +13,8 @@ function SettleUpModal({ billAmount }) {
     const [amount, setAmount] = useState('');
     const location = useLocation();
     const friendshipId = Number(location.pathname.split('/')[2]);
-    const friendships = useSelector(state => Object.values(state.friend.friendships));
-    const friendship = friendships.find(friendship => friendship.id === friendshipId);
+    const friendships = useSelector((state) => Object.values(state.friend.friendships));
+    const friendship = friendships.find((friendship) => friendship.id === friendshipId);
     const friend = friendship?.friend;
     const friendName = friend?.name || '';
     const totalBillAmount = friendship?.bill
@@ -26,11 +26,6 @@ function SettleUpModal({ billAmount }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // if (!amount) {
-        //   // Add validation for required fields
-        //   console.log('Please enter the amount.');
-        //   return;
-        // }
         dispatch(createPayment(amount, friendshipId));
         closeModal();
       };
