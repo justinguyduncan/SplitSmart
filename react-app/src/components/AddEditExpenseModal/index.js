@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getCreatedExpenses, createExpense, updateExpense } from '../../store/expense';
+import { createExpense, updateExpense } from '../../store/expense';
 import './AddEditExpenseModal.css';
 
 function AddEditExpenseModal({ expenseId }) {
@@ -69,10 +69,10 @@ function AddEditExpenseModal({ expenseId }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!description || !amount || amount < 1 || selectedFriends.length === 0) {
+    if (description.length > 50 || !amount || amount < 1 || selectedFriends.length === 0) {
       // Add validation for required fields
       setErrors({
-        description: !description ? 'Description is required.' : '',
+        description: description.length > 50 ? 'Description cannot be longer than 50 characters.' : '',
         amount: amount < 1 ? 'Amount must be at least $1.' : '',
         selectedFriends: selectedFriends.length === 0 ? 'At least one friend must be selected.' : ''
       });
@@ -83,13 +83,11 @@ function AddEditExpenseModal({ expenseId }) {
     if (expenseId) { //editing
       friendsIds = (friendships.filter((friendship) =>
         selectedFriends.map((friendId) => parseInt(friendId)).includes(friendship.friend_id)
-      )).map(friendship => friendship.id);
+      )).map((friendship) => friendship.id);
     } else { //creating
       friendsIds = selectedFriends.map((friendId) => parseInt(friendId));
     }
 
-    // console.log(friendsIds);
-    // console.log(selectedFriends);
     if (expenseId) {
       dispatch(updateExpense(expenseId, description, amount, friendsIds));
     } else {
@@ -110,7 +108,7 @@ function AddEditExpenseModal({ expenseId }) {
       <div className="error-msg">
         <ul>
           {Object.values(errors).map((error) => (
-            error && <li key={error}>{error}</li>
+            error && <li key={error} className="error-msg">{error}</li>
           ))}
         </ul>
       </div>
@@ -137,7 +135,10 @@ function AddEditExpenseModal({ expenseId }) {
 
         {!expenseId && (
           <div className="dropdown">
-            <button className="dropdown-button" onClick={() => setShowFriendList(!showFriendList)}>
+            <button className="dropdown-button" onClick={(e) => {
+              e.preventDefault();
+              setShowFriendList(!showFriendList);
+            }}>
               {showFriendList ? 'Hide Friends' : 'Select Friends'}
             </button>
             {showFriendList && (
@@ -166,7 +167,7 @@ function AddEditExpenseModal({ expenseId }) {
           onChange={(e) => setDescription(e.target.value)}
           placeholder='Enter a description'
           required
-          // disabled={expenseId} // Disable the input field if expenseId is present
+        // disabled={expenseId} // Disable the input field if expenseId is present
         />
       </div>
 
