@@ -216,35 +216,35 @@ function FriendPage() {
 
   if (!sessionUser) return <Redirect to="/" />;
 
-    return (isFriendshipLoaded &&
-        <>
-            <LeftNavigationBar />
-            <TopNavigationBar />
-            <MainHeader />
-            <RightSummaryBar />
-            <div id="friend-items">
-                <UnsettledItems items={unsettledItems} friendship={friendship} deleteExpense={deleteExpense} />
-                <div id="show-container">
-                    {unsettledItems.length === 0 &&
-                        <>
-                            <img id="settled-up-logo" src={checkmark} alt="checkmark-logo" />
-                            <div id="show-button-description">You and {friendship.friend.name} are all settled up.</div>
-                        </>
-                    }
-                    {(unsettledItems.length > 0 && settledItems.length > 0) &&
-                        <div id="show-button-description">All expenses before this date have been settled up.</div>
-                    }
-                    {settledItems.length > 0 && <button id="show-button" onClick={() => {
-                        document.getElementById("show-container").classList.add("hidden");
-                        setIsVisible(true);
-                    }}>
-                        Show settled expenses
-                    </button>}
-                </div>
-                {isVisible && <SettledItems items={settledItems} user={sessionUser} friendship={friendship} deleteExpense={deleteExpense} deletePayment={deletePayment} />}
-            </div>
-        </>
-    );
+  return (isFriendshipLoaded &&
+    <>
+      <LeftNavigationBar />
+      <TopNavigationBar />
+      <MainHeader />
+      <RightSummaryBar />
+      <div id="friend-items">
+        <UnsettledItems items={unsettledItems} friendship={friendship} deleteExpense={deleteExpense} />
+        <div id="show-container">
+          {unsettledItems.length === 0 &&
+            <>
+              <img id="settled-up-logo" src={checkmark} alt="checkmark-logo" />
+              <div id="show-button-description">You and {friendship.friend.name} are all settled up.</div>
+            </>
+          }
+          {(unsettledItems.length > 0 && settledItems.length > 0) &&
+            <div id="show-button-description">All expenses before this date have been settled up.</div>
+          }
+          {settledItems.length > 0 && <button id="show-button" onClick={() => {
+            document.getElementById("show-container").classList.add("hidden");
+            setIsVisible(true);
+          }}>
+            Show settled expenses
+          </button>}
+        </div>
+        {isVisible && <SettledItems items={settledItems} user={sessionUser} friendship={friendship} deleteExpense={deleteExpense} deletePayment={deletePayment} />}
+      </div>
+    </>
+  );
 }
 
 export default FriendPage;

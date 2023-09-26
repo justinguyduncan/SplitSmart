@@ -37,9 +37,6 @@ function UnsettledItems({ items, friendship, deleteExpense }) {
                                         <p>you lent {friendship.friend.short_name}</p>
                                         <p>{formatMoney(obj.participants[0].amount_due)}</p>
                                     </div>
-                                    {/* <button className="delete-expense" onClick={() => deleteExpense(obj.id, false, obj.type)}>
-                                    &#x2715;
-                                </button> */}
                                 </div>
                                 <ExpenseDetailsSection expenseId={obj.id} />
                             </>
@@ -67,9 +64,6 @@ function UnsettledItems({ items, friendship, deleteExpense }) {
                                         <p>{friendship.friend.short_name} lent you</p>
                                         <p>{formatMoney(obj.amount_due)}</p>
                                     </div>
-                                    {/* <button className="delete-expense" onClick={() => deleteExpense(obj.expense.id, false, obj.type)}>
-                                    &#x2715;
-                                </button> */}
                                 </div>
                                 <ExpenseDetailsSection expenseId={obj.expense.id} />
                             </>

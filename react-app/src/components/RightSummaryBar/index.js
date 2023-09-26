@@ -50,8 +50,6 @@ function RightSummaryBar() {
             </div>
         );
     }
-
-
 }
 
 export default RightSummaryBar;

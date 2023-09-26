@@ -2,12 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./ExpenseDetailsSection.css";
 import * as expenseActions from "../../store/expense";
-import {
-  addComment,
-  deleteComment,
-  // getCommentsByExpenseId,
-  updateComment,
-} from "../../store/comment";
+import { addComment, deleteComment, updateComment } from "../../store/comment";
 import OpenModalButton from '../OpenModalButton';
 import AddEditExpenseModal from '../AddEditExpenseModal';
 
@@ -25,6 +20,7 @@ const month = [
   "November",
   "December",
 ];
+
 function ExpenseDetailsSection({ expenseId }) {
   //dispatch
   const dispatch = useDispatch();
@@ -154,13 +150,6 @@ function ExpenseDetailsSection({ expenseId }) {
           <p className="expense-subheader-date">
             Added by {expense?.user?.short_name} on {createdDate}
           </p>
-
-          {/* <button
-            className="expense-btn expense-edit-btn"
-            onClick={() => alert("feature coming soon")}
-          >
-            Edit expense
-          </button> */}
           {expense.creator_id == sessionUser.id && <OpenModalButton modalComponent={<AddEditExpenseModal expenseId={expense.id} />} buttonText={'Edit expense'} />}
         </div>
       </section>
@@ -177,7 +166,6 @@ function ExpenseDetailsSection({ expenseId }) {
               {expense?.user?.short_name} paid{" "}
               {formatMoney(expense?.amount)} and owes{" "}
               {formatMoney(
-                // expense?.amount / (expense?.participants?.length + 1)
                 expense?.amount - (expense?.participants?.reduce((accum, curr) => accum + Number(curr.amount_due), 0))
               )}
             </p>
@@ -274,10 +262,6 @@ function ExpenseDetailsSection({ expenseId }) {
                           handleCommentEdit(comment.id, comment.comment)
                         }
                       >
-                        {/* <img
-                          src="https://res.cloudinary.com/dr1ekjmf4/image/upload/v1688651618/icons8-pencil-50_1_cg3jui.png"
-                          alt="edit icon"
-                        /> */}
                         <i className="expense-edit fas fa-pen"></i>
                       </div>
                       <div

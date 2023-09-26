@@ -27,15 +27,15 @@ function AboutPage() {
                 <div className="about-page-images">
                     <div>
                         <h2>Add Expenses Easily</h2>
-                        <img src={img_one} alt="img_one"/>
+                        <img src={img_one} alt="img_one" />
                     </div>
                     <div>
                         <h2>Converse with Friends</h2>
-                        <img src={img_two} alt="img_two"/>
+                        <img src={img_two} alt="img_two" />
                     </div>
                     <div>
                         <h2>Track Balances</h2>
-                        <img src={img_three} alt="img_three"/>
+                        <img src={img_three} alt="img_three" />
                     </div>
                 </div>
             </div>

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getCreatedExpenses, createExpense, updateExpense } from '../../store/expense';
+import { createExpense, updateExpense } from '../../store/expense';
 import './AddEditExpenseModal.css';
 
 function AddEditExpenseModal({ expenseId }) {
@@ -108,7 +108,7 @@ function AddEditExpenseModal({ expenseId }) {
       <div className="error-msg">
         <ul>
           {Object.values(errors).map((error) => (
-            error && <li key={error}>{error}</li>
+            error && <li key={error} className="error-msg">{error}</li>
           ))}
         </ul>
       </div>
@@ -167,7 +167,7 @@ function AddEditExpenseModal({ expenseId }) {
           onChange={(e) => setDescription(e.target.value)}
           placeholder='Enter a description'
           required
-          // disabled={expenseId} // Disable the input field if expenseId is present
+        // disabled={expenseId} // Disable the input field if expenseId is present
         />
       </div>
 
