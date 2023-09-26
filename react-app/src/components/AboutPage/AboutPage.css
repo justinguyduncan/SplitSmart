@@ -11,8 +11,10 @@
     "slideshow slideshow"
     "track-balances organize-expenses"
     "add-expenses-easily pay-friends-back"; */
+    display: flex;
+    flex-direction: column;
     place-items: center;
-    justify-content: center;
+    justify-content: space-between;
     text-align: center;
 }
 
@@ -37,20 +39,34 @@
 } */
 
 .slideshow {
-    padding: 50px;
+    width: 90%;
+    margin: 50px;
     text-align: left;
     /* height: 500px; */
 }
 
 .about-page-images {
+    width: inherit;
     display: flex;
+    column-gap: 20px;
     /* flex-wrap: wrap;
     justify-content: center; */
     overflow: scroll;
+    padding: 5px;
+}
+
+.about-page-images h2 {
+    color: white;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: rgb(82, 197, 167);
+    /* border: 1px solid white; */
+    border-radius: 5px;
 }
 
 .about-page-images img {
-    min-width: 500px;
+    height: 400px;
+    /* min-width: 500px; */
     /* max-width: 500px; */
 }
 
