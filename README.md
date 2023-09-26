@@ -40,28 +40,19 @@ SplitSmart is a Splitwise clone where users can add friends, charge expenses to 
 ## Site In Action
 
 ### Sign Up Page
-![Sign Up Page](/react-app/public/signup.gif)
+![Sign Up Page](/react-app/public/signup.png)
 
 ### Login Page
 ![Login Page](/react-app/public/login.png)
 
-### Home Page
-![Home Page](/react-app/public/home.gif)
+### Dashboard Page
+![Dashboard Page](/react-app/public/dashboard.png)
 
-### Search Feature
-![Search Feature](/react-app/public/search.gif)
+### Account Settings Page
+![Account Settings Page](/react-app/public/settings.png)
 
-### Profile Page
-![Profile Page](/react-app/public/profile.png)
-
-### List Page
-![List Page](/react-app/public/list.gif)
-
-### Create List Page
-![Create List Page](/react-app/public/create_list.gif)
-
-### Edit List Page
-![Edit List Page](/react-app/public/edit_list.gif)
+### Friend Page
+![Friend Page](/react-app/public/friend.png)
 
 ## Implementation Details
 
