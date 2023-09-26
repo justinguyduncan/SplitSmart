@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from app.models import db, User
 from app.forms import ProfileForm
 from app.api.auth_routes import validation_errors_to_error_messages
+from app.api.aws_helpers import get_unique_filename, upload_file_to_s3
 
 user_routes = Blueprint('users', __name__)
 

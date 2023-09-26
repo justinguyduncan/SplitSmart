@@ -45,7 +45,7 @@ function SettingsPage() {
         const formData = new FormData(form);
         formData.append('is_changed', isChanged);
         if (name.split(" ")[0]?.length > 0) formData.append('first_name', name.split(" ")[0]);
-        if (name.split(" ")[1]?.length > 0)formData.append('last_name', name.split(" ")[1]);
+        if (name.split(" ")[1]?.length > 0) formData.append('last_name', name.split(" ")[1]);
         const data = await dispatch(sessionActions.editProfile(sessionUser.id, formData));
         if (data) {
             setErrors(data);
@@ -77,18 +77,19 @@ function SettingsPage() {
                 <h2>Your Account</h2>
                 <form id="settings-form" onSubmit={handleEdit}>
                     <div id="settings-image">
-                        <img id="settings-preview" src={sessionUser.image_url} />
-                        <button
-                            id="settings-preview-remove"
-                            className="delete"
-                            onClick={async (e) => {
-                                await setIsChanged(true);
-                                await setImgUrl(null);
-                                await removeFile(e);
-                            }}
-                        >&#x2715;</button>
                         <div>
-                            <label>Change your avatar</label>
+                            <img id="settings-preview" src={sessionUser.image_url} />
+                            <button
+                                id="settings-preview-remove"
+                                className="delete"
+                                onClick={async (e) => {
+                                    await setIsChanged(true);
+                                    await setImgUrl(null);
+                                    await removeFile(e);
+                                }}
+                            >&#x2715;</button>
+                        </div>
+                        <div>
                             <input
                                 id="settings-upload"
                                 type="file"

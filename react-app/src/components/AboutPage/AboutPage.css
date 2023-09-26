@@ -47,11 +47,13 @@
 
 .about-page-images {
     width: inherit;
+    height: min-content;
     display: flex;
     column-gap: 20px;
     /* flex-wrap: wrap;
     justify-content: center; */
-    overflow: scroll;
+    overflow-x: scroll;
+    overflow-y: hidden;
     padding: 5px;
 }
 
@@ -65,7 +67,7 @@
 }
 
 .about-page-images img {
-    height: 400px;
+    height: 350px;
     border: 0.5px solid rgb(0, 0, 0);
     border-radius: 10px;
     /* min-width: 500px; */
