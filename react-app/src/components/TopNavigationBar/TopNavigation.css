@@ -13,7 +13,7 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
     gap: 5px;
     border: 1px solid lightgray;
     box-shadow: 1px 1px 5px 1px darkgray;
-    align-items: start;
+    align-items: flex-start;
     justify-content: center;
     padding: 0;
     width: 150px;

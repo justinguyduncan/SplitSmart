@@ -49,7 +49,7 @@ def update_user(user_id):
         user.first_name = form.data['first_name']
         user.last_name = form.data['last_name']
         if form.data['is_changed']:
-            user.image_url = image_url_upload['url'] if form.data['image_url'] else "https://keeping-up-aa-ai.s3.us-west-1.amazonaws.com/default.png"
+            user.image_url = image_url_upload['url'] if form.data['image_url'] else "https://splitsmart-aa-ai.s3.us-west-1.amazonaws.com/default.png"
         db.session.commit()
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400

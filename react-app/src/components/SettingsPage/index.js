@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-// import { useParams, useHistory } from "react-router";
 import * as sessionActions from '../../store/session';
 import TopNavigationBar from '../TopNavigationBar';
 import "./Settings.css";
@@ -9,33 +8,12 @@ import "./Settings.css";
 
 function SettingsPage() {
     const dispatch = useDispatch();
-    // const history = useHistory();
     const sessionUser = useSelector((state) => state.session.user);
-    // const friendship = useSelector((state) => state.friend.selectedFriendship);
-    // const [isFriendshipLoaded, setIsFriendshipLoaded] = useState(false);
     const [name, setName] = useState(sessionUser.name);
     const [imgUrl, setImgUrl] = useState(sessionUser.image_url);
     const [password, setPassword] = useState("");
     const [isChanged, setIsChanged] = useState(false);
     const [errors, setErrors] = useState([]);
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         await dispatch(friendActions.fetchFriendshipById(id))
-    //             .then(() => setIsFriendshipLoaded(true));
-    //     };
-    //     fetchData();
-    // }, [dispatch, id]);
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     const data = await dispatch(friendActions.updateFriendship(id));
-    //     if (data) {
-    //         setErrors(data);
-    //     } else {
-    //         history.push('/dashboard');
-    //     }
-    // };
 
     if (!sessionUser) return <Redirect to="/" />;
 
@@ -49,10 +27,9 @@ function SettingsPage() {
         const data = await dispatch(sessionActions.editProfile(sessionUser.id, formData));
         if (data) {
             setErrors(data);
+        } else {
+            setErrors([]);
         }
-        // } else {
-        //     history.push(`/${sessionUser.id}`);
-        // }
     };
 
     const displayFile = (e) => {
@@ -64,13 +41,12 @@ function SettingsPage() {
     const removeFile = (e) => {
         e.preventDefault();
         const img = document.getElementById("settings-preview");
-        img.src = "https://keeping-up-aa-ai.s3.us-west-1.amazonaws.com/default.png";
+        img.src = "https://splitsmart-aa-ai.s3.us-west-1.amazonaws.com/default.png";
         const upload = document.getElementById("settings-upload");
         upload.value = "";
     };
 
     return (
-        // isFriendshipLoaded &&
         <>
             <TopNavigationBar />
             <div id="settings-container">
@@ -78,7 +54,15 @@ function SettingsPage() {
                 <form id="settings-form" onSubmit={handleEdit}>
                     <div id="settings-image">
                         <div>
-                            <img id="settings-preview" src={sessionUser.image_url} />
+                            <img
+                                id="settings-preview"
+                                src={sessionUser.image_url}
+                                onError={(e) => {
+                                    e.target.src = "https://splitsmart-aa-ai.s3.us-west-1.amazonaws.com/default.png";
+                                    e.onerror = null;
+                                }}
+                                alt="settings-preview"
+                            />
                             <button
                                 id="settings-preview-remove"
                                 className="delete"
@@ -90,7 +74,7 @@ function SettingsPage() {
                             >&#x2715;</button>
                         </div>
                         <div>
-                        <label>Your avatar</label>
+                            <label>Your avatar</label>
                             <input
                                 id="settings-upload"
                                 type="file"
@@ -117,21 +101,18 @@ function SettingsPage() {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
-
                         <label>Your email address</label>
                         <input
                             type="text"
                             value={sessionUser.email}
                             disabled
                         />
-
                         <label>Your phone number</label>
                         <input
                             type="text"
                             value={sessionUser.phone_number || "None"}
                             disabled
                         />
-
                         <label>Enter Password to Confirm Changes</label>
                         <input
                             type="password"
@@ -140,33 +121,10 @@ function SettingsPage() {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
-
                         <button className="accent" type="submit">Save</button>
                     </div>
                 </form>
-
             </div>
-
-            {/* <form className="edit-friend-form" onSubmit={handleSubmit}>
-                <h1>Edit friend info</h1>
-                {errors.length > 0 && <ul>
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
-                </ul>}
-                <div>{friendship.friend.email}</div>
-                {friendship.bill != 0 &&
-                    <div className="edit-friend-text">
-                        Some of your expenses with this person also involve other third parties.
-                        <span style={{ fontWeight: "bolder" }}> As a result, deleting this friend will not delete those expenses, and they will still be visible from the "All expenses" screen. </span>
-                        However, this friend should be removed from your list of friends successfully.
-                    </div>
-                }
-                <div className="edit-friend-buttons">
-                    <button onClick={() => history.push(`/friends/${id}`)}>Cancel</button>
-                    <button type="submit">Delete this friend</button>
-                </div>
-            </form> */}
         </>
     );
 }
