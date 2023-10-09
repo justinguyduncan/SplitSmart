@@ -26,7 +26,7 @@ SplitSmart is a Splitwise clone where users can add friends, charge expenses to 
 	```
  5. Inside the react-app directory, run the following command to install JavaScript dependencies.
 	```
-	 npm install
+	npm install
 	```
  6. Inside the root directory, run the following command to create and seed the database, and start up the backend server.
 	```
