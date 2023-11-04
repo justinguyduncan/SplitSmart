@@ -2,9 +2,9 @@
 
 SplitSmart is a Splitwise clone where users can add friends, charge expenses to multiple friends, and settle up IOU’s in a minimal number of payments.
 
-**Live Site:** [SplitSmart](https://splitsmart.onrender.com)
+**Live Site:** [SplitSmart](https://splitsmart-j3bf.onrender.com/)
 
-**Created By:** [Aurora Ignacio](https://github.com/bellaignacio) | Justin Duncan | Dmytro Yakovenko
+**Created By:** Aurora Ignacio| [Justin Duncan](https://github.com/justinguyduncan) | Dmytro Yakovenko
 
 **Technologies Used:** [Python](https://docs.python.org/3/) | [JavaScript](https://devdocs.io/javascript/) | [PostgreSQL](https://www.postgresql.org/docs/) | [Flask](https://flask.palletsprojects.com/en/2.3.x/) | [SQLAlchemy](https://docs.sqlalchemy.org/en/20/) | [React](https://react.dev/) | [Redux](https://redux.js.org/) | [Amazon Web Services S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html)
 
