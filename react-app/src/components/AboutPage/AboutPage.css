@@ -25,8 +25,9 @@
     left: 0;
     width: inherit;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: flex-end;
+    margin-left: 5px;
     padding: 5px;
     z-index: 1; /* Ensure the images appear above the background */
 }
@@ -41,7 +42,7 @@
 }
 
 .about-page-images img {
-    max-height: 45vh;
+    max-height: 39vh;
     border: 0.5px solid rgb(0, 0, 0);
     border-radius: 10px;
 }
